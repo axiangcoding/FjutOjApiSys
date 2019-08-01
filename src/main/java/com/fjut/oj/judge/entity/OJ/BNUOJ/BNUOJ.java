@@ -68,7 +68,6 @@ public class BNUOJ extends OTHOJ {
         return URL+loginURL;
     }
 
-    @Override
     public String getName(){
         return "BNUOJ";
     }
@@ -83,15 +82,12 @@ public class BNUOJ extends OTHOJ {
         return languageList;
     }
 
-    @Override
     public String getProblemURL(String pid){ return URL+problemURL+"?pid="+pid; }
-
     private Result getResultMap(String v){
         return resultMap.get(v);
     }
 
-    @Override
-    public String getRid(String user, VjSubmitter s){
+    public String getRid(String user,VjSubmitter s){
         Document d = MyClient.getMyClient().get(URL + "/v3/ajax/status_data.php?sEcho=27&iDisplayLength=1&bSearchable_0=true&iDisplayStart=0&sSearch_0=" + user);
         if(d==null){
             return "error";
@@ -104,23 +100,17 @@ public class BNUOJ extends OTHOJ {
             return aadata.getJSONArray(0).getString(1);
         }
     }
-
-    @Override
     public String getTitle(String pid){
         Document doc;
         //doc = Jsoup.connect(getProblemURL(pid)).get();
         doc = MyClient.getMyClient().get(getProblemURL(pid));
         return doc.select(TitleSelect).get(0).text();
     }
-
-    @Override
     public problemHTML getProblemHTML(String pid){
         Document doc;
         problemHTML p=new problemHTML();
         doc = MyClient.getMyClient().get(getProblemURL(pid));
-        if(doc == null) {
-            return null;
-        }
+        if(doc == null) return null;
         Elements es=doc.select("img");
         for(Element e:es){
             String link=e.attr("src");
@@ -166,13 +156,9 @@ public class BNUOJ extends OTHOJ {
         p.setMenoryLimit(s.substring(14,s.length()));
         return p;
     }
-
-    @Override
     public String submit(VjSubmitter s){
         String ret=Login(s);
-        if("error".equals(ret)) {
-            return "error";
-        }
+        if(ret.equals("error")) return "error";
         List<NameValuePair> formparams = new ArrayList<NameValuePair>();
         formparams.add(new BasicNameValuePair("problem_id",""+s.getSubmitInfo().pid));
         formparams.add(new BasicNameValuePair("language",getTrueLanguage(s.getSubmitInfo().language,s.getSubmitInfo().pid)+""));
@@ -180,13 +166,9 @@ public class BNUOJ extends OTHOJ {
         formparams.add(new BasicNameValuePair("isshare","0"));//share code
         formparams.add(new BasicNameValuePair("user_id",s.getUsername()));
         formparams.add(new BasicNameValuePair("login","Submit"));
-        if(hc.Post(getSubmitURL(), formparams)==null) {
-            return "error";
-        }
+        if(hc.Post(getSubmitURL(), formparams)==null) return "error";
         return "success";
     }
-
-    @Override
     public RES getResult(VjSubmitter s) {
         RES r=new RES();
         JSONObject jo=JSONObject.fromObject(MyClient.getMyClient().get(URL + "/v3/ajax/status_data.php?sEcho=27&iDisplayLength=1&bSearchable_0=true&iDisplayStart=0&sSearch_0=" + s.getUsername()).select("body").html());
@@ -214,9 +196,7 @@ public class BNUOJ extends OTHOJ {
         formparams.add(new BasicNameValuePair("password",s.getPassword()));
         formparams.add(new BasicNameValuePair("cksave","365"));//cookie save
         formparams.add(new BasicNameValuePair("login","Login"));
-        if(hc.Post(getLoginURL(), formparams)==null) {
-            return "error";
-        }
+        if(hc.Post(getLoginURL(), formparams)==null) return "error";
         return "success";
     }
     public String getCEInfo(VjSubmitter s){

@@ -28,7 +28,7 @@ public class VJudge {
 
         AccountConfig accountConfig = new AccountConfig();
 
-        String ojkeys[] = Submitter.OJ_KEYS;
+        String ojkeys[] = Submitter.oj_keys;
         for(int j = 0;j < ojkeys.length; j++){
             String sss = ojkeys[j];
             int size = AccountConfig.mp.get(sss).length / 2;

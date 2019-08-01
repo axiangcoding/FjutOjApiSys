@@ -1,7 +1,7 @@
 package com.fjut.oj.util;
 
 /**
- * Created by Administrator on 2015/5/21.
+ * @author Created by Administrator on 2015/5/21.
  */
 public class SubmitInfo {
     //评测的rid

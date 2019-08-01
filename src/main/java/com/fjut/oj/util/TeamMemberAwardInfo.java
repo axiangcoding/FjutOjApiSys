@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by QAQ on 2016/6/30 0030.
+ * @author Created by QAQ on 2016/6/30 0030.
  */
 public class TeamMemberAwardInfo{
     int id;

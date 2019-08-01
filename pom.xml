@@ -269,6 +269,12 @@
             <artifactId>spring-data-redis</artifactId>
             <version>1.7.7.RELEASE</version>
         </dependency>
+        <!--http请求包-->
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+        </dependency>
     </dependencies>
 
     <build>

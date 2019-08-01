@@ -43,6 +43,8 @@ public interface StatusService {
 
     boolean updateStatus(Status status); // 更新一条评测记录
 
+    boolean updateStatusAfterJudge(Status status);
+
     /**
      * 根据用户名获取AC的题目列表
      * @param username

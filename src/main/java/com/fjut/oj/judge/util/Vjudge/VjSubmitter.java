@@ -25,9 +25,16 @@ public class VjSubmitter implements Runnable{
     public static final int IDLE=0;
     public LinkedList<String> showstatus;
     public String rid = "";
-    public MyClient client = new MyClient(); //用这个网络客户端进行登录、提交等操作
-    public SubmitInfo info;//正在处理的info
-    int status;//忙碌状态与否
+
+    //用这个网络客户端进行登录、提交等操作
+    public MyClient client = new MyClient();
+
+    //正在处理的info
+    public SubmitInfo info;
+
+    //忙碌状态与否
+    int status;
+
     int ojid;
     int submitterID;
     VJudge vj;
@@ -111,7 +118,7 @@ public class VjSubmitter implements Runnable{
         try{
             System.out.println("开始执行，正在第1次获取原rid");
             OTHOJ oj;
-            oj = Submitter.OJS[ojid];
+            oj = Submitter.ojs[ojid];
             String prid;
             int z = 0;
             do {
@@ -152,7 +159,9 @@ public class VjSubmitter implements Runnable{
                     System.out.println(submitterID+":get rid "+num+"=" + nrid);
                     System.out.println("第"+num+"次获取rid="+nrid);
                     num++;
-                    if (num == 5) break;//提交失败重新提交
+                    if (num == 5) {
+                        break;//提交失败重新提交
+                    }
                 } while (nrid.equals("error")||nrid.equals(prid));
                 k--;
             } while(num == 5 && k != 0);
@@ -170,7 +179,7 @@ public class VjSubmitter implements Runnable{
                     status.setMemoryUsed(r.getMemory());
                     status.setScore(r.getScore());
                     statusService.updateStatus(status);
-                    System.out.println(status.toString() +  "    170");
+//                    System.out.println(status.toString() +  "    170");
 
                     if (r.getR() == Result.CE){
                         // 编译错误会往表中添加编译错误信息
@@ -210,7 +219,7 @@ public class VjSubmitter implements Runnable{
         List<String> row=new ArrayList<String>();
         // row.add(HTML.a("admin.jsp?page=SubmitterInfo&id="+submitterID,submitterID+""));
         if(submitterID == -1) row.add("local");
-        else row.add(Submitter.OJS[ojid].getName());
+        else row.add(Submitter.ojs[ojid].getName());
         row.add(selfThread.getId()+"");
         row.add(status==1?"正在评测":"空闲");
         row.add(username);

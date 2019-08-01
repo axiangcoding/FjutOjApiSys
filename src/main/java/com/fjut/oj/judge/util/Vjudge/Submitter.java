@@ -16,7 +16,7 @@ import java.sql.Timestamp;
  */
 @Controller
 public interface Submitter {
-    OTHOJ[] OJS ={
+    OTHOJ[] ojs ={
             new HDU(),
             new BNUOJ(),
             new NBUT(),
@@ -35,13 +35,13 @@ public interface Submitter {
             new SPOJ(),*/
     };
 
-    String OJ_KEYS[] = {"hdu","foj","nbut","pku","hust","cf","codevs",
+    String oj_keys[] = {"hdu","foj","nbut","pku","hust","cf","codevs",
             /*"judge_system","acdream","judge_system_game", "cf_gym",
             "foj", "new_judge","bzoj","zoj","spoj"*/};
     //OJ列表。判题OJ顺序不能改变，否则导致已有题目的OJ不正确
 
     VJudge m = new VJudge();
 
-    public int doSubmit(String user, int pid, int cid, int language, String code, Timestamp submittime);
-    public int reJudge(int rid);
+    int doSubmit(String user, int pid, int cid, int language, String code, Timestamp submittime);
+    int reJudge(int rid);
 }

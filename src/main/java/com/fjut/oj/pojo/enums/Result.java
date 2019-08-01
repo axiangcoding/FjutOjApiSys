@@ -53,7 +53,9 @@ public enum Result{
         }
         public static Result getResultById(int value){
                 for(Result r: Result.values()){
-                        if(r.value == value) return r;
+                        if(r.value == value) {
+                                return r;
+                        }
                 }
                 return null;
         }

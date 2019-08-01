@@ -71,9 +71,7 @@ public class Acdream extends OTHOJ {
     @Override
     public String submit(VjSubmitter s) {
         MyClient client = s.client;
-        if(client == null) {
-            return "error";
-        }
+        if(client == null) return "error";
 
         List<NameValuePair> login_para = new ArrayList<>();
         login_para.add(new BasicNameValuePair("username",s.getUsername()));
@@ -128,19 +126,12 @@ public class Acdream extends OTHOJ {
         }else{
             String res_str = e.get(3).text();
             Result rs = res_map.get(res_str);
-            if(rs == null) {
-                res.setR(Result.ERROR);
-            } else {
-                res.setR(rs);
-            }
+            if(rs == null) res.setR(Result.ERROR);
+            else res.setR(rs);
             res.setTime(e.get(4).text().replace(" ",""));
             res.setMemory(e.get(5).text().replace(" ",""));
-            if(res.getR()==Result.CE || "---".equals(res.getTime())) {
-                res.setTime("-");
-            }
-            if(res.getR()==Result.CE || "---".equals(res.getMemory())) {
-                res.setMemory("-");
-            }
+            if(res.getR()==Result.CE || res.getTime().equals("---")) res.setTime("-");
+            if(res.getR()==Result.CE || res.getMemory().equals("---")) res.setMemory("-");
             if(res.getR() == Result.CE){
                 res.setCEInfo(getCEInfo(s,e.get(0).text()));
             }

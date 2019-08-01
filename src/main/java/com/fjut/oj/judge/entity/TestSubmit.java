@@ -15,7 +15,7 @@ public class TestSubmit {
         int language = 0;
         String code = "#include<stdio.h>\nint main(){int a,b;while(~scanf(\"%d%d\",&a,&b))printf(\"%d\\n\",a+b);}";
         Timestamp submittime = new Timestamp(System.currentTimeMillis());
-        sm.doSubmit(user, pid, cid, language, code, submittime);
+        //sm.doSubmit(user, pid, cid, language, code, submittime);
         //sm.doSubmit(user, pid, cid, language, code, submittime);
         // sm.doSubmit(user, pid, cid, language, code, submittime);
         //VJudge vj = new VJudge();

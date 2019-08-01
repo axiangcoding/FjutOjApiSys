@@ -100,6 +100,14 @@ public class StatusServiceImpl implements StatusService {
     }
 
     @Override
+    public boolean updateStatusAfterJudge(Status status) {
+        Integer num = statusMapper.updateStatusAfterJudge(status);
+        if (num != 0)
+            return true;
+        return false;
+    }
+
+    @Override
     public List<ViewUserSolve> queryUserSolveProblemByUsername(String username) {
         return statusMapper.queryUserSolveProblemByUsername(username);
     }

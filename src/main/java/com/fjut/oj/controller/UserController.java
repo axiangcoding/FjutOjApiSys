@@ -250,7 +250,7 @@ public class UserController {
      * 获取一个用户已经 AC 和未解决 题目的数量
      */
     @RequestMapping("/GStatusProblems")
-    public JsonInfo queryStatusProblemsByUsername(HttpServletRequest req, HttpServletResponse resp) {
+    public JsonInfo queryStatusProblemsByUsername(HttpServletRequest req) {
         JsonInfo jsonInfo = new JsonInfo();
         Integer status = Integer.parseInt(req.getParameter("status") == null ? "0" : req.getParameter("status"));
         String username = req.getParameter("username");

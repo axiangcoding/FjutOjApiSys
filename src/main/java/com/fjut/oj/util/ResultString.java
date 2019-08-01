@@ -85,37 +85,37 @@ public class ResultString {
     }
 
     public static Integer getSubmitLanguage(String lang) {
-        if ("G++".equals(lang)) {
+        if ("G++".equalsIgnoreCase(lang)) {
             // + 号通过 url 传递时要转化成 %2b
             return 0;
         }
-        if ("GCC".equals(lang)) {
+        if ("GCC".equalsIgnoreCase(lang)) {
             return 1;
         }
-        if ("JAVA".equals(lang)) {
+        if ("JAVA".equalsIgnoreCase(lang)) {
             return 2;
         }
-        if ("Python3".equals(lang)) {
+        if ("Python3".equalsIgnoreCase(lang)) {
             return 3;
         }
-        if ("G++11".equals(lang)) {
+        if ("G++11".equalsIgnoreCase(lang)) {
             // + 号通过 url 传递时要转化成 %2b
             return 4;
         }
-        if ("GCC11".equals(lang)) {
+        if ("GCC11".equalsIgnoreCase(lang)) {
             return 5;
         }
-        if ("VC++".equals(lang)) {
+        if ("VC++".equalsIgnoreCase(lang)) {
             return 6;
         }
-        if ("C#".equals(lang)) {
+        if ("C#".equalsIgnoreCase(lang)) {
             // # 号 %23
             return 7;
         }
-        if ("GO 1.8".equals(lang)) {
+        if ("GO 1.8".equalsIgnoreCase(lang)) {
             return 8;
         }
-        if ("JavaScript".equals(lang)) {
+        if ("JavaScript".equalsIgnoreCase(lang)) {
             return 9;
         }
         return 0;

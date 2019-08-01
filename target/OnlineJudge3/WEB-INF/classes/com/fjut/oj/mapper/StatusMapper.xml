@@ -142,6 +142,15 @@
         where id = #{status.id}
     </update>
 
+    <update id="updateStatusAfterJudge">
+        update statu
+        set
+          result = #{status.result},
+          timeUsed = #{status.timeUsed},
+          memoryUsed = #{status.memoryUsed}
+        where id = #{status.id}
+    </update>
+
     <select id="queryUserSolveProblemByUsername" resultType="com.fjut.oj.pojo.ViewUserSolve">
         SELECT ruser AS username,
             pid,

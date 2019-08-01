@@ -86,7 +86,6 @@ public class HDU extends OTHOJ {
         return URL+statusURL+"?"+statusFormUser+"="+user;
     }
 
-    @Override
     public String getName(){
         return "HDU";
     }
@@ -101,13 +100,11 @@ public class HDU extends OTHOJ {
         return languageList;
     }
 
-    @Override
     public String getProblemURL(String pid){ return URL+problemURL+"?pid="+pid; }
     private Result getResultMap(String v){
         return resultMap.get(v);
     }
 
-    @Override
     public String getRid(String user,VjSubmitter s){
         try {
             Document d = Jsoup.connect(getStatusURL(user)).get();
@@ -118,8 +115,6 @@ public class HDU extends OTHOJ {
         }
         return "error";
     }
-
-    @Override
     public String getTitle(String pid){
         Document doc;
         try {
@@ -130,8 +125,6 @@ public class HDU extends OTHOJ {
             return GET_TITLE_ERROR;
         }
     }
-
-    @Override
     public problemHTML getProblemHTML(String pid){
         Document doc;
         problemHTML p=new problemHTML();
@@ -163,25 +156,18 @@ public class HDU extends OTHOJ {
         s2=s2.substring(s2.indexOf("/")+1,s2.indexOf("K (Java/Others)")-1)+"KB";
         p.setTimeLimit(s1);
         p.setMenoryLimit(s2);
-        if(s.contains("Special Judge")) {
-            p.setSpj(true);
-        }
+        if(s.contains("Special Judge")) p.setSpj(true);
         return p;
     }
 
-    @Override
     public String submit(VjSubmitter s){
         String ret=Login(s);
-        if(ret.equals("error")) {
-            return "error";
-        }
+        if(ret.equals("error")) return "error";
         List<NameValuePair> formparams = new ArrayList<NameValuePair>();
         formparams.add(new BasicNameValuePair("problemid","" + s.getSubmitInfo().pid));
         formparams.add(new BasicNameValuePair("language",getTrueLanguage(s.getSubmitInfo().language,s.getSubmitInfo().pid)+""));
         formparams.add(new BasicNameValuePair("usercode",s.getSubmitInfo().code));
-        if(hc.Post(getSubmitURL(), formparams)==null) {
-            return "error";
-        }
+        if(hc.Post(getSubmitURL(), formparams)==null) return "error";
         return "success";
     }
 

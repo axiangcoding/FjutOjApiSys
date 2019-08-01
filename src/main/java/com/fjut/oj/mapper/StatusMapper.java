@@ -34,9 +34,16 @@ public interface StatusMapper {
 
     Integer queryMaxStatusId();
 
+    /**
+     * 插入评测记录
+     * @param status
+     * @return
+     */
     Integer insertStatus(@Param("status") Status status);
 
     Integer updateStatus(@Param("status") Status status);
+
+    Integer updateStatusAfterJudge(@Param("status")Status status);
 
     /**
      * 获取用户的解决题目列表
