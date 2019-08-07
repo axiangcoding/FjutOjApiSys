@@ -40,7 +40,6 @@ public class OrderServiceImpl implements OrderService {
             Integer userAcbChangeAns = userMapper.updateAcbNumber(order.getUsername(), -order.getAcb());
             if(1 != userAcbChangeAns)
             {
-                System.out.println("出错了！");
                 isOrderCompleted = false;
                 throw new RuntimeException();
             }
