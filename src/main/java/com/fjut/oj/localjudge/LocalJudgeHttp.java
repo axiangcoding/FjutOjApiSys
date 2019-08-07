@@ -10,7 +10,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
  * @Author: axiang [20190731] 与本地评测机的通讯
  */
 public class LocalJudgeHttp extends Thread {
-    private static String LOCALJUDGEURL = "http://192.168.122.131:8100";
+    private static String LOCALJUDGEURL = "http://localhost:8100";
 
 
     public static String submitToLocalJudge(LocalJudgeSubmitInfo localJudgeSubmitInfo) {

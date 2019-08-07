@@ -51,4 +51,8 @@ public interface UserMapper {
 
     Integer addAcnum(@Param("username") String username);
 
+    Integer queryAcbNumber(@Param("username")String username);
+
+    Integer updateAcbNumber(@Param("username") String username, @Param("acbChange") Integer acbChange);
+
 }

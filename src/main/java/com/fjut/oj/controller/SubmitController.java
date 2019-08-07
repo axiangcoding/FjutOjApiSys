@@ -14,7 +14,7 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -180,6 +180,7 @@ public class SubmitController {
         localJudgeSubmitInfo.setMemorylimit(MemoryLimit);
         localJudgeSubmitInfo.setTimelimit(timeLimit);
         localJudgeSubmitInfo.setCode(code);
+        // 目前本地评测机只支持三种语言
         localJudgeSubmitInfo.setLanguageId(("JAVA").equalsIgnoreCase(language) ? 2 : ("Python").equalsIgnoreCase(language) ? 3 : 1);
         String submitJsonStr = LocalJudgeHttp.submitToLocalJudge(localJudgeSubmitInfo);
         JSONObject jsonObject = JSONObject.fromObject(submitJsonStr);
@@ -231,12 +232,10 @@ public class SubmitController {
                 }
             }
         });
-
-
         return jsonInfo;
     }
 
-    @Transactional
+    @Transactional(rollbackFor = RuntimeException.class)
     public void getResultFromLocalJudgeSystem(Integer rid, Integer pid, String username) throws InterruptedException {
         Status status = new Status();
         status.setId(rid);
@@ -246,7 +245,7 @@ public class SubmitController {
         String judgingStatu = "judging";
         boolean quitLoop = false;
         int times = 100;
-        System.out.println(executor.getActiveCount());
+        // TODO: 可以根据活跃线程数executor.getActiveCount()来设置获取时间间隔times
         do {
             String getResultJsonStr = LocalJudgeHttp.getResultFromLocalJudge(rid);
             JSONObject jsonObject = JSONObject.fromObject(getResultJsonStr);
@@ -264,7 +263,7 @@ public class SubmitController {
                     status.setMemoryUsed("-");
                     statusService.updateStatusAfterJudge(status);
                 } else if ("CE".equals(judgingStatu)) {
-                    // 插入数据库内容，并设置ceinfo为resultJsonObj.getString("info");
+                    // 插入数据库内容，并设置 ceinfo 为 resultJsonObj.getString("info")
                     Ceinfo ceinfo = new Ceinfo();
                     ceinfo.setRid(status.getId());
                     ceinfo.setInfo(resultJsonObj.getString("info"));
@@ -296,15 +295,10 @@ public class SubmitController {
                     status.setTimeUsed(time + "MS");
                     status.setMemoryUsed(memory + "KB");
                     statusService.updateStatusAfterJudge(status);
-                    System.out.println("statuID: " + Result.valueOf(judgingStatu).getValue()
-                            + "\tstatu: " + resStatu
-                            + "\ttime: " + time + "MS"
-                            + "\tmemory: " + memory + "KB");
                     quitLoop = true;
                 }
             } else {
                 quitLoop = true;
-                // throw new RuntimeException("获取提交结果失败！");
             }
             Thread.sleep(2000);
             times--;
@@ -315,7 +309,7 @@ public class SubmitController {
         UserSolve userSolve = userSolveService.queryACProblem(status.getRuser(), status.getPid());
         if ("AC".equalsIgnoreCase(judgingStatu)) {
             // 题目 AC 数量加一
-            problemService.updateProblemtotalAc(status.getPid());
+            problemService.updateProblemTotalAc(status.getPid());
             if (userSolve == null) {
                 // 用户写题数量 + 1
                 userService.addAcnum(status.getRuser());
@@ -325,9 +319,11 @@ public class SubmitController {
                 userSolveService.replaceUserSolve(status.getRuser(), status.getPid(), 1);
             }
         } else {
+            // 用户尝试过该题目，但没有解决
             if (userSolve == null)
-                // 用户尝试过该题目，但没有解决
+            {
                 userSolveService.replaceUserSolve(status.getRuser(), status.getPid(), 0);
+            }
         }
 
     }

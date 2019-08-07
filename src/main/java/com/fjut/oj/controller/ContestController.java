@@ -17,6 +17,7 @@ import java.util.List;
 
 /**
  * TODO: 把 JsonMsg 替换为 JsonInfo
+ *
  * @author cjt
  */
 @Controller
@@ -29,15 +30,17 @@ public class ContestController {
 
     @RequestMapping("/GAllContest")
     @ResponseBody
-    public JsonMsg getAllContest(HttpServletRequest request, HttpServletResponse response){
+    public JsonMsg getAllContest(HttpServletRequest request) {
         Integer pagenum = Integer.parseInt(request.getParameter("pagenum")) - 1;
         List<Contest> list = contestService.getAllContest(pagenum);
         Integer contestNum = contestService.getAllContestNum();
-        if (list==null) return JsonMsg.success().addInfo("没有数据");
-        if (contestNum%50 > 0){
-            contestNum = contestNum/50+1;
-        }else{
-            contestNum = contestNum/50;
+        if (list == null) {
+            return JsonMsg.success().addInfo("没有数据");
+        }
+        if (contestNum % 50 > 0) {
+            contestNum = contestNum / 50 + 1;
+        } else {
+            contestNum = contestNum / 50;
         }
         return JsonMsg.success().addInfo(contestNum).addInfo(list);
     }
@@ -70,7 +73,7 @@ public class ContestController {
         contest.setKind(kind);
         contest.setPassword(password);
         Integer num = contestService.insertContest(contest);
-        if (num == 0){
+        if (num == 0) {
             return JsonMsg.fail().addInfo("新建比赛失败");
         }
         return JsonMsg.success().addInfo("新建比赛成功");
@@ -81,7 +84,7 @@ public class ContestController {
     public JsonMsg IContestProblems(HttpServletRequest request, HttpServletResponse response) {
         String pidStr = request.getParameter("pid");
         String tpidStr = request.getParameter("tpid");
-        if (pidStr == null || tpidStr == null){
+        if (pidStr == null || tpidStr == null) {
             return JsonMsg.fail().addInfo("信息不足");
         }
 
@@ -94,7 +97,7 @@ public class ContestController {
         contestProblem.setPid(pid);
         contestProblem.setTpid(tpid);
         Integer num = contestService.insertContestProblem(contestProblem);
-        if (num == 0){
+        if (num == 0) {
             return JsonMsg.fail().addInfo("新增比赛题目失败");
         }
         return JsonMsg.success().addInfo("新增比赛题目成功");
@@ -102,10 +105,10 @@ public class ContestController {
 
     @RequestMapping("/IContestuser")
     @ResponseBody
-    public JsonMsg IContestuser(HttpServletRequest request, HttpServletResponse response){
+    public JsonMsg IContestuser(HttpServletRequest request, HttpServletResponse response) {
         String cidStr = request.getParameter("cid");
         String username = request.getParameter("username");
-        if (cidStr == null || username == null){
+        if (cidStr == null || username == null) {
             return JsonMsg.fail().addInfo("信息不足");
         }
         Integer cid = Integer.parseInt(cidStr);
@@ -120,7 +123,7 @@ public class ContestController {
         contestuser.setInfo("");
         contestuser.setTime(dateString);
         Integer num = contestService.insertContestuser(contestuser);
-        if (num == 0){
+        if (num == 0) {
             return JsonMsg.fail().addInfo("新增比赛用户失败");
         }
         return JsonMsg.success().addInfo("新增比赛用户成功");
@@ -131,16 +134,16 @@ public class ContestController {
     public JsonMsg checkContestPassword(HttpServletRequest request, HttpServletResponse response) {
         String password = request.getParameter("password");
         String cidStr = request.getParameter("cid");
-        if (password == null || cidStr == null){
+        if (password == null || cidStr == null) {
             return JsonMsg.fail().addInfo("未传入密码或比赛id");
         }
         Integer cid = Integer.parseInt(cidStr);
         String contestPassword = contestService.getContestPassword(cid);
         System.out.println(password + "  " + cid + " " + contestPassword + "   123213");
-        if (contestPassword == null || contestPassword.isEmpty()){
+        if (contestPassword == null || contestPassword.isEmpty()) {
             return JsonMsg.success().addInfo("不需要密码");
         }
-        if (password.equals(contestPassword)){
+        if (password.equals(contestPassword)) {
             return JsonMsg.success().addInfo("密码输入正确");
         }
         return JsonMsg.fail().addInfo("密码输入错误");
@@ -151,12 +154,12 @@ public class ContestController {
     public JsonMsg checkIsApply(HttpServletRequest request, HttpServletResponse response) {
         String cidStr = request.getParameter("cid");
         String username = request.getParameter("username");
-        if (cidStr == null || username == null){
+        if (cidStr == null || username == null) {
             return JsonMsg.fail().addInfo("未传入比赛id或者用户名");
         }
         Integer cid = Integer.parseInt(cidStr);
-        Integer num = contestService.getContestUser(cid,username);
-        if (num == 0){
+        Integer num = contestService.getContestUser(cid, username);
+        if (num == 0) {
             return JsonMsg.fail().addInfo("该用户未报名");
         }
         return JsonMsg.success().addInfo("该用户已报名");
@@ -164,60 +167,73 @@ public class ContestController {
 
     @RequestMapping("/GContestUsers")
     @ResponseBody
-    public JsonMsg getContestUsers(HttpServletRequest request, HttpServletResponse response){
+    public JsonMsg getContestUsers(HttpServletRequest request, HttpServletResponse response) {
         Integer cid = Integer.parseInt(request.getParameter("cid"));
         Integer pagenum = Integer.parseInt(request.getParameter("pagenum"));
-        List<Contestuser> list = contestService.getContestUsers(cid,(pagenum-1)*50);
+        List<Contestuser> list = contestService.getContestUsers(cid, (pagenum - 1) * 50);
         Integer contestUsersNum = contestService.getContestUsersNum(cid);
-        if(contestUsersNum%50==0) contestUsersNum /= 50;
-        else contestUsersNum=contestUsersNum/50 + 1;
-        if (list==null) return JsonMsg.success().addInfo("没有数据");
+        if (contestUsersNum % 50 == 0) {
+            contestUsersNum /= 50;
+        } else {
+            contestUsersNum = contestUsersNum / 50 + 1;
+        }
+        if (list == null) {
+            return JsonMsg.success().addInfo("没有数据");
+        }
         return JsonMsg.success().addInfo(contestUsersNum).addInfo(list);
     }
 
     @RequestMapping("/GContestUsersNum")
     @ResponseBody
-    public JsonMsg getContestUsersNum(HttpServletRequest request, HttpServletResponse response){
+    public JsonMsg getContestUsersNum(HttpServletRequest request, HttpServletResponse response) {
         Integer cid = Integer.parseInt(request.getParameter("cid"));
         Integer ContestUsersNum = contestService.getContestUsersNum(cid);
-        if (ContestUsersNum==null) return JsonMsg.success().addInfo(0);
+        if (ContestUsersNum == null) {
+            return JsonMsg.success().addInfo(0);
+        }
         return JsonMsg.success().addInfo(ContestUsersNum);
     }
 
     @RequestMapping("/GContestProblem")
     @ResponseBody
-    public JsonMsg getContestProblem(HttpServletRequest request, HttpServletResponse response){
+    public JsonMsg getContestProblem(HttpServletRequest request, HttpServletResponse response) {
         Integer cid = Integer.parseInt(request.getParameter("cid"));
         List<ContestProblemInfo> contestProblemList = contestService.getContestProblem(cid);
-        if (contestProblemList==null)  return JsonMsg.success().addInfo("数据为空");
+        if (contestProblemList == null) {
+            return JsonMsg.success().addInfo("数据为空");
+        }
         return JsonMsg.success().addInfo(contestProblemList);
     }
 
     @RequestMapping("/GContestStatus")
     @ResponseBody
-    public JsonMsg getContestStatus(HttpServletRequest request, HttpServletResponse response){
+    public JsonMsg getContestStatus(HttpServletRequest request, HttpServletResponse response) {
         Integer cid = Integer.parseInt(request.getParameter("cid"));
         Integer pagenum = Integer.parseInt(request.getParameter("pagenum"));
-        List<Status> contestStatusList = contestService.getContestStatus(cid,(pagenum-1)*50);
+        List<Status> contestStatusList = contestService.getContestStatus(cid, (pagenum - 1) * 50);
 
         Integer contestStatusNum = contestService.getContestStatusNum(cid);
-        if (contestStatusNum%50 == 0)
+        if (contestStatusNum % 50 == 0) {
             contestStatusNum /= 50;
-        else
+        } else {
             contestStatusNum = contestStatusNum / 50 + 1;
+        }
 
-        if (contestStatusList==null)
+        if (contestStatusList == null) {
             return JsonMsg.success().addInfo("数据为空");
+        }
 
         return JsonMsg.success().addInfo(contestStatusNum).addInfo(contestStatusList);
     }
 
     @RequestMapping("/GContestRank")
     @ResponseBody
-    public JsonMsg getContestRank(HttpServletRequest request, HttpServletResponse response){
+    public JsonMsg getContestRank(HttpServletRequest request, HttpServletResponse response) {
         Integer cid = Integer.parseInt(request.getParameter("cid"));
         List<ContestRank> contestRankList = contestService.getContestRank(cid);
-        if (contestRankList == null) return JsonMsg.success().addInfo("数据为空");
+        if (contestRankList == null) {
+            return JsonMsg.success().addInfo("数据为空");
+        }
         return JsonMsg.success().addInfo(contestRankList);
     }
 }

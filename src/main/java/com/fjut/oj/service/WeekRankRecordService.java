@@ -7,8 +7,8 @@ import com.fjut.oj.pojo.WeekRankRecord;
 import java.util.List;
 
 public interface WeekRankRecordService {
-    public void add(WeekRankRecord weekRankRecord, int day, int value);
-    public void addStatus(WeekRankRecord weekRankRecord, SubmisssionRecord submisssionRecord);
-    public void sort(WeekRankRecord weekRankRecord);
-    public List<User> getActiveRank();
+    void add(WeekRankRecord weekRankRecord, int day, int value);
+    void addStatus(WeekRankRecord weekRankRecord, SubmisssionRecord submisssionRecord);
+    void sort(WeekRankRecord weekRankRecord);
+    List<User> getActiveRank();
 }

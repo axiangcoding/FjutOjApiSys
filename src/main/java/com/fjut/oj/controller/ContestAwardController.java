@@ -17,6 +17,7 @@ import java.util.List;
 
 /**
  * TODO: 把 JsonMsg 替换为 JsonInfo
+ * @author axiang
  */
 @Controller
 @CrossOrigin
@@ -62,7 +63,7 @@ public class ContestAwardController {
     }
 
     @RequestMapping("/UContestAward")
-    public JsonMsg UContestAward(HttpServletRequest req, HttpServletResponse resp) {
+    public JsonMsg UContestAward(HttpServletRequest req) {
         String strId = req.getParameter("id");
         if (strId==null){
             return JsonMsg.fail().addInfo("未传入id");
@@ -104,7 +105,7 @@ public class ContestAwardController {
 
     @RequestMapping("/GAllTeamMemberInfo")
     @ResponseBody
-    public JsonMsg GAllTeamMemberInfo(HttpServletRequest req, HttpServletResponse resp) {
+    public JsonMsg GAllTeamMemberInfo(HttpServletRequest req) {
         Integer pagenum = Integer.parseInt(req.getParameter("pagenum") == null ? "1" : req.getParameter("pagenum"));
         Integer totalnum = teamMemberInfoService.queryAllCountTeamMemberInfo();
         Integer totalpage = (totalnum % 50) == 0 ? totalnum / 50 : totalnum / 50 + 1;

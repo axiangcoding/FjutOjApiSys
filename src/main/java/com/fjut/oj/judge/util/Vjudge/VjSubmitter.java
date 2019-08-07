@@ -191,7 +191,7 @@ public class VjSubmitter implements Runnable{
                     UserSolve userSolve = userSolveService.queryACProblem(status.getRuser(),status.getPid());
                     if (r.getR() == Result.AC){
                         // 题目 AC 数量加一
-                        problemService.updateProblemtotalAc(status.getPid());
+                        problemService.updateProblemTotalAc(status.getPid());
                         if (userSolve == null){
                             // 用户写题数量 + 1
                             userService.addAcnum(status.getRuser());

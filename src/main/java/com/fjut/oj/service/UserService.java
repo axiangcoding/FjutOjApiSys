@@ -1,6 +1,7 @@
 package com.fjut.oj.service;
 
 import com.fjut.oj.pojo.User;
+import org.apache.ibatis.type.IntegerTypeHandler;
 
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface UserService {
     Object getRatingGraph(String username);
     Integer addAcnum(String username);
     Object getAcGraph(String username);
+    Integer queryAcbNumber(String username);
+    Integer updateAcbNumber(String username,Integer acbChange);
 }

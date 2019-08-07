@@ -180,4 +180,16 @@
         set acnum = acnum + 1
         where username = #{username}
     </update>
+
+
+    <update id="updateAcbNumber">
+        UPDATE users
+        SET acb = acb + #{acbChange}
+        WHERE username = #{username}
+
+    </update>
+
+    <select id="queryAcbNumber" resultType="java.lang.Integer">
+        SELECT acb FROM users WHERE username = #{username}
+    </select>
 </mapper>

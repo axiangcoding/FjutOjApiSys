@@ -25,7 +25,7 @@ public interface ProblemService {
 
     Integer updateProblemtotalSubmitUser(Integer pid);
 
-    Integer updateProblemtotalAc(Integer pid);
+    Integer updateProblemTotalAc(Integer pid);
 
     Integer updateProblemtotalAcUser(Integer pid);
 

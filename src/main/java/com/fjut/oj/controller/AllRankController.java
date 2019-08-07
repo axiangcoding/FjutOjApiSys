@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- *
  * @author axiang
  */
 @Controller
@@ -34,13 +33,13 @@ public class AllRankController {
         List<User> list_1 = allTopTenService.getRatingTOP();
         List<User> list_2 = allTopTenService.getAcTOP();
 //        List<User> list_3 = allTopTenService.getActiveTop();
-//        if(list_3.size()>=10){
-//            list_3 = list_3.subList(0,9);
+//        if (list_3.size() >= 10) {
+//            list_3 = list_3.subList(0, 9);
 //        }
         jsonInfo.setSuccess();
         jsonInfo.addInfo(list);
         jsonInfo.addInfo(list_1);
         jsonInfo.addInfo(list_2);
         return jsonInfo;
-        }
+    }
 }

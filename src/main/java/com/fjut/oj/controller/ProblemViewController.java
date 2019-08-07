@@ -7,7 +7,6 @@ import com.fjut.oj.pojo.UserSolve;
 import com.fjut.oj.service.ProblemService;
 import com.fjut.oj.service.ProblemViewService;
 import com.fjut.oj.service.UserSolveService;
-import com.fjut.oj.service.serviceImpl.ProblemServiceImpl;
 import com.fjut.oj.util.JsonMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

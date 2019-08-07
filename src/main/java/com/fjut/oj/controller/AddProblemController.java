@@ -86,7 +86,7 @@ public class AddProblemController {
         return JsonMsg.success().addInfo(title);
     }
 
-    @Transactional   // 事务
+    @Transactional(rollbackFor = RuntimeException.class)   // 事务
     @RequestMapping("/IAddProblem")
     @ResponseBody
     public JsonMsg IAddProblem(HttpServletRequest req, HttpServletResponse resp) {

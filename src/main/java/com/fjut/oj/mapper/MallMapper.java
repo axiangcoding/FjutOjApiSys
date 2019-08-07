@@ -13,4 +13,6 @@ public interface MallMapper {
     List<Mall> queryAllMallGoods();
 
     Mall queryMallGoodsById(@Param("id")Integer id);
+
+
 }
