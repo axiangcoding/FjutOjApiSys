@@ -116,9 +116,9 @@
     </delete>
 
     <select id="queryUserRadar1" resultType="com.fjut.oj.pojo.UserRadar1">
-        select username,ttype,count(*) as num
-        from (SELECT username,pid FROM t_usersolve where username = #{user} and status=1)
-        a join (SELECT pid,(SELECT ttype FROM t_problem_tag WHERE id=tagid)
+        SELECT username,ttype,COUNT(*) AS num
+        FROM (SELECT username,pid FROM t_usersolve WHERE username = #{user} AND status=1)
+        a JOIN (SELECT pid,(SELECT ttype FROM t_problem_tag WHERE id=tagid)
         as ttype,sum(rating-500)
         as ss  FROM t_problem_tag_record group by ttype,pid) b on a.pid=b.pid where b.ss>0 group by ttype
     </select>

@@ -7,17 +7,20 @@ import com.fjut.oj.pojo.UserSolve;
 import com.fjut.oj.service.ProblemService;
 import com.fjut.oj.service.ProblemViewService;
 import com.fjut.oj.service.UserSolveService;
+import com.fjut.oj.util.JsonInfo;
 import com.fjut.oj.util.JsonMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 /**
- * TODO: 把 JsonMsg 替换为 JsonInfo
+ * @author cjt axiang [20190808]
  */
 @Controller
 @CrossOrigin
@@ -33,22 +36,30 @@ public class ProblemViewController {
     @Autowired
     private UserSolveService userSolveService;
 
-    @RequestMapping("/Gproblemview")
+    @RequestMapping("/getProblemView")
     @ResponseBody
-    public JsonMsg queryProblemView(HttpServletRequest req, HttpServletResponse resp) {
-        Integer pid = Integer.parseInt(req.getParameter("pid"));
+    public JsonInfo queryProblemView(@RequestParam("pid") String pidStr,
+                                     @RequestParam(value = "username",required = false) String username)
+    {
+        JsonInfo jsonInfo = new JsonInfo();
+        Integer pid = Integer.parseInt(pidStr);
         ProblemView problemView = problemViewService.queryProblemView(pid);
         Problem problem = problemService.queryProblemById(pid);
-        Problemsample problemsamples = problemService.getProblemHTMLProblemSample(pid);
-
-        String user = req.getParameter("user");
+        Problemsample problemsamples;
+        problemsamples = problemService.getProblemHTMLProblemSample(pid);
         Boolean solve = false;
-        if (user!=null){
-            UserSolve userSolve = userSolveService.queryACProblem(user,pid);
-            if(userSolve!=null) {
+        if (username != null) {
+            UserSolve userSolve = userSolveService.queryACProblem(username, pid);
+            if (userSolve != null) {
                 solve = true;
             }
         }
-        return JsonMsg.success().addInfo(problemView).addInfo(problem).addInfo(problemsamples).addInfo(solve);
+        jsonInfo.setSuccess();
+        jsonInfo.addInfo(problemView);
+        jsonInfo.addInfo(problem);
+        jsonInfo.addInfo(problemsamples);
+        jsonInfo.addInfo(solve);
+        return jsonInfo;
+
     }
 }

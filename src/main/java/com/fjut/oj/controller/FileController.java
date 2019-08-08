@@ -34,13 +34,13 @@ public class FileController {
     /**
      * FIXME:部署时替换为生产环境部署路径
      */
-    private static String BASEFILEPATH = "D:\\个人专用\\OJ项目\\OJFile\\";
-    private static String BASEPICTUREPATH = "D:\\个人专用\\OJ项目\\OJPicture\\";
-    private static String VERIFYPICPATH = "VerifyPic\\";
+    private static String BASEFILEPATH = "/app/";
+    private static String BASEPICTUREPATH = "/app/";
+    private static String VERIFYPICPATH = "/app/";
 
 
     @PostMapping("/uploadPic")
-    public JsonInfo uploadPicture2(HttpServletRequest request, HttpServletResponse response) {
+    public JsonInfo uploadPicture(HttpServletRequest request, HttpServletResponse response) {
         JsonInfo jsonInfo = new JsonInfo();
         MultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
         MultipartHttpServletRequest multipartRequest = resolver.resolveMultipart(request);
@@ -71,4 +71,37 @@ public class FileController {
         return jsonInfo;
     }
 
+
+    /**
+     * TODO: 方便上传到服务器文件，正式使用时需要更改权限认证
+     *
+     * @param request
+     * @return
+     */
+    @PostMapping("/uploadFile")
+    public JsonInfo uploadFile(HttpServletRequest request) {
+        JsonInfo jsonInfo = new JsonInfo();
+        MultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+        MultipartHttpServletRequest multipartRequest = resolver.resolveMultipart(request);
+
+        MultipartFile multipartFile = multipartRequest.getFile("file");
+        Date today = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        String dateStr = format.format(today);
+        // 保存文件名为 例：admin-1-20190702.jpg
+        String imgPath = BASEPICTUREPATH + "-" + dateStr + ".jpg";
+        System.out.println(imgPath);
+        try {
+            InputStream is = multipartFile.getInputStream();
+            OutputStream out = new FileOutputStream(imgPath);
+            IOUtil.copy(is, out);
+            System.out.println(multipartFile.getOriginalFilename());
+            out.close();
+            is.close();
+            jsonInfo.setSuccess("文件保存成功！");
+        } catch (Exception e) {
+            jsonInfo.setError("文件储存错误！");
+        }
+        return jsonInfo;
+    }
 }

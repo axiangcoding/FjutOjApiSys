@@ -8,16 +8,16 @@ import java.util.Date;
  * @Author: axiang [20190717]
  */
 public class Mall {
-    Integer id;
-    String title;
-    Integer acb;
-    Integer stock;
-    String des;
-    boolean isHidden;
-    String user;
-    Date time;
-    Integer buyLimit;
-    Integer buyVerifyLimit;
+    private Integer id;
+    private String title;
+    private Integer acb;
+    private Integer stock;
+    private String des;
+    private boolean isHidden;
+    private String user;
+    private Date time;
+    private Integer buyLimit;
+    private Integer buyVerifyLimit;
 
     public Integer getId() {
         return id;

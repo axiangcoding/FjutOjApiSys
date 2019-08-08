@@ -45,8 +45,7 @@ public class OrderController {
      * @param buyNum
      * @return
      */
-    //  @CheckUserPrivate
-    @Transactional
+    @CheckUserPrivate
     @PostMapping("/createOrder")
     public JsonInfo insertOrder(@RequestParam("username") String username,
                                 @RequestParam("goodsId") Integer goodsId,
