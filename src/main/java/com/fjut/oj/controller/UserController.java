@@ -7,7 +7,7 @@ import com.fjut.oj.service.StatusService;
 import com.fjut.oj.service.UserRadarService;
 import com.fjut.oj.service.UserService;
 import com.fjut.oj.interceptor.CheckUserIsLogin;
-import com.fjut.oj.manager.TokenManager;
+import com.fjut.oj.redis.TokenManager;
 import com.fjut.oj.util.JsonInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

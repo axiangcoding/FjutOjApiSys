@@ -4,6 +4,8 @@ import com.fjut.oj.interceptor.CheckUserPrivate;
 import com.fjut.oj.pojo.UserPer;
 import com.fjut.oj.service.UserPermissionService;
 import com.fjut.oj.util.JsonInfo;
+import net.sf.json.JSON;
+import org.jsoup.select.Evaluator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +43,23 @@ public class UserPermissionController {
             jsonInfo.addInfo(perList);
         } else {
             jsonInfo.setFail("未找到权限！");
+        }
+        return jsonInfo;
+    }
+
+    @CheckUserPrivate
+    @GetMapping("/getUserPermissionById")
+    public JsonInfo queryUserPermissionById(@RequestParam("username") String username,
+                                            @RequestParam("id") String idStr) {
+        JsonInfo jsonInfo = new JsonInfo();
+        Integer id = Integer.parseInt(idStr);
+        boolean isAvailable = permissionService.queryUserPermissionAvailable(username, id);
+        if(isAvailable)
+        {
+            jsonInfo.setSuccess("拥有权限");
+        }
+        else{
+            jsonInfo.setFail("没有这项权限");
         }
         return jsonInfo;
     }

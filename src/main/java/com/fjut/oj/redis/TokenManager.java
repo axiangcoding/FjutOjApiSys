@@ -1,4 +1,4 @@
-package com.fjut.oj.manager;
+package com.fjut.oj.redis;
 
 import com.fjut.oj.pojo.TokenModel;
 

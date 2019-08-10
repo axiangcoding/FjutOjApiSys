@@ -1,7 +1,7 @@
 package com.fjut.oj.interceptor;
 
 import com.fjut.oj.exception.NotOwnerException;
-import com.fjut.oj.manager.TokenManager;
+import com.fjut.oj.redis.TokenManager;
 import com.fjut.oj.pojo.TokenModel;
 import com.fjut.oj.util.IPTool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class CheckUserPrivateInterceptor extends HandlerInterceptorAdapter {
         if (null == checkUserPrivate) {
             return true;
         }
-        // TODO:从头部获取Token
+        // 从头部获取Token
         String auth = request.getHeader("auth");
         String username = request.getParameter("username");
         TokenModel model = manager.getToken(auth);

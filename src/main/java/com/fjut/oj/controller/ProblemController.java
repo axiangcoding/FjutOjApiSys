@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -69,9 +70,16 @@ public class ProblemController {
      * @return
      */
     @GetMapping("/getProblemSolve")
-    public JsonInfo queryProblemsByConditions(@RequestParam("username") String username) {
+    public JsonInfo queryProblemsByConditions(@RequestParam(value = "username",required = false) String username) {
         JsonInfo jsonInfo = new JsonInfo();
-        List<ViewUserSolve> solves = statusService.queryUserSolveProblemByUsername(username);
+        List<ViewUserSolve> solves = new ArrayList<>();
+        if("".equals(username)||null == username)
+        {
+            jsonInfo.setSuccess();
+            jsonInfo.addInfo(solves);
+            return jsonInfo;
+        }
+        solves = statusService.queryUserSolveProblemByUsername(username);
         jsonInfo.addInfo(solves);
         return jsonInfo;
     }
@@ -185,12 +193,9 @@ public class ProblemController {
      * 查询题目页面数量,根据 num 的不同结果会有不同
      */
     @RequestMapping("/GPageNum")
-    @ResponseBody
-    public JsonMsg getPageNum(HttpServletRequest req, HttpServletResponse resp) {
-
+    public JsonMsg getPageNum() {
         Integer num = 20;
         boolean showHide = false;
-
         Integer total = problemService.getPageNum(num, showHide);
         return JsonMsg.success().addInfo(total);
     }
@@ -199,7 +204,6 @@ public class ProblemController {
      * 编辑题目信息
      */
     @RequestMapping("/EProblem")
-    @ResponseBody
     public JsonMsg editProblem(HttpServletRequest req, HttpServletResponse resp) {
         Integer pid = 1;
         Problem pro = null;
@@ -212,7 +216,6 @@ public class ProblemController {
      * 新增题目
      */
     @RequestMapping("/AProblem")
-    @ResponseBody
     public JsonMsg addProblem(HttpServletRequest req, HttpServletResponse resp) {
         Integer pid = 1;
         Problem pro = null;
@@ -225,7 +228,6 @@ public class ProblemController {
      * 更改一个题目的可见状态
      */
     @RequestMapping("/UProblemVisiablePid")
-    @ResponseBody
     public JsonMsg setProblemVisiablePid(HttpServletRequest req, HttpServletResponse resp) {
         Integer pid = 1;
         Integer num = problemService.setProblemVisiablePid(pid);
@@ -237,7 +239,6 @@ public class ProblemController {
      * 将一个题目的可见状态改为想要的状态用 z 表示
      */
     @RequestMapping("/UProblemVisiablePidZ")
-    @ResponseBody
     public JsonMsg UProblemVisiablePidZ(HttpServletRequest req, HttpServletResponse resp) {
         Integer pid = 1;
         Integer z = 0;
@@ -250,7 +251,6 @@ public class ProblemController {
      * 获取某个oj 的一个题目
      */
     @RequestMapping("/GProblemsByOjPid")
-    @ResponseBody
     public JsonMsg getProblemsByOjPid(HttpServletRequest req, HttpServletResponse resp) {
         Integer oj = 1;
         String ojspid = "";

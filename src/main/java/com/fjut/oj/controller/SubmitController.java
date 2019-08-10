@@ -47,9 +47,11 @@ public class SubmitController {
     @Autowired
     private CeinfoService ceinfoService;
 
+    /**
+     * 线程池
+     */
     @Autowired
     private ThreadPoolTaskExecutor executor;
-//    private static ExecutorService service = Executors.newFixedThreadPool(100);
 
     Submitter sm = new SubmitterImp();
 
@@ -131,7 +133,7 @@ public class SubmitController {
                                               @RequestParam("memoryLimit") String MemoryLimitStr,
                                               @RequestParam("code") String code,
                                               @RequestParam("language") String language,
-                                              @RequestParam("user") final String user,
+                                              @RequestParam("user") String user,
                                               @RequestParam(value = "cid", required = false) String cidStr) throws InterruptedException {
         JsonInfo jsonInfo = new JsonInfo();
 
@@ -180,7 +182,7 @@ public class SubmitController {
         localJudgeSubmitInfo.setMemorylimit(MemoryLimit);
         localJudgeSubmitInfo.setTimelimit(timeLimit);
         localJudgeSubmitInfo.setCode(code);
-        // 目前本地评测机只支持三种语言
+        // 目前本地评测机只支持三种语言 JAVA Python C/C++
         localJudgeSubmitInfo.setLanguageId(("JAVA").equalsIgnoreCase(language) ? 2 : ("Python").equalsIgnoreCase(language) ? 3 : 1);
         String submitJsonStr = LocalJudgeHttp.submitToLocalJudge(localJudgeSubmitInfo);
         JSONObject jsonObject = JSONObject.fromObject(submitJsonStr);
@@ -235,6 +237,9 @@ public class SubmitController {
         return jsonInfo;
     }
 
+    /**
+     * 这里的事务注解只有在数据库报错的情况下才会回滚
+     */
     @Transactional(rollbackFor = RuntimeException.class)
     public void getResultFromLocalJudgeSystem(Integer rid, Integer pid, String username) throws InterruptedException {
         Status status = new Status();
@@ -280,15 +285,18 @@ public class SubmitController {
                     int time = 0;
                     int memory = 0;
                     JSONArray retJsonArr = resultJsonObj.getJSONArray("ret");
-                    // FIXME: 测试中评测机只返回一组有效记录，但是定义成数组，可能有多组，暂时没发现那种情况，先这么做
+                    // TODO: 测试中评测机返回多组不同IO的评测记录，暂时未测试
                     for (int i = 0; i < retJsonArr.size(); i++) {
                         resStatu = retJsonArr.getJSONArray(i).getString(1);
                         if (resStatu.equals("MLE") || resStatu.equals("OLE")) {
-                            time = retJsonArr.getJSONArray(i).getInt(4);
+                            time += retJsonArr.getJSONArray(i).getInt(4);
                         } else {
-                            time = retJsonArr.getJSONArray(i).getInt(2);
+                            time += retJsonArr.getJSONArray(i).getInt(2);
                         }
-                        memory = retJsonArr.getJSONArray(i).getInt(3);
+                        memory = Math.max(memory, retJsonArr.getJSONArray(i).getInt(3));
+                        if (!"AC".equals(resStatu)) {
+                            break;
+                        }
                     }
                     judgingStatu = resStatu;
                     status.setResult(Result.valueOf(judgingStatu).getValue());
@@ -320,8 +328,7 @@ public class SubmitController {
             }
         } else {
             // 用户尝试过该题目，但没有解决
-            if (userSolve == null)
-            {
+            if (userSolve == null) {
                 userSolveService.replaceUserSolve(status.getRuser(), status.getPid(), 0);
             }
         }

@@ -79,4 +79,8 @@ public enum PermissionType {
     public String getName() {
         return name;
     }
+
+    public int getCode() {
+        return code;
+    }
 }

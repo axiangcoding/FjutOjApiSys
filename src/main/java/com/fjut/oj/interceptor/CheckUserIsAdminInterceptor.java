@@ -1,7 +1,7 @@
 package com.fjut.oj.interceptor;
 
 import com.fjut.oj.exception.NotAdminException;
-import com.fjut.oj.manager.TokenManager;
+import com.fjut.oj.redis.TokenManager;
 import com.fjut.oj.pojo.TokenModel;
 import com.fjut.oj.service.UserPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class CheckUserIsAdminInterceptor extends HandlerInterceptorAdapter {
         if (null == checkUserIsAdmin) {
             return true;
         }
-        // TODO:从头部获取Token
+        // 从头部获取Token
         String auth = request.getHeader("token");
         TokenModel model = manager.getToken(auth);
         if (manager.checkToken(model) && permissionService.queryIsAdmin(model.getUsername())) {

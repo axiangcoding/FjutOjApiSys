@@ -28,6 +28,13 @@ public class UserRankController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 获得用户排行榜
+     * @param pageNumStr
+     * @param order
+     * @param desc
+     * @return
+     */
     @GetMapping("/GUserRank")
     public JsonInfo getAllUsersRank(@RequestParam("pagenum") String pageNumStr,
                                     @RequestParam(value = "order",required = false) String order,

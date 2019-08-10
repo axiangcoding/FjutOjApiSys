@@ -2,7 +2,7 @@ package com.fjut.oj.interceptor;
 
 import com.fjut.oj.exception.NotLoginException;
 import com.fjut.oj.pojo.TokenModel;
-import com.fjut.oj.manager.TokenManager;
+import com.fjut.oj.redis.TokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -31,7 +31,7 @@ public class CheckUserIsLoginInterceptor extends HandlerInterceptorAdapter {
         if (null == checkUserIsLogin) {
             return true;
         }
-        // TODO:从头部获取Token
+        // 从头部获取Token
         String auth = request.getHeader("auth");
         TokenModel model = manager.getToken(auth);
         if (manager.checkToken(model)) {

@@ -14,6 +14,14 @@ public interface UserPermissionMapper {
     List<UserPer> queryUserPermission(@Param("username") String username);
 
     /**
+     * 获取用户的某项权限是否存在
+     * @param username
+     * @param id
+     * @return
+     */
+    Integer queryUserPermissionAvailable(@Param("username") String username, @Param("id") Integer id);
+
+    /**
      * 获取用户是否为管理员
      * @param username
      * @return

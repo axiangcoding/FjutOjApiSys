@@ -6,9 +6,16 @@
         FROM userper
         WHERE username = #{username}
     </select>
+
     <select id="queryIsAdmin" resultType="java.lang.Integer">
-        SELECT COUNT (*)
+        SELECT COUNT(*)
         FROM userper
         WHERE username = #{username}
+    </select>
+
+    <select id="queryUserPermissionAvailable" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM userper
+        WHERE username = #{username} AND perid = #{id}
     </select>
 </mapper>

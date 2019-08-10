@@ -3,17 +3,17 @@ package com.fjut.oj.controller;
 import com.fjut.oj.pojo.Status;
 import com.fjut.oj.pojo.UserSolve;
 import com.fjut.oj.pojo.ViewUserStatus;
+import com.fjut.oj.pojo.enums.PermissionType;
+import com.fjut.oj.service.CodeViewService;
 import com.fjut.oj.service.StatusService;
+import com.fjut.oj.service.UserPermissionService;
 import com.fjut.oj.service.UserSolveService;
 import com.fjut.oj.util.JsonInfo;
 import com.fjut.oj.util.MapSort;
 import com.fjut.oj.util.ResultString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,7 +36,12 @@ public class StatusController {
     @Autowired
     private UserSolveService userSolveService;
 
-    static private List<Status> list;
+    @Autowired
+    private UserPermissionService permissionService;
+
+    @Autowired
+    private CodeViewService codeViewService;
+
 
     @RequestMapping("/GAllStatus")
     public JsonInfo queryAllStatus(@RequestParam("pagenum") String pageNumStr) {
@@ -130,20 +135,21 @@ public class StatusController {
         return jsonInfo;
     }
 
-    @RequestMapping("/getStatusById")
-    public JsonInfo getStatusById(HttpServletRequest request) {
+    @GetMapping("/getStatusById")
+    public JsonInfo getStatusById(@RequestParam("id") String idStr, @RequestParam("user") String user) {
         JsonInfo jsonInfo = new JsonInfo();
-        String idStr = request.getParameter("id");
         Integer id = Integer.parseInt(idStr);
-        String user = request.getParameter("user");
         Status status = statusService.queryStatusById(id);
+        boolean permissionCanViewOthersCode = permissionService.queryUserPermissionAvailable(user, PermissionType.viewCode.getCode());
+        boolean normalCanViewOthersCode = codeViewService.queryCanUserViewCodeByPid(user, id);
         if (null == status) {
             jsonInfo.setFail("评测信息不存在！");
-        } else if (status.getRuser().equals(user)) {
+            return jsonInfo;
+        } else if (status.getRuser().equals(user) || permissionCanViewOthersCode || normalCanViewOthersCode ) {
             jsonInfo.setSuccess();
             jsonInfo.addInfo(status);
-        } else {
-            jsonInfo.setFail("不允许查看其他用户代码");
+        } else{
+            jsonInfo.setFail("不允许查看此评测代码，请完成该题解答或者使用ACB购买该题");
         }
         return jsonInfo;
     }

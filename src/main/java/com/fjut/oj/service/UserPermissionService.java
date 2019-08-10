@@ -17,6 +17,8 @@ public interface UserPermissionService {
      */
     List<UserPer> queryUserPermission(String username);
 
+    boolean queryUserPermissionAvailable(String username,Integer id);
+
     /**
      * 判断是非为管理员
      * @param username

@@ -34,7 +34,7 @@
         <!-- targetProject:mapper映射文件生成的位置
            如果maven工程只是单独的一个工程，targetProject="src/main/java"
            若果maven工程是分模块的工程，targetProject="所属模块的名称"，例如：
-           targetProject="ecps-manager-mapper"，下同-->
+           targetProject="ecps-redis-mapper"，下同-->
         <sqlMapGenerator targetPackage="com.fjut.oj.mapper"
                          targetProject="src/main/resource">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
