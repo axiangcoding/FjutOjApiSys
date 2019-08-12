@@ -19,6 +19,7 @@ public class ViewUserStatus {
     private String timeUsed;
     private String memoryUsed;
     private Integer codelen;
+    private String code;
     private String otherinfo;
     private String submitlanguage;
 
@@ -108,6 +109,14 @@ public class ViewUserStatus {
 
     public void setCodelen(Integer codelen) {
         this.codelen = codelen;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getOtherinfo() {

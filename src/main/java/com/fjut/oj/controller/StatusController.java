@@ -139,15 +139,15 @@ public class StatusController {
     public JsonInfo getStatusById(@RequestParam("id") String idStr, @RequestParam("user") String user) {
         JsonInfo jsonInfo = new JsonInfo();
         Integer id = Integer.parseInt(idStr);
-        Status status = statusService.queryStatusById(id);
+        ViewUserStatus viewUserStatus = statusService.queryStatusViewById(id);
         boolean permissionCanViewOthersCode = permissionService.queryUserPermissionAvailable(user, PermissionType.viewCode.getCode());
         boolean normalCanViewOthersCode = codeViewService.queryCanUserViewCodeByPid(user, id);
-        if (null == status) {
+        if (null == viewUserStatus) {
             jsonInfo.setFail("评测信息不存在！");
             return jsonInfo;
-        } else if (status.getRuser().equals(user) || permissionCanViewOthersCode || normalCanViewOthersCode ) {
+        } else if (viewUserStatus.getRuser().equals(user) || permissionCanViewOthersCode || normalCanViewOthersCode ) {
             jsonInfo.setSuccess();
-            jsonInfo.addInfo(status);
+            jsonInfo.addInfo(viewUserStatus);
         } else{
             jsonInfo.setFail("不允许查看此评测代码，请完成该题解答或者使用ACB购买该题");
         }

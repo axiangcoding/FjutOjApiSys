@@ -22,6 +22,8 @@ public interface StatusMapper {
 
     Status queryStatusById(@Param("id") Integer id);
 
+    ViewUserStatus queryStatusViewById(@Param("id") Integer id);
+
     List<Status> queryAllStatusByUser(@Param("ruser") String ruser);
 
     List<Status> queryAllStatusByPid(@Param("pid") String pid);

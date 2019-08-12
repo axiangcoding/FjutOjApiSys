@@ -30,6 +30,12 @@
         WHERE id = #{id}
     </select>
 
+    <select id="queryStatusViewById" resultType="com.fjut.oj.pojo.ViewUserStatus">
+        SELECT *
+        FROM v_user_status
+        WHERE id = #{id}
+    </select>
+
     <select id="queryAllStatusByUser" resultType="com.fjut.oj.pojo.Status">
         SELECT id,ruser,pid,lang,submitTime,result,score,timeUsed,memoryUsed,codelen
         FROM statu
@@ -158,5 +164,6 @@
             FROM statu WHERE ruser = #{username}
             GROUP BY ruser,pid
     </select>
+
 
 </mapper>

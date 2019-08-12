@@ -281,23 +281,33 @@ public class SubmitController {
                 }
                 //以下为运行正确返回的内容，即提交并且编译成功得到的结果
                 else {
+                    Ceinfo ceinfo = new Ceinfo();
+                    String ceStr = "";
                     String resStatu = "";
                     int time = 0;
                     int memory = 0;
                     JSONArray retJsonArr = resultJsonObj.getJSONArray("ret");
                     // TODO: 测试中评测机返回多组不同IO的评测记录，暂时未测试
                     for (int i = 0; i < retJsonArr.size(); i++) {
+                        ceStr += ("测试文件：【"+retJsonArr.getJSONArray(i).getString(0)+"】 ");
                         resStatu = retJsonArr.getJSONArray(i).getString(1);
+                        ceStr += ("测试结果：【"+resStatu+"】 ");
                         if (resStatu.equals("MLE") || resStatu.equals("OLE")) {
                             time += retJsonArr.getJSONArray(i).getInt(4);
+                            ceStr += ("用时：【"+retJsonArr.getJSONArray(i).getInt(4)+"MS】 ");
                         } else {
                             time += retJsonArr.getJSONArray(i).getInt(2);
+                            ceStr += ("用时：【"+retJsonArr.getJSONArray(i).getInt(2)+"MS】 ");
                         }
                         memory = Math.max(memory, retJsonArr.getJSONArray(i).getInt(3));
+                        ceStr += ("内存：【"+retJsonArr.getJSONArray(i).getInt(3)+"KB】\n");
                         if (!"AC".equals(resStatu)) {
                             break;
                         }
                     }
+                    ceinfo.setInfo(ceStr);
+                    ceinfo.setRid(status.getId());
+                    ceinfoService.insertCeinfo(ceinfo);
                     judgingStatu = resStatu;
                     status.setResult(Result.valueOf(judgingStatu).getValue());
                     status.setTimeUsed(time + "MS");

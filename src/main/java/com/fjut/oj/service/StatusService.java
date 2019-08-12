@@ -17,7 +17,14 @@ public interface StatusService {
 
     List<ViewUserStatus> queryStatus(Integer start);
 
-    Status queryStatusById(Integer id); // 按照id查询评测记录
+    /**
+     * 按照id查询评测记录
+     * @param id
+     * @return
+     */
+    Status queryStatusById(Integer id);
+
+    ViewUserStatus queryStatusViewById(Integer id);
 
     /**
      * 查询某一条件下评测的数量

@@ -56,6 +56,14 @@ public class StatusServiceImpl implements StatusService {
     }
 
     @Override
+    public ViewUserStatus queryStatusViewById(Integer id) {
+        ViewUserStatus viewUserStatus = statusMapper.queryStatusViewById(id);
+        viewUserStatus.setOtherinfo(ResultString.getResultString(viewUserStatus.getResult()));
+        viewUserStatus.setSubmitlanguage(ResultString.getSubmitLanguage(viewUserStatus.getLang()));
+        return viewUserStatus;
+    }
+
+    @Override
     public Integer queryCountAllStatusByConditions(String ruser, Integer pid, Integer result, Integer language, Integer start) {
         return statusMapper.queryCountAllStatusByConditions(ruser,pid,result,language,start);
     }

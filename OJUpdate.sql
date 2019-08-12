@@ -65,7 +65,8 @@ SELECT id,
        score,
        timeUsed,
        memoryUsed,
-       codelen
+       codelen,
+       code
 FROM statu,
      users
 WHERE statu.ruser = users.username
