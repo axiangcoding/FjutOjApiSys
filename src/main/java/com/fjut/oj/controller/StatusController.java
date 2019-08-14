@@ -1,6 +1,7 @@
 package com.fjut.oj.controller;
 
 import com.fjut.oj.exception.NotLoginException;
+import com.fjut.oj.exception.NotOwnerException;
 import com.fjut.oj.interceptor.CheckUserIsLogin;
 import com.fjut.oj.interceptor.CheckUserPrivate;
 import com.fjut.oj.pojo.Status;
@@ -145,8 +146,7 @@ public class StatusController {
         JsonInfo jsonInfo = new JsonInfo();
         if("".equals(username) || null == username)
         {
-//            return new JsonInfo("FAIL","未登录");
-            throw new NotLoginException();
+            throw new NotOwnerException();
         }
         Integer id = Integer.parseInt(idStr);
         ViewUserStatus viewUserStatus = statusService.queryStatusViewById(id);

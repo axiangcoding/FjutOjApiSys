@@ -81,22 +81,22 @@ public class ProblemServiceImpl implements ProblemService {
 
     @Override
     public Integer updateProblemtotalSubmit(Integer pid) {
-        return problemMapper.updateProblemtotalSubmit(pid);
+        return problemMapper.updateProblemTotalSubmit(pid);
     }
 
     @Override
     public Integer updateProblemtotalSubmitUser(Integer pid) {
-        return problemMapper.updateProblemtotalSubmitUser(pid);
+        return problemMapper.updateProblemTotalSubmitUser(pid);
     }
 
     @Override
     public Integer updateProblemTotalAc(Integer pid) {
-        return problemMapper.updateProblemtotalAc(pid);
+        return problemMapper.updateProblemTotalAc(pid);
     }
 
     @Override
     public Integer updateProblemtotalAcUser(Integer pid) {
-        return problemMapper.updateProblemtotalAcUser(pid);
+        return problemMapper.updateProblemTotalAcUser(pid);
     }
 
     @Override

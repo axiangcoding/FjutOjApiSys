@@ -32,6 +32,7 @@ public class AllRankController {
         List<User> list = allTopTenService.getAcbTOP();
         List<User> list_1 = allTopTenService.getRatingTOP();
         List<User> list_2 = allTopTenService.getAcTOP();
+        // TODO: 活跃榜还没做
 //        List<User> list_3 = allTopTenService.getActiveTop();
 //        if (list_3.size() >= 10) {
 //            list_3 = list_3.subList(0, 9);

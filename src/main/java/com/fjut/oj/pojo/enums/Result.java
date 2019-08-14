@@ -17,7 +17,7 @@ public enum Result{
         RUNNING(10),
         ERROR(11),
         JUDGING(12),
-        SCORE(13);
+        SC(13);
 
         int value;
         Result(int v){

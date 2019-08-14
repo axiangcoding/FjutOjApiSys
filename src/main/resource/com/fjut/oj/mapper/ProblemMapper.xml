@@ -37,28 +37,28 @@
 
     <select id="queryProblemsByConditions" resultType="com.fjut.oj.pojo.Problem">
         SELECT * FROM problem
-            WHERE (1=1)
-            <if test="title != null">
-                AND title LIKE "%"#{title}"%"
-            </if>
-            <if test="tagId != null">
-                AND problem.pid IN
-                (SELECT distinct pid FROM t_problem_tag_record WHERE tagid=#{tagId})
-            </if>
-            ORDER BY pid
-            LIMIT #{startIndex}, 50
+        WHERE (1=1)
+        <if test="title != null">
+            AND title LIKE "%"#{title}"%"
+        </if>
+        <if test="tagId != null">
+            AND problem.pid IN
+            (SELECT distinct pid FROM t_problem_tag_record WHERE tagid=#{tagId})
+        </if>
+        ORDER BY pid
+        LIMIT #{startIndex}, 50
     </select>
 
     <select id="queryProblemCountByCondition" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM problem
-            WHERE (1=1)
+        WHERE (1=1)
         <if test="title != null">
-                AND title LIKE "%"#{title}"%"
-            </if>
-            <if test="tagId != null">
-                AND problem.pid IN
-                (SELECT DISTINCT pid FROM t_problem_tag_record WHERE tagid=#{tagId})
-            </if>
+            AND title LIKE "%"#{title}"%"
+        </if>
+        <if test="tagId != null">
+            AND problem.pid IN
+            (SELECT DISTINCT pid FROM t_problem_tag_record WHERE tagid=#{tagId})
+        </if>
     </select>
 
 
@@ -103,25 +103,25 @@
         </where>
     </select>
 
-    <update id="updateProblemtotalSubmit" parameterType="java.lang.Integer">
+    <update id="updateProblemTotalSubmit" parameterType="java.lang.Integer">
           update problem
           set totalSubmit = ( totalSubmit + 1 )
           where pid = #{pid}
     </update>
 
-    <update id="updateProblemtotalSubmitUser" parameterType="java.lang.Integer">
+    <update id="updateProblemTotalSubmitUser" parameterType="java.lang.Integer">
         UPDATE problem
         SET totalSubmitUser = (totalSubmitUser+1)
         WHERE pid=#{pid}
     </update>
 
-    <update id="updateProblemtotalAc" parameterType="java.lang.Integer">
+    <update id="updateProblemTotalAc" parameterType="java.lang.Integer">
         UPDATE problem
         SET totalAc = (totalAc + 1)
         WHERE pid = #{pid}
     </update>
 
-    <update id="updateProblemtotalAcUser" parameterType="java.lang.Integer">
+    <update id="updateProblemTotalAcUser" parameterType="java.lang.Integer">
         UPDATE problem
         SET totalAcUser = (totalAcUser + 1)
         WHERE pid = #{pid}
