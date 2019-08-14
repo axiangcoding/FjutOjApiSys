@@ -7,7 +7,7 @@ public enum CodeLanguage {
     GPP(0,"G++"),
     GCC(1,"GCC"),
     JAVA(2,"JAVA"),
-    PYTHON3(3,"Python3"),
+    PYTHON2(3,"Python2"),
     GPP11(4,"G++11"),
     GCC11(5,"GCC11"),
     VCPP(6,"VC++"),
@@ -33,7 +33,9 @@ public enum CodeLanguage {
 
     public static CodeLanguage getByID(int id){
         for(CodeLanguage l : CodeLanguage.values()){
-            if(l.getId() == id) return l;
+            if(l.getId() == id) {
+                return l;
+            }
         }
         return null;
     }

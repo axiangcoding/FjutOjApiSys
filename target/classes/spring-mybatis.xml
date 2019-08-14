@@ -11,8 +11,10 @@
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/oj?serverTimezone=Asia/Shanghai"/>
+<!--        <property name="url" value="jdbc:mysql://localhost:3306/ojtest?serverTimezone=Asia/Shanghai"/>-->
         <property name="username" value="root"/>
         <property name="password" value="wyx"/>
+<!--        <property name="password" value="W.yx6666"/>-->
     </bean>
 
     <!--

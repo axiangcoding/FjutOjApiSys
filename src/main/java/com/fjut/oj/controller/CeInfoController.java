@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 @CrossOrigin
 @ResponseBody
 @RequestMapping("/ceinfo")
-public class CeinfoController {
+public class CeInfoController {
 
     @Autowired
     private CeinfoService ceinfoService;

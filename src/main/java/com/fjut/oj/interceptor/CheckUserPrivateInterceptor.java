@@ -35,6 +35,7 @@ public class CheckUserPrivateInterceptor extends HandlerInterceptorAdapter {
         }
         // 从头部获取Token
         String auth = request.getHeader("auth");
+        // 从参数获取username
         String username = request.getParameter("username");
         TokenModel model = manager.getToken(auth);
         if (manager.checkToken(model) && model.getUsername().equals(username)) {

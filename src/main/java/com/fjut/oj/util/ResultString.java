@@ -58,7 +58,7 @@ public class ResultString {
             return "JAVA";
         }
         if (langId == 3) {
-            return "Python3";
+            return "Python2";
         }
         if (langId == 4) {
             return "G++11";
@@ -95,7 +95,7 @@ public class ResultString {
         if ("JAVA".equalsIgnoreCase(lang)) {
             return 2;
         }
-        if ("Python3".equalsIgnoreCase(lang)) {
+        if ("Python2".equalsIgnoreCase(lang)) {
             return 3;
         }
         if ("G++11".equalsIgnoreCase(lang)) {

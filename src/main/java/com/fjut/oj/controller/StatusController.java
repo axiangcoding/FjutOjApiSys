@@ -1,5 +1,8 @@
 package com.fjut.oj.controller;
 
+import com.fjut.oj.exception.NotLoginException;
+import com.fjut.oj.interceptor.CheckUserIsLogin;
+import com.fjut.oj.interceptor.CheckUserPrivate;
 import com.fjut.oj.pojo.Status;
 import com.fjut.oj.pojo.UserSolve;
 import com.fjut.oj.pojo.ViewUserStatus;
@@ -124,7 +127,7 @@ public class StatusController {
         }
         Integer totalStatus = statusService.queryCountAllStatusByConditions(ruser, pid, result, lang, start);
         Integer totalPage = totalStatus % 50 == 0 ? totalStatus / 50 : totalStatus / 50 + 1;
-        List<Status> list = statusService.queryAllStatusByConditions(ruser, pid, result, lang, start);
+        List<ViewUserStatus> list = statusService.queryAllStatusByConditions(ruser, pid, result, lang, start);
         if (0 == list.size()) {
             jsonInfo.setFail("未找到内容");
         } else {
@@ -135,21 +138,30 @@ public class StatusController {
         return jsonInfo;
     }
 
+    @CheckUserPrivate
     @GetMapping("/getStatusById")
-    public JsonInfo getStatusById(@RequestParam("id") String idStr, @RequestParam("user") String user) {
+    public JsonInfo getStatusById(@RequestParam("id") String idStr,
+                                  @RequestParam(value = "username",required = false) String username) {
         JsonInfo jsonInfo = new JsonInfo();
+        if("".equals(username) || null == username)
+        {
+//            return new JsonInfo("FAIL","未登录");
+            throw new NotLoginException();
+        }
         Integer id = Integer.parseInt(idStr);
         ViewUserStatus viewUserStatus = statusService.queryStatusViewById(id);
-        boolean permissionCanViewOthersCode = permissionService.queryUserPermissionAvailable(user, PermissionType.viewCode.getCode());
-        boolean normalCanViewOthersCode = codeViewService.queryCanUserViewCodeByPid(user, id);
+        boolean permissionCanViewOthersCode = permissionService.queryUserPermissionAvailable(username, PermissionType.viewCode.getCode());
+        boolean normalCanViewOthersCode = codeViewService.queryCanUserViewCodeByPid(username, id);
         if (null == viewUserStatus) {
             jsonInfo.setFail("评测信息不存在！");
             return jsonInfo;
-        } else if (viewUserStatus.getRuser().equals(user) || permissionCanViewOthersCode || normalCanViewOthersCode ) {
+        } else if (viewUserStatus.getRuser().equals(username) || permissionCanViewOthersCode || normalCanViewOthersCode ) {
             jsonInfo.setSuccess();
             jsonInfo.addInfo(viewUserStatus);
         } else{
-            jsonInfo.setFail("不允许查看此评测代码，请完成该题解答或者使用ACB购买该题");
+            jsonInfo.setSuccess("权限不足!");
+            viewUserStatus.setCode("不允许查看此评测代码，请完成该题解答或者使用ACB购买该题");
+            jsonInfo.addInfo(viewUserStatus);
         }
         return jsonInfo;
     }

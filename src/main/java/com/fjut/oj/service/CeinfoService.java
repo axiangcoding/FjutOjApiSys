@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface CeinfoService {
 
-    public List<Ceinfo> queryAllCeinfo();
+    List<Ceinfo> queryAllCeinfo();
 
-    public Ceinfo queryCeinfo(Integer rid);
+    Ceinfo queryCeinfo(Integer rid);
 
-    public boolean insertCeinfo(Ceinfo ce);
+    boolean insertCeinfo(Ceinfo ce);
 }

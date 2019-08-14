@@ -37,9 +37,10 @@ public class CheckUserIsAdminInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
         // 从头部获取Token
-        String auth = request.getHeader("token");
+        String auth = request.getHeader("auth");
         TokenModel model = manager.getToken(auth);
         if (manager.checkToken(model) && permissionService.queryIsAdmin(model.getUsername())) {
+
             return true;
         } else {
             throw new NotAdminException();

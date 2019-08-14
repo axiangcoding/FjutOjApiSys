@@ -40,7 +40,7 @@ public interface StatusService {
     /**
      * 查询某一条件下的评测
       */
-    List<Status> queryAllStatusByConditions(String ruser, Integer pid, Integer result, Integer language, Integer start);
+    List<ViewUserStatus> queryAllStatusByConditions(String ruser, Integer pid, Integer result, Integer language, Integer start);
 
     Integer querySubmitCountByUsername(String name);    // 获取一个用户所有提交题目的次数
 

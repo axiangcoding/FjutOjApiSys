@@ -14,7 +14,6 @@
         <property name="username" value="root"/>
         <property name="password" value="wyx"/>
     </bean>
-
     <!--
         2. 配置和MyBatis的整合
     -->
@@ -27,7 +26,7 @@
         <constructor-arg name="executorType" value="BATCH"/>
     </bean>
     <!-- 3. mybatis自动扫描加载Sql映射文件 : MapperScannerConfigurer -->
-    <bean  class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
         <property name="basePackage" value="com.fjut.oj.mapper"/>
     </bean>
@@ -35,9 +34,9 @@
     <!-- 配置事务管理器 -->
     <bean id="transactionManager"
           class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="dataSource"/>
     </bean>
-    <tx:annotation-driven transaction-manager="transactionManager" />
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <bean id="SpringApplicationContext" class="com.fjut.oj.judge.util.ApplicationContextHelper"/>
 

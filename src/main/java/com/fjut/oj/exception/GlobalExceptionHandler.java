@@ -93,7 +93,7 @@ public class GlobalExceptionHandler {
         } else if (e instanceof SQLException) {
             msg = "SQL语句错误！";
         } else if (e instanceof MissingServletRequestParameterException) {
-            msg = "参数不完整！";
+            msg = "请求参数不完整！";
         } else if (e instanceof RedisConnectionFailureException) {
             msg = "服务器异常！";
         } else if (e instanceof AuthExpireException) {

@@ -28,7 +28,7 @@ public interface StatusMapper {
 
     List<Status> queryAllStatusByPid(@Param("pid") String pid);
 
-    List<Status> queryAllStatusByConditions(@Param("ruser") String ruser, @Param("pid") Integer pid, @Param("result")Integer result, @Param("language")Integer language, @Param("start")Integer start);
+    List<ViewUserStatus> queryAllStatusByConditions(@Param("ruser") String ruser, @Param("pid") Integer pid, @Param("result")Integer result, @Param("language")Integer language, @Param("start")Integer start);
 
     Integer queryCountAllStatusByConditions(@Param("ruser") String ruser, @Param("pid") Integer pid, @Param("result")Integer result, @Param("language")Integer language, @Param("start")Integer start);
 

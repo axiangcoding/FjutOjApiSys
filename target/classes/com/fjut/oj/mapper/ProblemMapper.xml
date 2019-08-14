@@ -5,7 +5,6 @@
     <select id="queryAllProblems" resultType="com.fjut.oj.pojo.Problem">
           select *
           from problem
-          WHERE `ojid` = 0 OR `ojid` = 3
           order by pid
     </select>
 
@@ -32,14 +31,13 @@
     <select id="queryProblemsByPage" resultType="com.fjut.oj.pojo.Problem">
         SELECT *
         FROM problem
-        WHERE ojid = 0 OR ojid = 3
         ORDER BY pid
         LIMIT #{startIndex}, 50
     </select>
 
     <select id="queryProblemsByConditions" resultType="com.fjut.oj.pojo.Problem">
         SELECT * FROM problem
-            WHERE (ojid = 0 OR ojid = 3)
+            WHERE (1=1)
             <if test="title != null">
                 AND title LIKE "%"#{title}"%"
             </if>
@@ -53,8 +51,8 @@
 
     <select id="queryProblemCountByCondition" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM problem
-            WHERE (ojid = 0 OR ojid = 3)
-            <if test="title != null">
+            WHERE (1=1)
+        <if test="title != null">
                 AND title LIKE "%"#{title}"%"
             </if>
             <if test="tagId != null">
@@ -76,7 +74,7 @@
         select *
         from problem
         <where>
-            pid = #{pid} AND `ojid` = 0 OR pid = #{pid} AND `ojid` = 3
+            pid = #{pid}
         </where>
     </select>
 
@@ -84,7 +82,7 @@
         select *
         from problem
         <where>
-            title like '%${title}%' AND `ojid` = 0 OR title like '%${title}%' AND `ojid` = 3
+            title like '%${title}%'
         </where>
         order by pid
         LIMIT #{pid1}, 50
@@ -94,7 +92,6 @@
     <select id="queryProblemCount" resultType="java.lang.Integer">
           SELECT COUNT(*)
           FROM  problem
-          WHERE `ojid` = 0 OR `ojid` = 3
     </select>
 
 
@@ -102,7 +99,7 @@
         select count(*)
         from problem
         <where>
-            title like '%${title}%' AND `ojid` = 0 OR title like '%${title}%' AND `ojid` = 3
+            title like '%${title}%'
         </where>
     </select>
 

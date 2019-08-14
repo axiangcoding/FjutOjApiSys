@@ -20,7 +20,7 @@ public class StatusServiceImpl implements StatusService {
     @Override
     public List<Status> ShowAllStatus() {
         List<Status> list = statusMapper.ShowAllStatus();
-        for (Status element : list){
+        for (Status element : list) {
             element.setOtherinfo(ResultString.getResultString(element.getResult()));
             element.setSubmitlanguage(ResultString.getSubmitLanguage(element.getLang()));
         }
@@ -28,19 +28,19 @@ public class StatusServiceImpl implements StatusService {
     }
 
     @Override
-    public List<Status> getAllStatusByUsername(String username){
+    public List<Status> getAllStatusByUsername(String username) {
         return statusMapper.getAllStatusByUsername(username);
     }
 
     @Override
-    public Integer allStatusNum(){
+    public Integer allStatusNum() {
         return statusMapper.allStatusNum();
     }
 
     @Override
-    public List<ViewUserStatus> queryStatus(Integer start){
+    public List<ViewUserStatus> queryStatus(Integer start) {
         List<ViewUserStatus> list = statusMapper.queryStatus(start);
-        for (ViewUserStatus element : list){
+        for (ViewUserStatus element : list) {
             element.setOtherinfo(ResultString.getResultString(element.getResult()));
             element.setSubmitlanguage(ResultString.getSubmitLanguage(element.getLang()));
         }
@@ -48,7 +48,7 @@ public class StatusServiceImpl implements StatusService {
     }
 
     @Override
-    public Status queryStatusById(Integer id){
+    public Status queryStatusById(Integer id) {
         Status status = statusMapper.queryStatusById(id);
         status.setOtherinfo(ResultString.getResultString(status.getResult()));
         status.setSubmitlanguage(ResultString.getSubmitLanguage(status.getLang()));
@@ -65,13 +65,13 @@ public class StatusServiceImpl implements StatusService {
 
     @Override
     public Integer queryCountAllStatusByConditions(String ruser, Integer pid, Integer result, Integer language, Integer start) {
-        return statusMapper.queryCountAllStatusByConditions(ruser,pid,result,language,start);
+        return statusMapper.queryCountAllStatusByConditions(ruser, pid, result, language, start);
     }
 
     @Override
-    public List<Status> queryAllStatusByConditions(String ruser, Integer pid, Integer result, Integer language, Integer start) {
-        List<Status> list1 = statusMapper.queryAllStatusByConditions(ruser,pid,result,language, start);
-        for (Status element : list1){
+    public List<ViewUserStatus> queryAllStatusByConditions(String ruser, Integer pid, Integer result, Integer language, Integer start) {
+        List<ViewUserStatus> list1 = statusMapper.queryAllStatusByConditions(ruser, pid, result, language, start);
+        for (ViewUserStatus element : list1) {
             element.setOtherinfo(ResultString.getResultString(element.getResult()));
             element.setSubmitlanguage(ResultString.getSubmitLanguage(element.getLang()));
         }
@@ -85,14 +85,14 @@ public class StatusServiceImpl implements StatusService {
     }
 
     @Override
-    public Integer queryMaxStatusId(){
+    public Integer queryMaxStatusId() {
 
 
         return statusMapper.queryMaxStatusId();
     }
 
     @Override
-    public boolean insertStatus(Status status){
+    public boolean insertStatus(Status status) {
         Integer num = statusMapper.insertStatus(status);
         if (num != 0)
             return true;
@@ -100,7 +100,7 @@ public class StatusServiceImpl implements StatusService {
     }
 
     @Override
-    public boolean updateStatus(Status status){
+    public boolean updateStatus(Status status) {
         Integer num = statusMapper.updateStatus(status);
         if (num != 0)
             return true;

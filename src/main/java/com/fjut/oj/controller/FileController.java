@@ -1,12 +1,11 @@
 package com.fjut.oj.controller;
 
+import com.fjut.oj.interceptor.CheckUserIsAdmin;
+import com.fjut.oj.pojo.LocalJudgeFile;
 import com.fjut.oj.util.JsonInfo;
 import org.codehaus.plexus.util.IOUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartResolver;
@@ -14,13 +13,14 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -31,16 +31,22 @@ import java.util.Date;
 @RequestMapping("/file")
 @ResponseBody
 public class FileController {
+
+//    private String baseFilePath = "/app/file/";
+//    private String baseJudgeFilePath = "/app/judge_system/judge_file/data/";
+//    private String picPath = "pic/";
+//    private String picVerifyPath = "pic/verify/";
+
     /**
      * FIXME:部署时替换为生产环境部署路径
      */
-    private static String BASEFILEPATH = "/app/";
-    private static String BASEPICTUREPATH = "/app/";
-    private static String VERIFYPICPATH = "/app/";
-
+    private static String baseFilePath = "D://";
+    private String baseJudgeFilePath = "D://test_data/";
+    private static String picPath = "pic/";
+    private static String picVerifyPath = "pic/verify/";
 
     @PostMapping("/uploadPic")
-    public JsonInfo uploadPicture(HttpServletRequest request, HttpServletResponse response) {
+    public JsonInfo uploadPicture(HttpServletRequest request) {
         JsonInfo jsonInfo = new JsonInfo();
         MultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
         MultipartHttpServletRequest multipartRequest = resolver.resolveMultipart(request);
@@ -52,7 +58,7 @@ public class FileController {
             SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
             String dateStr = format.format(today);
             // 保存文件名为 例：admin-1-20190702.jpg
-            String imgPath = BASEPICTUREPATH + VERIFYPICPATH + username + "-" + verifyType + "-" + dateStr + ".jpg";
+            String imgPath = baseFilePath + picVerifyPath + username + "-" + verifyType + "-" + dateStr + ".jpg";
             System.out.println(imgPath);
             try {
                 InputStream is = multipartFile.getInputStream();
@@ -73,7 +79,7 @@ public class FileController {
 
 
     /**
-     * TODO: 方便上传到服务器文件，正式使用时需要更改权限认证
+     * FIXME: 由于在前端上使用url上传，无法在请求中带上token鉴权，所以暂时不用拦截器拦截权限问题
      *
      * @param request
      * @return
@@ -83,19 +89,14 @@ public class FileController {
         JsonInfo jsonInfo = new JsonInfo();
         MultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
         MultipartHttpServletRequest multipartRequest = resolver.resolveMultipart(request);
-
         MultipartFile multipartFile = multipartRequest.getFile("file");
-        Date today = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-        String dateStr = format.format(today);
-        // 保存文件名为 例：admin-1-20190702.jpg
-        String imgPath = BASEPICTUREPATH + "-" + dateStr + ".jpg";
-        System.out.println(imgPath);
+        // 保存文件名为原名
+        String filePath = baseFilePath + multipartFile.getOriginalFilename();
+        System.out.println(filePath);
         try {
             InputStream is = multipartFile.getInputStream();
-            OutputStream out = new FileOutputStream(imgPath);
+            OutputStream out = new FileOutputStream(filePath);
             IOUtil.copy(is, out);
-            System.out.println(multipartFile.getOriginalFilename());
             out.close();
             is.close();
             jsonInfo.setSuccess("文件保存成功！");
@@ -104,4 +105,56 @@ public class FileController {
         }
         return jsonInfo;
     }
+
+    @CheckUserIsAdmin
+    @GetMapping("/getLocalJudgeFile")
+    public JsonInfo getLocalJudgeFile() {
+        JsonInfo jsonInfo = new JsonInfo();
+        List<LocalJudgeFile> judgeFiles = new ArrayList<>();
+        File baseDir = new File(baseJudgeFilePath);
+        if (baseDir.isDirectory()) {
+            File[] problemDir = baseDir.listFiles();
+            for (File problemFile : problemDir) {
+                LocalJudgeFile judgeFile = new LocalJudgeFile();
+                String inputFileNamesStr = "";
+                String outputFIleNamesStr = "";
+                String otherFileNamesStr = "";
+                String spjFileNameStr = "";
+                judgeFile.setProblemName(problemFile.getName());
+                File[] problemDetailFile = problemFile.listFiles();
+                for (File f : problemDetailFile) {
+                    if (f.isFile() && f.exists()) {
+                        if (f.getName().lastIndexOf(".") != -1) {
+                            String suffix = f.getName().substring(f.getName().lastIndexOf(".") + 1);
+                            String prefix = f.getName().substring(0, f.getName().lastIndexOf("."));
+                            if (("in").equals(suffix)) {
+                                inputFileNamesStr += (f.getName() + "\n");
+                            } else if (("out").equals(suffix)) {
+                                outputFIleNamesStr += (f.getName() + "\n");
+                            } else if ("spj".equals(prefix)) {
+                                spjFileNameStr += (f.getName() + "\n");
+                            } else {
+                                otherFileNamesStr += (f.getName() + "\n");
+                            }
+                        } else {
+                            otherFileNamesStr += (f.getName() + "\n");
+                        }
+
+                    }
+                }
+                judgeFile.setInputFiles(inputFileNamesStr);
+                judgeFile.setOutputFiles(outputFIleNamesStr);
+                judgeFile.setSpjFiles(spjFileNameStr);
+                judgeFile.setOtherFiles(otherFileNamesStr);
+                judgeFiles.add(judgeFile);
+            }
+            jsonInfo.setSuccess();
+            jsonInfo.addInfo(judgeFiles);
+        } else {
+            jsonInfo.setFail("未找到目录！");
+        }
+
+        return jsonInfo;
+    }
+
 }

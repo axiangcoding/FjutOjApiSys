@@ -214,7 +214,7 @@ public class UserController {
      */
     @CheckUserIsLogin
     @RequestMapping("/GUserInfo")
-    public JsonInfo queryUserInfoByUsername(HttpServletRequest req, HttpServletResponse resp) {
+    public JsonInfo queryUserInfoByUsername(HttpServletRequest req) {
         JsonInfo jsonInfo = new JsonInfo();
         String username = req.getParameter("username");
         User user = userService.getUserByUsername(username);

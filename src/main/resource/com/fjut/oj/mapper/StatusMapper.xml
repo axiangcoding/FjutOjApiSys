@@ -50,7 +50,7 @@
         order by id desc
     </select>
 
-    <select id="queryAllStatusByConditions" resultType="com.fjut.oj.pojo.Status">
+    <select id="queryAllStatusByConditions" resultType="com.fjut.oj.pojo.ViewUserStatus">
         select *
         from v_user_status
         <where>
