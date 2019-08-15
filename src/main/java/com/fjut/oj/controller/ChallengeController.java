@@ -1,5 +1,7 @@
 package com.fjut.oj.controller;
 
+import com.fjut.oj.exception.NotLoginException;
+import com.fjut.oj.exception.NotOwnerException;
 import com.fjut.oj.pojo.*;
 import com.fjut.oj.pojo.enums.ChallengeBlockType;
 import com.fjut.oj.service.ChallengeService;
@@ -21,6 +23,11 @@ public class ChallengeController {
     @Autowired
     ChallengeService challengeService;
 
+    /**
+     * 获取用户的挑战模块
+     * @param username
+     * @return
+     */
     @GetMapping("/getAllChallengeBlocks")
     public JsonInfo queryAllChallengeBlocks(@RequestParam("username") String username) {
         JsonInfo jsonInfo = new JsonInfo();
@@ -61,6 +68,11 @@ public class ChallengeController {
         return jsonInfo;
     }
 
+    /**
+     * 获取解锁条件
+     * @param blockIdStr
+     * @return
+     */
     @GetMapping("/getCondition")
     public JsonInfo getConditionByBlockId(@RequestParam("blockId") String blockIdStr) {
         JsonInfo jsonInfo = new JsonInfo();
@@ -75,6 +87,12 @@ public class ChallengeController {
         return jsonInfo;
     }
 
+    /**
+     * 获取模块详情
+     * @param blockIdStr
+     * @param username
+     * @return
+     */
     @GetMapping("/getBlockDetail")
     public JsonInfo getBlockDetail(
             @RequestParam("blockId") String blockIdStr,
@@ -82,7 +100,7 @@ public class ChallengeController {
         JsonInfo jsonInfo = new JsonInfo();
         Integer blockId = Integer.parseInt(blockIdStr);
         ChallengeBlock block = challengeService.queryChallengeBlockByBlockId(blockId);
-        // add by axiang [20190628] 获取该模块的全部得到分值
+        // 获取该模块的全部得到分值
         List<ChallengeBlockForUser> getScores = challengeService.queryChallengeBlocksScoredByUsername(username);
         Integer getScore = 0;
         for (ChallengeBlockForUser get : getScores) {
@@ -107,6 +125,13 @@ public class ChallengeController {
         return jsonInfo;
     }
 
+    /**
+     * 获取模块的题目
+     * @param username
+     * @param blockIdStr
+     * @param pageNumStr
+     * @return
+     */
     @GetMapping("/getBlockProblems")
     public JsonInfo getBlockProblems(
             @RequestParam("username") String username,
@@ -120,9 +145,9 @@ public class ChallengeController {
                 challengeService.queryChallengeBlockProblemByBlockId(blockId, startIndex);
         Integer count = challengeService.queryChallengeBlockProblemCountByBlockId(blockId);
         if (null == username) {
-            jsonInfo.setFail("参数错误！");
-            return jsonInfo;
+            throw new NotOwnerException();
         }
+        // FIXME: 已有数据库表保存解题状态，这里是多余了，虽然功能正常，但是是冗余，必须修改！！！
         if (0 < count) {
             List<Status> statuses = challengeService.queryAllBlockSolvedProblemByUsername(username);
             Map<Integer, Integer> statusMap = new TreeMap<>();
@@ -152,5 +177,30 @@ public class ChallengeController {
         }
         return jsonInfo;
     }
+
+    /**
+     * TODO: 非常重要的挑战模块解锁逻辑！！！
+     * 更新挑战模块开放模块
+     * 逻辑如下：
+     *      已知进入本控制器的前置条件：用户在解决完一道题后发出更新挑战模式开放模块的请求
+     *      先获取该题隶属挑战模块，如果不属于任何模块则直接退出，如果属于进入下一步骤
+     *      获取题目隶属挑战模块的后置模块（所有可能会解锁的待解锁模块）
+     *      依次对这些可能会解锁的待解锁模块计算解锁条件，条件全部满足则解锁
+     * @param username
+     * @param pid
+     * @return
+     */
+    @PostMapping("/updateOpenBlock")
+    public JsonInfo updateOpenBlock(@RequestParam("username")String username,
+                                    @RequestParam("pid")Integer pid){
+        JsonInfo jsonInfo = new JsonInfo();
+
+
+
+
+        return jsonInfo;
+    }
+
+
 
 }

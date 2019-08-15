@@ -46,25 +46,24 @@
 
     <select id="queryChallengeOpenBlocksByUsername" resultType="java.lang.Integer">
         SELECT
-            block
-            FROM t_challenge_openblock
-            <if test="username != null">
-                WHERE username = #{username}
-            </if>
+        block
+        FROM t_challenge_openblock
+        <if test="username != null">
+            WHERE username = #{username}
+        </if>
     </select>
-
 
 
     <select id="getChallengeBlocksScoredByUsername" resultType="com.fjut.oj.pojo.ChallengeBlockForUser">
         SELECT id, SUM(score) getScore FROM
             t_challenge_problem WHERE tpid IN
-            (SELECT DISTINCT pid FROM statu WHERE ruser = #{username} AND result = 1)
+            (SELECT pid FROM t_usersolve WHERE username = #{username} AND status = 1)
             GROUP BY id
     </select>
 
     <select id="queryChallengeConditionByBlockId" resultType="com.fjut.oj.pojo.ChallengeConditionForBlock">
       SELECT c.par blockId, name, num FROM t_challenge_condition c,t_challenge_block b
-        WHERE c.belongBlockId = #{blockId} and b.id = c.par
+        WHERE c.belongBlockId = #{blockId} AND b.id = c.par
     </select>
 
     <select id="queryChallengeBlockByBlockId" resultType="com.fjut.oj.pojo.ChallengeBlock">
@@ -92,10 +91,19 @@
         WHERE t_challenge_problem.id = #{blockId}
     </select>
 
-
     <select id="queryAllBlockSolvedProblemByUsername" resultType="com.fjut.oj.pojo.Status">
         SELECT statu.pid,statu.result FROM statu
             WHERE ruser = #{username}
+    </select>
+
+    <select id="queryBlocksByPid" resultType="java.lang.Integer">
+        SELECT id from t_challenge_problem WHERE tpid = #{pid}
+    </select>
+
+    <select id="queryBelongBlocksByPid" resultType="java.lang.Integer">
+        SELECT belongBlockId
+        FROM t_challenge_condition
+        WHERE par = (SELECT id FROM t_challenge_problem WHERE tpid = #{pid})
     </select>
 
 

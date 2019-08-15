@@ -44,15 +44,15 @@ public class UserController {
 
     /**
      * 登录认证，redis做鉴权
-     @param username
+     *
+     * @param username
      * @param password
      * @return
      */
     @PostMapping("/login")
-    public JsonInfo doLogin(@RequestParam(value = "username" ,required = false) String username,@RequestParam(value = "password" ,required = false) String password){
+    public JsonInfo doLogin(@RequestParam(value = "username", required = false) String username, @RequestParam(value = "password", required = false) String password) {
         JsonInfo jsonInfo = new JsonInfo();
-        if(null == username || null == password)
-        {
+        if (null == username || null == password) {
             jsonInfo.setFail("用户名或者密码为空！");
             return jsonInfo;
         }
@@ -70,7 +70,7 @@ public class UserController {
             jsonInfo.setSuccess("用户名和密码正确");
             TokenModel tokenModel = tokenManager.createToken(username);
             // TODO:做的简单字符串拼接，后期需要做一定的加密
-            String auth = tokenModel.getUsername()+"_"+tokenModel.getToken();
+            String auth = tokenModel.getUsername() + "_" + tokenModel.getToken();
             jsonInfo.addInfo(username);
             jsonInfo.addInfo(auth);
         }
@@ -79,6 +79,7 @@ public class UserController {
 
     /**
      * 注册一个用户
+     *
      * @param req
      * @return
      */
@@ -86,7 +87,7 @@ public class UserController {
     public JsonInfo insertUser(HttpServletRequest req) {
         JsonInfo jsonInfo = new JsonInfo();
         User tmp = userService.getUserByUsername(req.getParameter("username"));
-        if (tmp != null) {
+        if (null != tmp) {
             jsonInfo.setFail("用户名已经存在");
             return jsonInfo;
         }
@@ -100,8 +101,7 @@ public class UserController {
         user.setMotto(req.getParameter("motto") == null ? " " : req.getParameter("motto"));
 
         Date currentTime = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateString = formatter.format(currentTime);
+        String dateString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(currentTime);
         user.setRegistertime(dateString);
 
         user.setType(Integer.parseInt(req.getParameter("type") == null ? "0" : req.getParameter("type")));
@@ -133,6 +133,7 @@ public class UserController {
 
     /**
      * 修改用户信息
+     *
      * @param req
      * @return
      */
@@ -184,7 +185,7 @@ public class UserController {
      */
     @CheckUserIsLogin
     @GetMapping("/getUserRadar")
-    public JsonInfo getUserRadar(@RequestParam("username")String username) {
+    public JsonInfo getUserRadar(@RequestParam("username") String username) {
         JsonInfo jsonInfo = new JsonInfo();
         String userRadar;
         userRadar = userRadarService.getUserRadar(username);
@@ -197,7 +198,7 @@ public class UserController {
      */
     @CheckUserIsLogin
     @GetMapping("/GSubmitCount")
-    public JsonInfo querySubmitCountByUsername(@RequestParam("username")String username) {
+    public JsonInfo querySubmitCountByUsername(@RequestParam("username") String username) {
         JsonInfo jsonInfo = new JsonInfo();
         Integer num = statusService.querySubmitCountByUsername(username);
         if (null != num) {
@@ -239,8 +240,7 @@ public class UserController {
         if (num != 0) {
             jsonInfo.setSuccess();
             jsonInfo.addInfo(num);
-        }
-        else{
+        } else {
             jsonInfo.setFail("未找到用户贴标签的信息");
         }
         return jsonInfo;
@@ -258,7 +258,7 @@ public class UserController {
         if (list != null) {
             jsonInfo.addInfo(list);
             jsonInfo.setSuccess();
-        }else{
+        } else {
             jsonInfo.setFail("未查询到用户相关的题目信息");
         }
         return jsonInfo;
@@ -276,7 +276,6 @@ public class UserController {
         jsonInfo.setSuccess();
         return jsonInfo;
     }
-
 
 
     @RequestMapping(value = "/awardinfo", method = RequestMethod.POST)
@@ -297,8 +296,7 @@ public class UserController {
         if (null != list) {
             jsonInfo.setSuccess();
             jsonInfo.addInfo(list);
-        }
-        else{
+        } else {
             jsonInfo.setFail("未查询到该用户的信息");
         }
         return jsonInfo;
@@ -306,15 +304,14 @@ public class UserController {
 
     @RequestMapping(value = "/GAcGraph")
     public JsonInfo getAcGraph(HttpServletRequest request, HttpServletResponse response) {
-        JsonInfo jsonInfo =new JsonInfo();
+        JsonInfo jsonInfo = new JsonInfo();
         String username = request.getParameter("username");
         //FIXME: 函数错误
         List<Object> list = (List<Object>) userService.getAcGraph(username);
         if (null != list) {
             jsonInfo.setSuccess();
             jsonInfo.addInfo(list);
-        }
-        else{
+        } else {
             jsonInfo.setFail("未查询到该用户的信息");
         }
         return jsonInfo;

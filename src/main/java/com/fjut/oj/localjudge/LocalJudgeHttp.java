@@ -23,7 +23,6 @@ public class LocalJudgeHttp extends Thread {
 
     public String submitToLocalJudge(LocalJudgeSubmitInfo localJudgeSubmitInfo) {
         try {
-            System.out.println(localJudgePath);
             String postURL = localJudgePath;
             PostMethod postMethod = null;
             postMethod = new PostMethod(postURL);

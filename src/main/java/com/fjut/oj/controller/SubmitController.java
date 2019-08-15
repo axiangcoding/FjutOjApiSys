@@ -126,10 +126,11 @@ public class SubmitController {
 
 
     /**
-     * 提交到本地
+     * FIXME
+     * @author axiang [20190815] 提交到本地
      */
-    //FIXME
-//    @CheckUserPrivate
+
+    @CheckUserPrivate
     @PostMapping("/submitProblemToLocal")
     public JsonInfo submitProblemToLocalJudge(@RequestParam("pid") String pidStr,
                                               @RequestParam("timeLimit") String timeLimitStr,
@@ -277,12 +278,11 @@ public class SubmitController {
                     statusService.updateStatusAfterJudge(status);
                     quitLoop = true;
                 }
-                //以下为运行正确返回的内容，即提交并且编译成功得到的结果
+                //以下为编译正确返回的内容，即提交并且编译成功得到的结果，但不一定为AC
                 else {
-
                     JSONArray retJsonArr = resultJsonObj.getJSONArray("ret");
                     // TODO: 测试中评测机返回多组不同IO的评测记录
-                    handleLocalJudgeReturns(retJsonArr, status);
+                    judgingStatu = handleLocalJudgeReturns(retJsonArr, status);
                     quitLoop = true;
                 }
             } else {
@@ -315,8 +315,9 @@ public class SubmitController {
 
     }
 
-    public void handleLocalJudgeReturns(JSONArray retJsonArr, Status status) {
+    public String handleLocalJudgeReturns(JSONArray retJsonArr, Status status) {
         Ceinfo ceinfo = new Ceinfo();
+        String ans;
         String ceStr = "";
         String resStatu = "";
         int time = 0;
@@ -355,12 +356,15 @@ public class SubmitController {
         ceinfoService.insertCeinfo(ceinfo);
         if (isScore && isAllScore) {
             status.setResult(Result.valueOf("AC").getValue());
+            ans = "AC";
         } else {
             status.setResult(Result.valueOf(resStatu).getValue());
+            ans = resStatu;
         }
         status.setTimeUsed(time + "MS");
         status.setMemoryUsed(memory + "KB");
         statusService.updateStatusAfterJudge(status);
+        return ans;
     }
 
 }
