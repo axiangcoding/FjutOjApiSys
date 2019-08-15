@@ -5,11 +5,33 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author cjt
+ */
 public interface AllUsersRankMapper {
 
-    List<User> getallUsersRank(@Param("order") String order, @Param("desc") String desc, @Param("start") Integer start);
+    /**
+     * 查询用户的排名榜
+     *
+     * @param order
+     * @param desc
+     * @param start
+     * @return
+     */
+    List<User> queryAllUsersRank(@Param("order") String order, @Param("desc") String desc, @Param("start") Integer start);
 
-    Integer queryUserCountByName(@Param("username") String username);
-
+    /**
+     * 查询名字相似用户
+     * @param username
+     * @param start
+     * @return
+     */
     List<User> queryUserByName(@Param("username") String username, @Param("start") Integer start);
+
+    /**
+     * 查询名字相似用户的数量
+     * @param username
+     * @return
+     */
+    Integer queryUserCountByName(@Param("username") String username);
 }

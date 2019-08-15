@@ -5,6 +5,9 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author cjt
+ */
 public interface UserMapper {
 
     Integer queryUserCount();
@@ -17,13 +20,13 @@ public interface UserMapper {
 
     List<User> queryAll();
 
-    User queryUserByName(@Param("username")String username);
+    User queryUserByName(@Param("username") String username);
 
     Integer getUserByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 
     int updateUserByUsername(@Param("user") User user);
 
-    void deleteUserByUsername(@Param("username")String username);
+    void deleteUserByUsername(@Param("username") String username);
 
     List<UserRadar1> queryUserRadar1(@Param("user") String user);
 
@@ -31,9 +34,9 @@ public interface UserMapper {
 
     Integer queryPutTagNumByUsername(@Param("username") String username);
 
-    List<Integer> queryStatusProblemsByUsername(@Param("status")Integer status, @Param("username")String username);
+    List<Integer> queryStatusProblemsByUsername(@Param("status") Integer status, @Param("username") String username);
 
-    List<Integer> queryCanViewCodeProblemsByUsername(@Param("username")String username);  // 查询用户已经贴过标签的题目
+    List<Integer> queryCanViewCodeProblemsByUsername(@Param("username") String username);  // 查询用户已经贴过标签的题目
 
     List<User> queryRichTop10();
 
@@ -41,7 +44,7 @@ public interface UserMapper {
 
     List<Integer> queryUserPermission(@Param("username") String username);
 
-    List<User> getRatingTop(@Param("from") int from,@Param("num") int num);
+    List<User> getRatingTop(@Param("from") int from, @Param("num") int num);
 
     List<User> getRichTop();
 
@@ -51,7 +54,7 @@ public interface UserMapper {
 
     Integer addAcnum(@Param("username") String username);
 
-    Integer queryAcbNumber(@Param("username")String username);
+    Integer queryAcbNumber(@Param("username") String username);
 
     Integer updateAcbNumber(@Param("username") String username, @Param("acbChange") Integer acbChange);
 

@@ -74,7 +74,7 @@ public interface ChallengeMapper {
      * @param username
      * @return
      */
-    List<ChallengeBlockForUser> getChallengeBlocksScoredByUsername(@Param("username") String username);
+    List<ChallengeBlockForUser> queryChallengeBlocksScoredByUsername(@Param("username") String username);
 
     /**
      * 根据模块ID和起始INDEX 获取15个题目

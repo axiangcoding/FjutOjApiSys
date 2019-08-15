@@ -1,14 +1,14 @@
 package com.fjut.oj.service;
 
-import com.fjut.oj.pojo.Ceinfo;
+import com.fjut.oj.pojo.CeInfo;
 
 import java.util.List;
 
 public interface CeinfoService {
 
-    List<Ceinfo> queryAllCeinfo();
+    List<CeInfo> queryAllCeinfo();
 
-    Ceinfo queryCeinfo(Integer rid);
+    CeInfo queryCeinfo(Integer rid);
 
-    boolean insertCeinfo(Ceinfo ce);
+    boolean insertCeinfo(CeInfo ce);
 }

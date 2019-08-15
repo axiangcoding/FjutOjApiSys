@@ -15,7 +15,7 @@
     </select>
 
     <insert id="replaceUserSolve" parameterType="com.fjut.oj.pojo.UserSolve">
-        replace into
+        REPLACE into
         t_usersolve
         values(
         #{username},

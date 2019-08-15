@@ -21,12 +21,6 @@
          )
     </insert>
 
-    <update id="updateMessageStatuByMid">
-        UPDATE t_message SET statu=#{status}
-            WHERE mid = #{mid}
-
-    </update>
-
     <delete id="deleteMessageByMid">
         DELETE FROM t_message WHERE mid=#{mid}
     </delete>
@@ -35,18 +29,23 @@
         DELETE FROM t_message WHERE user=#{username}
     </delete>
 
+    <update id="updateMessageStatuByMid">
+        UPDATE t_message SET statu=#{status}
+            WHERE mid = #{mid}
+
+    </update>
+
     <update id="updateAllMessageReadByUser">
         UPDATE t_message SET statu=1 WHERE user=#{username} AND statu = 0
     </update>
 
     <select id="queryAllMessageByUser" resultType="com.fjut.oj.pojo.t_message">
         SELECT * FROM t_message WHERE user = #{username}
-            ORDER BY time DESC
+        ORDER BY time DESC
         <if test="startIndex !=null">
             LIMIT #{startIndex},10
         </if>
     </select>
-
 
     <select id="queryMessageCountByUser" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM t_message WHERE user = #{username}
@@ -58,7 +57,7 @@
 
     <select id="queryUnReadMessageByUser" resultType="com.fjut.oj.pojo.t_message">
         SELECT * FROM t_message WHERE user = #{username} and statu = 0
-            ORDER BY time DESC
+        ORDER BY time DESC
         <if test="startIndex != null">
             LIMIT #{startIndex},10
         </if>

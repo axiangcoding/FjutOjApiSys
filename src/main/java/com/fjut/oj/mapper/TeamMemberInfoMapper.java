@@ -5,6 +5,9 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author cjt
+ */
 public interface TeamMemberInfoMapper {
 
     List<TeamMemberInfo> queryAllTeamMemberInfo(@Param("start") Integer start);

@@ -28,9 +28,9 @@ public interface StatusMapper {
 
     List<Status> queryAllStatusByPid(@Param("pid") String pid);
 
-    List<ViewUserStatus> queryAllStatusByConditions(@Param("ruser") String ruser, @Param("pid") Integer pid, @Param("result")Integer result, @Param("language")Integer language, @Param("start")Integer start);
+    List<ViewUserStatus> queryAllStatusByConditions(@Param("ruser") String ruser, @Param("pid") Integer pid, @Param("result") Integer result, @Param("language") Integer language, @Param("start") Integer start);
 
-    Integer queryCountAllStatusByConditions(@Param("ruser") String ruser, @Param("pid") Integer pid, @Param("result")Integer result, @Param("language")Integer language, @Param("start")Integer start);
+    Integer queryCountAllStatusByConditions(@Param("ruser") String ruser, @Param("pid") Integer pid, @Param("result") Integer result, @Param("language") Integer language, @Param("start") Integer start);
 
     Integer querySubmitCountByUsername(@Param("ruser") String ruser);
 
@@ -38,6 +38,7 @@ public interface StatusMapper {
 
     /**
      * 插入评测记录
+     *
      * @param status
      * @return
      */
@@ -45,10 +46,11 @@ public interface StatusMapper {
 
     Integer updateStatus(@Param("status") Status status);
 
-    Integer updateStatusAfterJudge(@Param("status")Status status);
+    Integer updateStatusAfterJudge(@Param("status") Status status);
 
     /**
      * 获取用户的解决题目列表
+     *
      * @param username
      * @return
      */

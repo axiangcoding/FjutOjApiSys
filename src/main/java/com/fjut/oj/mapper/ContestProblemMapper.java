@@ -5,6 +5,9 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author cjt
+ */
 public interface ContestProblemMapper {
 
     List<ContestProblem> getContestProblemsByCid(@Param("cid") Integer cid);

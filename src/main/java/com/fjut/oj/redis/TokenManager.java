@@ -3,7 +3,8 @@ package com.fjut.oj.redis;
 import com.fjut.oj.pojo.TokenModel;
 
 /**
- * @Author: axiang [20190705] 对token进行操作
+ * 对token进行操作
+ * @Author: axiang [20190705]
  */
 public interface TokenManager {
     /**

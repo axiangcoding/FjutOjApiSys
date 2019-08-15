@@ -54,8 +54,8 @@ public class AddProblemController {
     };
 
     @PostMapping("/GAddProblemTitle")
-    public JsonMsg GAddProblemTitle(@RequestParam(value = "pid", required = false) String pidStr,
-                                    @RequestParam(value = "ojStr", required = false) String ojStr) {
+    public JsonMsg getAddProblemTitle(@RequestParam(value = "pid", required = false) String pidStr,
+                                      @RequestParam(value = "ojStr", required = false) String ojStr) {
         if (pidStr == null || ojStr == null) {
             return JsonMsg.fail().addInfo("信息不足");
         }
@@ -86,10 +86,11 @@ public class AddProblemController {
         return JsonMsg.success().addInfo(title);
     }
 
-    @Transactional(rollbackFor = RuntimeException.class)   // 事务
+
+    @Transactional(rollbackFor = RuntimeException.class)
     @RequestMapping("/IAddProblem")
     @ResponseBody
-    public JsonMsg IAddProblem(HttpServletRequest req, HttpServletResponse resp) {
+    public JsonMsg insertProblem(HttpServletRequest req) {
         String pidStr = req.getParameter("pid");
         String ojStr = req.getParameter("ojStr");
         if (pidStr == null || ojStr == null) {

@@ -150,6 +150,7 @@ public interface ProblemMapper {
 
     /**
      * 设置题目类型 ptype = 0 为本地， ptype = 1为第三方
+     *
      * @param type
      * @param pid
      * @return

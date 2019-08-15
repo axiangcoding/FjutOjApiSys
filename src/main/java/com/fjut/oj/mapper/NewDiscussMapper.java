@@ -5,6 +5,9 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author cjt
+ */
 public interface NewDiscussMapper {
 
     List<NewDiscuss> queryDiscussByPage(@Param("start") Integer start);

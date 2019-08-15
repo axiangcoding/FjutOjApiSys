@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fjut.oj.mapper.AllUsersRankMapper">
-    <select id="getallUsersRank" resultType="com.fjut.oj.pojo.User">
+    <select id="queryAllUsersRank" resultType="com.fjut.oj.pojo.User">
         select *
         from users
         order by acnum
         desc
         LIMIT #{start}, 50
-    </select>
-
-    <select id="queryUserCountByName" resultType="java.lang.Integer">
-        SELECT COUNT(*)
-        FROM users
-        WHERE username LIKE '%${username}%'
     </select>
 
     <select id="queryUserByName" resultType="com.fjut.oj.pojo.User">
@@ -21,5 +15,11 @@
         WHERE username LIKE '%${username}%'
         ORDER BY acnum DESC
         LIMIT #{start},50
+    </select>
+
+    <select id="queryUserCountByName" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM users
+        WHERE username LIKE '%${username}%'
     </select>
 </mapper>

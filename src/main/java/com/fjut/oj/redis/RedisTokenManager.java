@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 /**
- * @Author: axiang [20190705] Redis操作类，封装了对Redis的一些操作
+ * Redis操作类，封装了对Redis的一些操作
+ * @Author: axiang [20190705]
  */
 @Component
 public class RedisTokenManager implements TokenManager {

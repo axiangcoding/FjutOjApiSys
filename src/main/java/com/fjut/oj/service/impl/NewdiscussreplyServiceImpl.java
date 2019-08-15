@@ -1,6 +1,6 @@
 package com.fjut.oj.service.impl;
 
-import com.fjut.oj.mapper.NewdiscussreplyMapper;
+import com.fjut.oj.mapper.NewDiscussReplyMapper;
 import com.fjut.oj.pojo.NewDiscussReply;
 import com.fjut.oj.service.NewdiscussreplyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.util.List;
 public class NewdiscussreplyServiceImpl implements NewdiscussreplyService {
 
     @Autowired
-    private NewdiscussreplyMapper newdiscussreplyMapper;
+    private NewDiscussReplyMapper newdiscussreplyMapper;
 
 
     @Override

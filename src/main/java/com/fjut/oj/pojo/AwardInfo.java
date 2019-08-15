@@ -1,5 +1,8 @@
 package com.fjut.oj.pojo;
 
+/**
+ * @author cjt
+ */
 public class AwardInfo {
     private String time;
     private int contest_level;

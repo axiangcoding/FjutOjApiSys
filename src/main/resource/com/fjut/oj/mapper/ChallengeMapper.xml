@@ -54,7 +54,7 @@
     </select>
 
 
-    <select id="getChallengeBlocksScoredByUsername" resultType="com.fjut.oj.pojo.ChallengeBlockForUser">
+    <select id="queryChallengeBlocksScoredByUsername" resultType="com.fjut.oj.pojo.ChallengeBlockForUser">
         SELECT id, SUM(score) getScore FROM
             t_challenge_problem WHERE tpid IN
             (SELECT pid FROM t_usersolve WHERE username = #{username} AND status = 1)

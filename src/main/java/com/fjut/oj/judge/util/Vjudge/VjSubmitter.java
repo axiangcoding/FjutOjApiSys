@@ -6,7 +6,7 @@ import com.fjut.oj.judge.entity.Result;
 import com.fjut.oj.judge.util.ApplicationContextHelper;
 import com.fjut.oj.judge.util.MyClient;
 import com.fjut.oj.judge.util.Tool;
-import com.fjut.oj.pojo.Ceinfo;
+import com.fjut.oj.pojo.CeInfo;
 import com.fjut.oj.pojo.Status;
 import com.fjut.oj.pojo.UserSolve;
 import com.fjut.oj.service.*;
@@ -183,7 +183,7 @@ public class VjSubmitter implements Runnable{
 
                     if (r.getR() == Result.CE){
                         // 编译错误会往表中添加编译错误信息
-                        Ceinfo ceinfo = new Ceinfo();
+                        CeInfo ceinfo = new CeInfo();
                         ceinfo.setRid(info.rid);
                         ceinfo.setInfo(r.getCEInfo());
                         ceinfoService.insertCeinfo(ceinfo);

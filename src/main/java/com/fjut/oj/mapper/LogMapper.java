@@ -7,11 +7,12 @@ import com.fjut.oj.pojo.Log;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * @author axiang
+ * @author axiang [20190620]
  */
 public interface LogMapper {
     /**
      * 插入日志
+     *
      * @param log
      * @return
      */
@@ -19,6 +20,7 @@ public interface LogMapper {
 
     /**
      * 根据一个时间段查询日志
+     *
      * @param DateStart
      * @param DateEnd
      * @param startIndex

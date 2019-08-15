@@ -16,7 +16,7 @@ public class AllUserRankServiceImpl implements AllUserRankService {
 
     @Override
     public List<User> allUsersRank(String order, String desc,Integer start) {
-        List<User> list = allUsersRankMapper.getallUsersRank(order,desc,start);
+        List<User> list = allUsersRankMapper.queryAllUsersRank(order,desc,start);
         return list;
     }
 

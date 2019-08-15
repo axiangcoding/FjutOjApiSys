@@ -268,7 +268,7 @@ public class SubmitController {
                     statusService.updateStatusAfterJudge(status);
                 } else if ("CE".equals(judgingStatu)) {
                     // 插入数据库内容，并设置 ceinfo 为 resultJsonObj.getString("info")
-                    Ceinfo ceinfo = new Ceinfo();
+                    CeInfo ceinfo = new CeInfo();
                     ceinfo.setRid(status.getId());
                     ceinfo.setInfo(resultJsonObj.getString("info"));
                     ceinfoService.insertCeinfo(ceinfo);
@@ -316,7 +316,7 @@ public class SubmitController {
     }
 
     public String handleLocalJudgeReturns(JSONArray retJsonArr, Status status) {
-        Ceinfo ceinfo = new Ceinfo();
+        CeInfo ceinfo = new CeInfo();
         String ans;
         String ceStr = "";
         String resStatu = "";

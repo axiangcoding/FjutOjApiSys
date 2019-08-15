@@ -30,6 +30,7 @@ public class UserRankController {
 
     /**
      * 获得用户排行榜
+     *
      * @param pageNumStr
      * @param order
      * @param desc
@@ -37,11 +38,10 @@ public class UserRankController {
      */
     @GetMapping("/GUserRank")
     public JsonInfo getAllUsersRank(@RequestParam("pagenum") String pageNumStr,
-                                    @RequestParam(value = "order",required = false) String order,
-                                    @RequestParam(value = "desc",required = false) String desc) {
+                                    @RequestParam(value = "order", required = false) String order,
+                                    @RequestParam(value = "desc", required = false) String desc) {
         JsonInfo jsonInfo = new JsonInfo();
-        if(null == order)
-        {
+        if (null == order) {
             order = "acnum";
         }
         Integer pageNum = Integer.parseInt(pageNumStr);

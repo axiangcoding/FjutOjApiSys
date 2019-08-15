@@ -15,6 +15,7 @@ public interface ProblemTagMapper {
 
     /**
      * 查询全部题目标签
+     *
      * @return
      */
     List<t_problem_tag> queryAllProblemTag();

@@ -5,7 +5,10 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface NewdiscussreplyMapper {
+/**
+ * @author cjt
+ */
+public interface NewDiscussReplyMapper {
     
     List<NewDiscussReply> queryDiscussReplyById(@Param("start") Integer start, @Param("id") Integer id);
     

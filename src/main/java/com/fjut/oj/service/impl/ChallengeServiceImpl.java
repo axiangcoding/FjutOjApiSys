@@ -46,7 +46,7 @@ public class ChallengeServiceImpl implements ChallengeService {
 
     @Override
     public List<ChallengeBlockForUser> queryChallengeBlocksScoredByUsername(String username) {
-        return challengeMapper.getChallengeBlocksScoredByUsername(username);
+        return challengeMapper.queryChallengeBlocksScoredByUsername(username);
     }
 
     @Override
