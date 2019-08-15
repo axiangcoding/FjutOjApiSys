@@ -191,6 +191,11 @@
         Insert into problem values(newpid,ptype,title,ojid,ojspid,0,author,spj,0,0,0,0,owner)
     </insert>
 
+
+    <update id="updateProblemType">
+        UPDATE problem SET ptype = #{type} WHERE pid = #{pid}
+    </update>
+
     <update id="setProblemVisiablePid" parameterType="com.fjut.oj.pojo.Problem">
         update problem set visiable=1-visiable
         where pid=#{pid}
@@ -208,6 +213,8 @@
         where pid in
         (select tpid from contestproblems where cid = #{cid})
     </update>
+
+
 
     <select id="getProblemsByOjPid" resultType="java.lang.Integer">
         SELECT pid

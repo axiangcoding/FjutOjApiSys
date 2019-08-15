@@ -5,18 +5,19 @@ import com.fjut.oj.pojo.Problems1;
 import com.fjut.oj.pojo.ViewUserSolve;
 import com.fjut.oj.service.ProblemService;
 import com.fjut.oj.service.StatusService;
-import com.fjut.oj.service.UserService;
 import com.fjut.oj.util.JsonInfo;
 import com.fjut.oj.util.JsonMsg;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 
 /**
  * TODO: 把 JsonMsg 替换为 JsonInfo
@@ -35,6 +36,9 @@ public class ProblemController {
     @Autowired
     private StatusService statusService;
 
+
+    @Value("${oj.baseJudgeFilePath}")
+    private String baseJudgeFilePath;
 
     /**
      * TODO: 还有条件 是否收藏 未用到
@@ -199,6 +203,40 @@ public class ProblemController {
         Integer total = problemService.getPageNum(num, showHide);
         return JsonMsg.success().addInfo(total);
     }
+
+    /**
+     * FIXME: 运行速度太慢，多行sql多次连接数据库，等待改进
+     * 更新所有题目的类型
+     * @return
+     */
+    @PostMapping("/updateAllProblemType")
+    @Transactional(rollbackFor = RuntimeException.class)
+    public JsonInfo updateAllProblemType(){
+        JsonInfo jsonInfo = new JsonInfo();
+        File baseDir = new File(baseJudgeFilePath);
+        if (baseDir.isDirectory()) {
+            jsonInfo.setSuccess();
+            File[] problemDir = baseDir.listFiles();
+            for (File problemFile : problemDir) {
+                String problemId = problemFile.getName();
+                File[] problemDetailFile = problemFile.listFiles();
+                System.out.println(problemDetailFile.length);
+                if( 0 == problemDetailFile.length )
+                {
+                    problemService.updateProblemType(Integer.parseInt(problemId),1);
+                }
+                else{
+                    problemService.updateProblemType(Integer.parseInt(problemId),0);
+                }
+            }
+        }else {
+            jsonInfo.setFail("找不到题库目录！");
+        }
+
+        return jsonInfo;
+    }
+
+
 
     /**
      * 编辑题目信息

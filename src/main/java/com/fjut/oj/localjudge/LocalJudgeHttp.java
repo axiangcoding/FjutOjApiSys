@@ -4,24 +4,27 @@ import com.fjut.oj.pojo.LocalJudgeSubmitInfo;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Properties;
 
 
 /**
  * @Author: axiang [20190731] 与本地评测机的通讯
  */
+@Component
 public class LocalJudgeHttp extends Thread {
-    /**
-     * 生产环境下用默认评测机
-     */
-//    private static String LOCALJUDGEURL = "http://localhost:8100";
-    /**
-     * 开发环境下使用虚拟机评测机
-     */
-    private static String LOCALJUDGEURL = "http://192.168.122.129:8100";
 
-    public static String submitToLocalJudge(LocalJudgeSubmitInfo localJudgeSubmitInfo) {
+    @Value("${oj.localJudgePath}")
+    private String localJudgePath;
+
+    public String submitToLocalJudge(LocalJudgeSubmitInfo localJudgeSubmitInfo) {
         try {
-            String postURL = LOCALJUDGEURL;
+            System.out.println(localJudgePath);
+            String postURL = localJudgePath;
             PostMethod postMethod = null;
             postMethod = new PostMethod(postURL);
             postMethod.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;");
@@ -45,9 +48,9 @@ public class LocalJudgeHttp extends Thread {
         }
     }
 
-    public static String getResultFromLocalJudge(Integer rid) {
+    public String getResultFromLocalJudge(Integer rid) {
         try {
-            String postURL = LOCALJUDGEURL;
+            String postURL = localJudgePath;
             PostMethod postMethod = null;
             postMethod = new PostMethod(postURL);
             postMethod.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;");

@@ -199,6 +199,11 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     @Override
+    public Integer updateProblemType(Integer pid, Integer type) {
+        return problemMapper.updateProblemType(pid,type);
+    }
+
+    @Override
     public Integer setProblemVisiablePid(Integer pid) {
         Integer num = 0;
         if (pid != -1) {

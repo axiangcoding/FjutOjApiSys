@@ -11,6 +11,10 @@
 
     <import resource="spring-mybatis.xml"/>
     <import resource="spring-redis.xml"/>
+
+    <!-- 自定义注解配置 -->
+    <context:property-placeholder location="classpath*:oj-config.properties" ignore-unresolvable="false" ignore-resource-not-found="false" />
+
     <!--全局异常处理器    -->
     <bean id="GlobalExceptionHandler" class="com.fjut.oj.exception.GlobalExceptionHandler"/>
     <!--Swagger的配置    -->
@@ -20,7 +24,7 @@
         <!-- 核心线程数 -->
         <property name="corePoolSize" value="5" />
         <!-- 线程池维护线程的最大数量 -->
-        <property name="maxPoolSize" value="100" />
+        <property name="maxPoolSize" value="25" />
         <!-- 允许的空闲时间, 默认60秒 -->
         <property name="keepAliveSeconds" value="60" />
         <!-- 缓存队列 -->

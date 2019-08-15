@@ -4,6 +4,7 @@ import com.fjut.oj.interceptor.CheckUserIsAdmin;
 import com.fjut.oj.pojo.LocalJudgeFile;
 import com.fjut.oj.util.JsonInfo;
 import org.codehaus.plexus.util.IOUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,19 +32,17 @@ import java.util.List;
 @RequestMapping("/file")
 @ResponseBody
 public class FileController {
+    @Value("${oj.baseFilePath}")
+    private String baseFilePath;
 
-//    private String baseFilePath = "/app/file/";
-//    private String baseJudgeFilePath = "/app/judge_system/judge_file/data/";
-//    private String picPath = "pic/";
-//    private String picVerifyPath = "pic/verify/";
+    @Value("${oj.baseJudgeFilePath}")
+    private String baseJudgeFilePath;
 
-    /**
-     * FIXME:部署时替换为生产环境部署路径
-     */
-    private static String baseFilePath = "D://";
-    private String baseJudgeFilePath = "D://test_data/";
-    private static String picPath = "pic/";
-    private static String picVerifyPath = "pic/verify/";
+    @Value("${oj.picPath}")
+    private String picPath;
+
+    @Value("${oj.picVerifyPath}")
+    private String picVerifyPath;
 
     @PostMapping("/uploadPic")
     public JsonInfo uploadPicture(HttpServletRequest request) {
@@ -112,6 +111,7 @@ public class FileController {
         JsonInfo jsonInfo = new JsonInfo();
         List<LocalJudgeFile> judgeFiles = new ArrayList<>();
         File baseDir = new File(baseJudgeFilePath);
+        System.out.println(baseJudgeFilePath);
         if (baseDir.isDirectory()) {
             File[] problemDir = baseDir.listFiles();
             for (File problemFile : problemDir) {

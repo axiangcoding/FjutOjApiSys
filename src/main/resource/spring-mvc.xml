@@ -13,12 +13,15 @@
     如果扫描到有@Component @Controller@Service等这些注解的类，则把这些类注册为bean-->
     <context:component-scan base-package="com.fjut.oj.controller, com.fjut.oj.judge">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-        <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+        <context:include-filter type="annotation"
+                                expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
     </context:component-scan>
 
-    <mvc:annotation-driven />
+    <context:property-placeholder location="classpath:oj-config.properties" />
+
+    <mvc:annotation-driven/>
     <mvc:default-servlet-handler/>
-    <!-- 配置拦截器CheckUserLoginInterceptor，拦截所有url请求 -->
+    <!-- 配置自定义拦截器，拦截所有url请求 -->
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
@@ -37,8 +40,10 @@
     <!-- 配置jsp文件的前后缀 “／”代表的是项目设定的Resource目录 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/jsp/"/>
-        <property name="suffix" value=".jsp" />
+        <property name="suffix" value=".jsp"/>
     </bean>
+
+
 
 
 </beans>

@@ -49,6 +49,14 @@ public interface ProblemService {
 
     Integer addProblem(Integer pid, Problem pro);
 
+    /**
+     * 设置题目类型 ptype = 0 为本地， ptype = 1为第三方
+     * @param pid
+     * @param type
+     * @return
+     */
+    Integer updateProblemType(Integer pid, Integer type);
+
     Integer setProblemVisiablePid(Integer pid);
 
     Integer setProblemVisiablePidZ(Integer pid, Integer z);

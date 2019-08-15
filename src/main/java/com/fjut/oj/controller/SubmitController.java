@@ -1,6 +1,7 @@
 package com.fjut.oj.controller;
 
 import com.fjut.oj.interceptor.CheckUserIsLogin;
+import com.fjut.oj.interceptor.CheckUserPrivate;
 import com.fjut.oj.judge.util.Vjudge.Submitter;
 import com.fjut.oj.judge.util.Vjudge.SubmitterImp;
 import com.fjut.oj.localjudge.LocalJudgeHttp;
@@ -14,7 +15,6 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,6 +46,8 @@ public class SubmitController {
     private UserService userService;
     @Autowired
     private CeinfoService ceinfoService;
+    @Autowired
+    private LocalJudgeHttp localJudgeHttp;
 
     /**
      * 线程池
@@ -63,7 +65,7 @@ public class SubmitController {
             return new JsonInfo("FAIL", "pid未传入");
         }
 
-        String user = req.getParameter("user");
+        String user = req.getParameter("username");
         if (user == null || user == "") {
             return new JsonInfo("FAIL", "user未传入");
         }
@@ -126,13 +128,15 @@ public class SubmitController {
     /**
      * 提交到本地
      */
+    //FIXME
+//    @CheckUserPrivate
     @PostMapping("/submitProblemToLocal")
     public JsonInfo submitProblemToLocalJudge(@RequestParam("pid") String pidStr,
                                               @RequestParam("timeLimit") String timeLimitStr,
                                               @RequestParam("memoryLimit") String MemoryLimitStr,
                                               @RequestParam("code") String code,
                                               @RequestParam("language") String language,
-                                              @RequestParam("user") String user,
+                                              @RequestParam("username") String username,
                                               @RequestParam(value = "cid", required = false) String cidStr) throws InterruptedException {
         JsonInfo jsonInfo = new JsonInfo();
         Integer cid = -1;
@@ -150,13 +154,13 @@ public class SubmitController {
             if (endTime.compareTo(dateString) < 0) {
                 return new JsonInfo("FAIL", "比赛已经结束，提交失败");
             }
-            Integer userNum = contestService.getContestUser(cid, user);
+            Integer userNum = contestService.getContestUser(cid, username);
             if (userNum == 0) {
                 // 用户之前没有提交过题目，添加该用户
                 Contestuser contestuser = new Contestuser();
                 contestuser.setTime(dateString);
                 contestuser.setCid(cid);
-                contestuser.setUsername(user);
+                contestuser.setUsername(username);
                 contestuser.setInfo("");
                 contestuser.setStatu(1);
                 contestService.insertContestuser(contestuser);
@@ -178,18 +182,18 @@ public class SubmitController {
         localJudgeSubmitInfo.setCode(code);
         // 目前本地评测机只支持三种语言 JAVA Python2 C/C++
         localJudgeSubmitInfo.setLanguageId(("JAVA").equalsIgnoreCase(language) ? 2 : ("Python").equalsIgnoreCase(language) ? 3 : 1);
-        String submitJsonStr = LocalJudgeHttp.submitToLocalJudge(localJudgeSubmitInfo);
+        String submitJsonStr = localJudgeHttp.submitToLocalJudge(localJudgeSubmitInfo);
         JSONObject jsonObject = JSONObject.fromObject(submitJsonStr);
 
         Status beforeStatus = new Status();
         // 如果提交到本地评测机成功，则插入数据库
         if ("success".equals(jsonObject.getString("ret"))) {
-            Integer langid = ResultString.getSubmitLanguage(language);
+            Integer langId = ResultString.getSubmitLanguage(language);
             beforeStatus.setId(rid);
-            beforeStatus.setRuser(user);
+            beforeStatus.setRuser(username);
             beforeStatus.setPid(pid);
             beforeStatus.setCid(cid);
-            beforeStatus.setLang(langid);
+            beforeStatus.setLang(langId);
             Date currentTime = new Date();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             beforeStatus.setSubmitTime(formatter.format(currentTime));
@@ -203,7 +207,7 @@ public class SubmitController {
             //题目号为pid的题目解决总数+1
             problemService.updateProblemtotalSubmit(pid);
             // 查询用户是否提交过这道题
-            UserSolve userSolve = userSolveService.queryByUsernameAndPid(user, pid);
+            UserSolve userSolve = userSolveService.queryByUsernameAndPid(username, pid);
             if (userSolve == null) {
                 // 该用户没有交过这道题目
                 problemService.updateProblemtotalSubmitUser(pid);
@@ -246,7 +250,7 @@ public class SubmitController {
         int times = 100;
         // TODO: 可以根据活跃线程数executor.getActiveCount()来设置获取时间间隔times
         do {
-            String getResultJsonStr = LocalJudgeHttp.getResultFromLocalJudge(rid);
+            String getResultJsonStr = localJudgeHttp.getResultFromLocalJudge(rid);
             JSONObject jsonObject = JSONObject.fromObject(getResultJsonStr);
             if ("success".equals(jsonObject.getString("ret"))) {
                 JSONObject resultJsonObj = JSONObject.fromObject(jsonObject.getString("result"));
@@ -275,59 +279,10 @@ public class SubmitController {
                 }
                 //以下为运行正确返回的内容，即提交并且编译成功得到的结果
                 else {
-                    Ceinfo ceinfo = new Ceinfo();
-                    String ceStr = "";
-                    String resStatu = "";
-                    int time = 0;
-                    int memory = 0;
-                    boolean isScore = false;
-                    boolean isAllScore = true;
+
                     JSONArray retJsonArr = resultJsonObj.getJSONArray("ret");
                     // TODO: 测试中评测机返回多组不同IO的评测记录
-                    handleLocalJudgeReturns(retJsonArr);
-                    for (int i = 0; i < retJsonArr.size(); i++) {
-                        resStatu = retJsonArr.getJSONArray(i).getString(1);
-                        ceStr += ("测试结果：【" + resStatu + "】 ");
-                        ceStr += ("测试文件：【" + retJsonArr.getJSONArray(i).getString(0) + "】 ");
-                        if(resStatu.equals("SC"))
-                        {
-                            int score = retJsonArr.getJSONArray(i).getInt(5);
-                            ceStr += ("得分：【" + score + "】 ");
-                            isScore = true;
-                            if( 100!=score)
-                            {
-                                isAllScore = false;
-                            }
-                            time += retJsonArr.getJSONArray(i).getInt(2);
-                            ceStr += ("用时：【" + retJsonArr.getJSONArray(i).getInt(2) + "MS】 ");
-                        }
-                        else if(resStatu.equals("MLE") || resStatu.equals("OLE")) {
-                            time += retJsonArr.getJSONArray(i).getInt(4);
-                            ceStr += ("用时：【" + retJsonArr.getJSONArray(i).getInt(4) + "MS】 ");
-                        }
-                         else {
-                            time += retJsonArr.getJSONArray(i).getInt(2);
-                            ceStr += ("用时：【" + retJsonArr.getJSONArray(i).getInt(2) + "MS】 ");
-                        }
-                        memory = Math.max(memory, retJsonArr.getJSONArray(i).getInt(3));
-                        ceStr += ("内存：【" + retJsonArr.getJSONArray(i).getInt(3) + "KB】\n");
-                        if (!"AC".equals(resStatu) && !"SC".equals(resStatu)) {
-                            isAllScore = false;
-                            break;
-                        }
-                    }
-                    ceinfo.setInfo(ceStr);
-                    ceinfo.setRid(status.getId());
-                    ceinfoService.insertCeinfo(ceinfo);
-                    judgingStatu = resStatu;
-                    if (isScore && isAllScore) {
-                        status.setResult(Result.valueOf("AC").getValue());
-                    } else {
-                        status.setResult(Result.valueOf(judgingStatu).getValue());
-                    }
-                    status.setTimeUsed(time + "MS");
-                    status.setMemoryUsed(memory + "KB");
-                    statusService.updateStatusAfterJudge(status);
+                    handleLocalJudgeReturns(retJsonArr, status);
                     quitLoop = true;
                 }
             } else {
@@ -360,8 +315,52 @@ public class SubmitController {
 
     }
 
-    public void handleLocalJudgeReturns(JSONArray retJsonArr){
-
+    public void handleLocalJudgeReturns(JSONArray retJsonArr, Status status) {
+        Ceinfo ceinfo = new Ceinfo();
+        String ceStr = "";
+        String resStatu = "";
+        int time = 0;
+        int memory = 0;
+        boolean isScore = false;
+        boolean isAllScore = true;
+        for (int i = 0; i < retJsonArr.size(); i++) {
+            resStatu = retJsonArr.getJSONArray(i).getString(1);
+            ceStr += ("测试结果：【" + resStatu + "】 ");
+            ceStr += ("测试文件：【" + retJsonArr.getJSONArray(i).getString(0) + "】 ");
+            if (resStatu.equals("SC")) {
+                int score = retJsonArr.getJSONArray(i).getInt(5);
+                ceStr += ("得分：【" + score + "】 ");
+                isScore = true;
+                if (100 != score) {
+                    isAllScore = false;
+                }
+                time += retJsonArr.getJSONArray(i).getInt(2);
+                ceStr += ("用时：【" + retJsonArr.getJSONArray(i).getInt(2) + "MS】 ");
+            } else if (resStatu.equals("MLE") || resStatu.equals("OLE")) {
+                time += retJsonArr.getJSONArray(i).getInt(4);
+                ceStr += ("用时：【" + retJsonArr.getJSONArray(i).getInt(4) + "MS】 ");
+            } else {
+                time += retJsonArr.getJSONArray(i).getInt(2);
+                ceStr += ("用时：【" + retJsonArr.getJSONArray(i).getInt(2) + "MS】 ");
+            }
+            memory = Math.max(memory, retJsonArr.getJSONArray(i).getInt(3));
+            ceStr += ("内存：【" + retJsonArr.getJSONArray(i).getInt(3) + "KB】\n");
+            if (!"AC".equals(resStatu) && !"SC".equals(resStatu)) {
+                isAllScore = false;
+                break;
+            }
+        }
+        ceinfo.setInfo(ceStr);
+        ceinfo.setRid(status.getId());
+        ceinfoService.insertCeinfo(ceinfo);
+        if (isScore && isAllScore) {
+            status.setResult(Result.valueOf("AC").getValue());
+        } else {
+            status.setResult(Result.valueOf(resStatu).getValue());
+        }
+        status.setTimeUsed(time + "MS");
+        status.setMemoryUsed(memory + "KB");
+        statusService.updateStatusAfterJudge(status);
     }
 
 }

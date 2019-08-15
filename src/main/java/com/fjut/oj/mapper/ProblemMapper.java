@@ -148,6 +148,14 @@ public interface ProblemMapper {
 
     Integer getMaxProblemIdAddOne();
 
+    /**
+     * 设置题目类型 ptype = 0 为本地， ptype = 1为第三方
+     * @param type
+     * @param pid
+     * @return
+     */
+    Integer updateProblemType(@Param("pid") Integer pid, @Param("type") Integer type);
+
     Integer setProblemVisiablePid(@Param("pid") Integer pid);
 
     Integer setProblemVisiablePidZ(@Param("pid") Integer pid, @Param("z") Integer z);
