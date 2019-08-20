@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fjut.oj.mapper.ChallengeMapper">
+    <insert id="insertOpenBlock">
+        INSERT INTO t_challenge_openblock
+        (username, block) VALUES
+	    ( #{username}, #{blockId} )
+
+    </insert>
 
     <select id="queryAllChallengeBlocks" resultType="com.fjut.oj.pojo.ChallengeBlockForUser">
         SELECT
@@ -100,10 +106,16 @@
         SELECT id from t_challenge_problem WHERE tpid = #{pid}
     </select>
 
-    <select id="queryBelongBlocksByPid" resultType="java.lang.Integer">
+    <select id="queryBelongBlocksByBlockId" resultType="java.lang.Integer">
         SELECT belongBlockId
         FROM t_challenge_condition
-        WHERE par = (SELECT id FROM t_challenge_problem WHERE tpid = #{pid})
+        WHERE par = #{blockId}
+    </select>
+
+    <select id="queryBlockSolvedScore" resultType="java.lang.Integer">
+        SELECT SUM(score)
+        FROM    t_challenge_problem WHERE id=#{blockId} AND tpid IN
+        (SELECT pid FROM t_usersolve WHERE username = #{username} AND status = 1)
     </select>
 
 

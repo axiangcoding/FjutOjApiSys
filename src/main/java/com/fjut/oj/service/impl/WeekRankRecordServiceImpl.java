@@ -14,7 +14,6 @@ import java.util.*;
 
 @Service("WeekRankRecordService")
 public class WeekRankRecordServiceImpl implements WeekRankRecordService {
-//    private static boolean isInit = false;
 
     @Autowired
     private SubmissionRecordMapper submissionRecordMapper;
@@ -22,50 +21,54 @@ public class WeekRankRecordServiceImpl implements WeekRankRecordService {
     private UserMapper userMapper;
 
     @Override
-    public void add(WeekRankRecord weekRankRecord,int day, int value) {
+    public void add(WeekRankRecord weekRankRecord, int day, int value) {
         int[] acnum = weekRankRecord.getAcNum();
         int[] scoreEveryDay = weekRankRecord.getScoreEveryDay();
         int score = weekRankRecord.getScore();
-        acnum[day]+=1;
+        acnum[day] += 1;
         weekRankRecord.setAcNum(acnum);
-        scoreEveryDay[day]+=value;
+        scoreEveryDay[day] += value;
         weekRankRecord.setScoreEveryDay(scoreEveryDay);
-        score+=value;
+        score += value;
         weekRankRecord.setScore(score);
     }
 
     @Override
-    public void addStatus(WeekRankRecord weekRankRecord,SubmisssionRecord submisssionRecord) {
-        if(submisssionRecord.getSubmitTime().before(weekRankRecord.getFrom()))return;
-        int day = (int)((submisssionRecord.getSubmitTime().getTime() - weekRankRecord.getFrom().getTime())/(1000*60*60*24));
-        if(day<0 || day >=30) return ;
+    public void addStatus(WeekRankRecord weekRankRecord, SubmisssionRecord submisssionRecord) {
+        if (submisssionRecord.getSubmitTime().before(weekRankRecord.getFrom())) {
+            return;
+        }
+        int day = (int) ((submisssionRecord.getSubmitTime().getTime() - weekRankRecord.getFrom().getTime()) / (1000 * 60 * 60 * 24));
+        if (day < 0 || day >= 30) {
+            return;
+        }
         WeekRankRecord record = weekRankRecord.getResultsMap().get(submisssionRecord.getRuser());
-        if(record == null){
+        if (record == null) {
             record = new WeekRankRecord();
             record.setUsername(submisssionRecord.getRuser());
-            Map<String,WeekRankRecord> resultsMap = weekRankRecord.getResultsMap();
-            resultsMap.put(submisssionRecord.getRuser(),record);
+            Map<String, WeekRankRecord> resultsMap = weekRankRecord.getResultsMap();
+            resultsMap.put(submisssionRecord.getRuser(), record);
             weekRankRecord.setResultsMap(resultsMap);
         }
-        this.add(record,day, WeekRankRecord.getConfig(day));
+        this.add(record, day, WeekRankRecord.getConfig(day));
     }
 
     @Override
-    public void sort(WeekRankRecord weekRankRecord){
+    public void sort(WeekRankRecord weekRankRecord) {
         List<WeekRankRecord> resultsList = weekRankRecord.getResultsList();
-        for (WeekRankRecord record: weekRankRecord.getResultsMap().values()) {
+        for (WeekRankRecord record : weekRankRecord.getResultsMap().values()) {
             resultsList.add(record);
             weekRankRecord.setResultsList(resultsList);
         }
         Collections.sort(resultsList);
-        for(int i = 0; i< weekRankRecord.getResultsList().size(); i++) {
+        for (int i = 0; i < weekRankRecord.getResultsList().size(); i++) {
             WeekRankRecord record = weekRankRecord.getResultsList().get(i);
-            if(i==0){
+            if (i == 0) {
                 record.setRank(1);
-            }else if(record.getScore() == weekRankRecord.getResultsList().get(i-1).getScore()){
-                record.setRank(resultsList.get(i-1).getRank());
-            }else{
-                record.setRank(i+1);
+            } else if (record.getScore() == weekRankRecord.getResultsList().get(i - 1).getScore()) {
+                record.setRank(resultsList.get(i - 1).getRank());
+            } else {
+                record.setRank(i + 1);
             }
         }
     }
@@ -73,79 +76,79 @@ public class WeekRankRecordServiceImpl implements WeekRankRecordService {
     @Override
     public List<User> getActiveRank() {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY,0);
-        calendar.set(Calendar.MINUTE,0);
-        calendar.set(Calendar.SECOND,0);
-        calendar.set(Calendar.MILLISECOND,0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
         Timestamp getListTo = new Timestamp(calendar.getTimeInMillis());
-        calendar.add(Calendar.DATE,-7);
+        calendar.add(Calendar.DATE, -7);
         Timestamp getListFrom = new Timestamp(calendar.getTimeInMillis());
-        List<SubmisssionRecord> list = submissionRecordMapper.getAreaSubmissionRecord(getListFrom,getListTo);
+        List<SubmisssionRecord> list = submissionRecordMapper.getAreaSubmissionRecord(getListFrom, getListTo);
         System.out.println(list);
-        List<SubmisssionRecord> list_1 = submissionRecordMapper.getFailAreaSubmissionRecord(getListFrom,getListTo);
-        Map<String,Integer> hash_score = new HashMap<>();
-        Map<String,Set<Integer>> hash_day = new HashMap<>();
+        List<SubmisssionRecord> list_1 = submissionRecordMapper.getFailAreaSubmissionRecord(getListFrom, getListTo);
+        Map<String, Integer> hash_score = new HashMap<>();
+        Map<String, Set<Integer>> hash_day = new HashMap<>();
         int score = 0;
-        for (SubmisssionRecord status:list) {
+        for (SubmisssionRecord status : list) {
             Set<Integer> set = new HashSet<>();
             Set<Integer> checkInTime = new HashSet<>();
-            for (SubmisssionRecord sr : list){
-                if(sr.getRuser().equals(status.getRuser())){
+            for (SubmisssionRecord sr : list) {
+                if (sr.getRuser().equals(status.getRuser())) {
                     set.add(sr.getPid());
-                    int day = (int)((sr.getSubmitTime().getTime() - getListFrom.getTime())/(1000*60*60*24));
+                    int day = (int) ((sr.getSubmitTime().getTime() - getListFrom.getTime()) / (1000 * 60 * 60 * 24));
                     checkInTime.add(day);
                 }
             }
-            if (set.size()>=35){
-                score = score+140;
-            }else{
-                score = set.size() * 4+score;
+            if (set.size() >= 35) {
+                score = score + 140;
+            } else {
+                score = set.size() * 4 + score;
             }
-            hash_score.put(status.getRuser(),score);
-            hash_day.put(status.getRuser(),checkInTime);
+            hash_score.put(status.getRuser(), score);
+            hash_day.put(status.getRuser(), checkInTime);
             score = 0;
         }
-        for (SubmisssionRecord status:list_1) {
+        for (SubmisssionRecord status : list_1) {
             Set<Integer> set = new HashSet<>();
-            for (SubmisssionRecord sr : list_1){
-                if(sr.getRuser().equals(status.getRuser())){
+            for (SubmisssionRecord sr : list_1) {
+                if (sr.getRuser().equals(status.getRuser())) {
                     set.add(sr.getPid());
-                    int day = (int)((sr.getSubmitTime().getTime() - getListFrom.getTime())/(1000*60*60*24));
+                    int day = (int) ((sr.getSubmitTime().getTime() - getListFrom.getTime()) / (1000 * 60 * 60 * 24));
                     hash_day.get(sr.getRuser()).add(day);
                 }
             }
-            if (set.size()>=60){
-                hash_score.put(status.getRuser(),hash_score.get(status.getRuser())+120);
-            }else{
-                hash_score.put(status.getRuser(),hash_score.get(status.getRuser())+set.size() * 2);
+            if (set.size() >= 60) {
+                hash_score.put(status.getRuser(), hash_score.get(status.getRuser()) + 120);
+            } else {
+                hash_score.put(status.getRuser(), hash_score.get(status.getRuser()) + set.size() * 2);
             }
         }
-        for (String map : hash_day.keySet()){
+        for (String map : hash_day.keySet()) {
             int j = 0;
-            for (int i=0;i<6;i++){
-                if (hash_day.get(map).contains(i)){
-                    j+=1;
-                    hash_score.put(map,hash_score.get(map)+j * 3);
-                }else {
+            for (int i = 0; i < 6; i++) {
+                if (hash_day.get(map).contains(i)) {
+                    j += 1;
+                    hash_score.put(map, hash_score.get(map) + j * 3);
+                } else {
                     j = 0;
                 }
             }
         }
         List<String> rank = new ArrayList<>();
-        for (int j=0;j<hash_score.size();j++){
-            String max_name="";
-            int max_score=0;
-            for (String username : hash_score.keySet()){
-                if(hash_score.get(username)>max_score){
+        for (int j = 0; j < hash_score.size(); j++) {
+            String max_name = "";
+            int max_score = 0;
+            for (String username : hash_score.keySet()) {
+                if (hash_score.get(username) > max_score) {
                     max_name = username;
                     max_score = hash_score.get(username);
                 }
             }
-            hash_score.put(max_name,0);
+            hash_score.put(max_name, 0);
             rank.add(max_name);
         }
         List<User> rank_user = new ArrayList<>();
-        for (int i =0;i<rank.size();i++){
+        for (int i = 0; i < rank.size(); i++) {
             User user = userMapper.queryUserByName(rank.get(i));
             rank_user.add(user);
         }

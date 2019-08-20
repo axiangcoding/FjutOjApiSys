@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ContestProblemService {
 
-    public List<ContestProblem> getContestProblemsByCid(Integer cid);
+    List<ContestProblem> getContestProblemsByCid(Integer cid);
 
-    public Integer insertContestProblem(ContestProblem contestProblem);
+    Integer insertContestProblem(ContestProblem contestProblem);
 }

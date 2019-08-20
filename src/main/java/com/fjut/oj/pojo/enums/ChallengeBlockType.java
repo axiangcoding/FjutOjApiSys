@@ -1,13 +1,16 @@
 package com.fjut.oj.pojo.enums;
 
+/**
+ * @author axiang
+ */
 public enum ChallengeBlockType {
     BASIS(0, "基础"),
-    DATASTRUCTURE(1,"数据结构"),
-    MATH(2,"数学"),
-    GEOMETRIC(3,"几何"),
-    GRAPHTHEORY(4,"图论"),
-    SEARCH(5,"搜索"),
-    DP(6,"动态规划");
+    DATASTRUCTURE(1, "数据结构"),
+    MATH(2, "数学"),
+    GEOMETRIC(3, "几何"),
+    GRAPHTHEORY(4, "图论"),
+    SEARCH(5, "搜索"),
+    DP(6, "动态规划");
 
 
     private int id;

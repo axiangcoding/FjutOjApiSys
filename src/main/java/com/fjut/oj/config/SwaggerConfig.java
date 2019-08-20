@@ -11,14 +11,14 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-
-@EnableSwagger2 // 启动Swagger
+/**
+ * 注解 @EnableSwagger2 启动Swagger
+ * @author axiang [20190704] swagger配置文件
+ */
+@EnableSwagger2
 @EnableWebMvc
 @Configuration
 @ComponentScan(basePackages = "com.fjut.oj.controller")
-/**
- * @author axiang [20190704] swagger配置文件
- */
 public class SwaggerConfig {
     @Bean
     public Docket api() {

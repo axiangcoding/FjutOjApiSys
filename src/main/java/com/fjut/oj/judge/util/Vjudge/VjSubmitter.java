@@ -44,6 +44,7 @@ public class VjSubmitter implements Runnable{
     public UserSolveService userSolveService = ApplicationContextHelper.getBean(UserSolveService.class);
     public ProblemService problemService = ApplicationContextHelper.getBean(ProblemService.class);
     public UserService userService = ApplicationContextHelper.getBean(UserService.class);
+    public ChallengeService challengeService = ApplicationContextHelper.getBean(ChallengeService.class);
 
     private Thread selfThread = null;
     private String username;
@@ -200,10 +201,13 @@ public class VjSubmitter implements Runnable{
                             // 用户之前未尝试过现在解决了
                             userSolveService.replaceUserSolve(status.getRuser(),status.getPid(),1);
                         }
+                        challengeService.updateOpenBlock(status.getRuser(), status.getPid());
                     } else{
                         if (userSolve==null)
                         // 用户尝试过该题目，但没有解决
-                        userSolveService.replaceUserSolve(status.getRuser(),status.getPid(),0);
+                        {
+                            userSolveService.replaceUserSolve(status.getRuser(),status.getPid(),0);
+                        }
                     }
                 }
             }

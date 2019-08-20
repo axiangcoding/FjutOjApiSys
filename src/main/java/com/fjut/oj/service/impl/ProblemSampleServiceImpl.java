@@ -1,7 +1,7 @@
 package com.fjut.oj.service.impl;
 
 import com.fjut.oj.mapper.ProblemSampleMapper;
-import com.fjut.oj.pojo.Problemsample;
+import com.fjut.oj.pojo.ProblemSample;
 import com.fjut.oj.service.ProblemSampleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ public class ProblemSampleServiceImpl implements ProblemSampleService {
     private ProblemSampleMapper problemSampleMapper;
 
     @Override
-    public Integer insertProblemSample(Problemsample problemsample){
+    public Integer insertProblemSample(ProblemSample problemsample){
         return problemSampleMapper.insertProblemSample(problemsample);
     }
 

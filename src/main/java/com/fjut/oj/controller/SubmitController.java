@@ -36,22 +36,29 @@ public class SubmitController {
 
     @Autowired
     private StatusService statusService;
+
     @Autowired
     private ProblemService problemService;
+
     @Autowired
     private UserSolveService userSolveService;
+
     @Autowired
     private ContestService contestService;
+
     @Autowired
     private UserService userService;
+
     @Autowired
     private CeinfoService ceinfoService;
+
+    @Autowired
+    private ChallengeService challengeService;
+
     @Autowired
     private LocalJudgeHttp localJudgeHttp;
 
-    /**
-     * 线程池
-     */
+    /* 线程池 */
     @Autowired
     private ThreadPoolTaskExecutor executor;
 
@@ -79,17 +86,17 @@ public class SubmitController {
         Integer cid = Integer.parseInt(req.getParameter("cid") == null ? "-1" : req.getParameter("cid"));
 
         if (cid != -1) {
-            Contest contest = contestService.getContestById(cid);
+            Contest contest = contestService.queryContestByCid(cid);
             if (contest == null) {
                 return new JsonInfo("FAIL", "没有查找到该比赛");
             }
-            String endTime = contest.getEndTime();
+            Date endTime = contest.getEndTime();
 
             Date currentTime = new Date();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String dateString = formatter.format(currentTime);
 
-            if (endTime.compareTo(dateString) < 0) {
+            if (endTime.compareTo(currentTime) < 0) {
                 return new JsonInfo("FAIL", "比赛已经结束，提交失败");
             }
 
@@ -127,6 +134,7 @@ public class SubmitController {
 
     /**
      * FIXME
+     *
      * @author axiang [20190815] 提交到本地
      */
 
@@ -141,18 +149,20 @@ public class SubmitController {
                                               @RequestParam(value = "cid", required = false) String cidStr) throws InterruptedException {
         JsonInfo jsonInfo = new JsonInfo();
         Integer cid = -1;
-        if (null != cidStr && "".equals(cidStr)) {
+        if (null != cidStr && !"".equals(cidStr)) {
             cid = Integer.parseInt(cidStr);
         }
+        System.out.println("cidStr: "+cidStr);
+        System.out.println("cid: "+cid);
         if (cid != -1) {
-            Contest contest = contestService.getContestById(cid);
+            Contest contest = contestService.queryContestByCid(cid);
             if (contest == null) {
                 return new JsonInfo("FAIL", "没有查找到该比赛");
             }
-            String endTime = contest.getEndTime();
+            Date endTime = contest.getEndTime();
             Date currentTime = new Date();
             String dateString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(currentTime);
-            if (endTime.compareTo(dateString) < 0) {
+            if (endTime.compareTo(currentTime) < 0) {
                 return new JsonInfo("FAIL", "比赛已经结束，提交失败");
             }
             Integer userNum = contestService.getContestUser(cid, username);
@@ -306,6 +316,8 @@ public class SubmitController {
                 // 用户之前未尝试过现在解决了
                 userSolveService.replaceUserSolve(status.getRuser(), status.getPid(), 1);
             }
+            // 对挑战模式的更新逻辑
+            challengeService.updateOpenBlock(username,pid);
         } else {
             // 用户尝试过该题目，但没有解决
             if (userSolve == null) {

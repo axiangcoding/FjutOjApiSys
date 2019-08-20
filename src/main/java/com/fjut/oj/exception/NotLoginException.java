@@ -1,7 +1,7 @@
 package com.fjut.oj.exception;
 
 /**
- * @Author: axiang [20190621] 未登录异常
+ * @author axiang [20190621] 未登录异常
  *
  */
 public class NotLoginException extends RuntimeException {

@@ -1,22 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fjut.oj.mapper.ContestMapper">
-    <select id="getAllContest" resultType="com.fjut.oj.pojo.Contest">
+
+    <select id="queryContestByCondition" resultType="com.fjut.oj.pojo.Contest">
         SELECT * FROM contest
-        where rankType = 2 and ctype = 0 and kind = 0
-        ORDER BY endTime&lt;now(),beginTime DESC limit #{pagenum},50
+        WHERE kind = #{kind}
+        ORDER BY endTime &lt; now(),beginTime DESC
+        LIMIT #{startIndex}, 20
     </select>
 
-    <select id="getContestById" resultType="com.fjut.oj.pojo.Contest">
-        select *
-        from contest
-        where id = #{cid}
-    </select>
-
-    <select id="getAllContestNum" resultType="java.lang.Integer">
+    <select id="queryContestCountByCondition" resultType="java.lang.Integer">
         SELECT count(*)
         FROM contest
-        where rankType = 2 and ctype = 0 and kind = 0
+        WHERE kind = #{kind}
+    </select>
+
+    <select id="queryContestStatusByCondition" resultType="com.fjut.oj.pojo.ViewUserStatus">
+        SELECT *
+        FROM v_user_status
+        WHERE cid= #{cid}
+        <if test="nick != null">
+            AND nick like #{nick}
+        </if>
+        <if test="pid != null">
+            AND pid = #{pid}
+        </if>
+        <if test="result != null">
+            AND result = #{result}
+        </if>
+        LIMIT #{startIndex}, 30
+    </select>
+
+    <select id="queryContestStatusCountByCondition" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM v_user_status
+        WHERE cid= #{cid}
+        <if test="nick != null">
+            AND nick LIKE #{nick}
+        </if>
+        <if test="pid != null">
+            AND pid = #{pid}
+        </if>
+        <if test="result != null">
+            AND result = #{result}
+        </if>
+    </select>
+
+    <select id="queryContestByCid" resultType="com.fjut.oj.pojo.Contest">
+        SELECT *
+        FROM contest
+        WHERE id = #{cid}
     </select>
 
     <select id="getContestUsers" resultType="com.fjut.oj.pojo.Contestuser">
@@ -35,8 +68,10 @@
         WHERE cid=#{cid}
     </select>
 
-    <select id="getContestProblem" resultType="com.fjut.oj.pojo.ContestProblemInfo">
-        SELECT contestproblems.tpid,title,totalAcUser,totalSubmit FROM contestproblems LEFT JOIN problem ON contestproblems.tpid=problem.pid WHERE cid=#{cid}
+    <select id="queryContestProblem" resultType="com.fjut.oj.pojo.ContestProblemInfo">
+        SELECT contestproblems.pid, contestproblems.tpid, title, totalAcUser, totalSubmit
+        FROM contestproblems
+        LEFT JOIN problem ON contestproblems.tpid=problem.pid WHERE cid= #{cid}
     </select>
 
     <select id="getContestStatus" resultType="com.fjut.oj.pojo.Status">
@@ -99,6 +134,7 @@
         select MAX(id)
         from contest
     </select>
+
 
     <insert id="insertContestProblem" parameterType="com.fjut.oj.pojo.ContestProblem">
         insert into

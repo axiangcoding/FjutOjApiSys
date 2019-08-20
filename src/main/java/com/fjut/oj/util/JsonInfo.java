@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Author: wyx
- * @Despriction: 对Json数据的封装。建议将JsonMsg全部替换为该封装
- * @Date:Created in 11:47 2019/6/17
- * @Modify By:
+ * 自定义的与前端交互的类
+ *
+ * @author axiang [20190617]
  */
 public class JsonInfo {
     private int code;
@@ -17,7 +16,7 @@ public class JsonInfo {
     private static String TYPE_FAIL = "fail";
     private static String TYPE_ERROR = "error";
 
-    public JsonInfo(){
+    public JsonInfo() {
 
     }
 

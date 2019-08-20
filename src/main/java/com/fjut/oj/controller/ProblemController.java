@@ -220,7 +220,6 @@ public class ProblemController {
             for (File problemFile : problemDir) {
                 String problemId = problemFile.getName();
                 File[] problemDetailFile = problemFile.listFiles();
-                System.out.println(problemDetailFile.length);
                 if( 0 == problemDetailFile.length )
                 {
                     problemService.updateProblemType(Integer.parseInt(problemId),1);

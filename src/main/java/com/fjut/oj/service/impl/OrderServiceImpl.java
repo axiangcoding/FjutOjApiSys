@@ -29,37 +29,30 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
     public boolean insertOrder(Order order) {
-        boolean isOrderCompleted = true;
-        try{
+        try {
             Integer orderAns = orderMapper.insertOrder(order);
-            if(1 != orderAns)
-            {
-                isOrderCompleted = false;
+            if (1 != orderAns) {
+
                 throw new RuntimeException();
             }
             Integer userAcbChangeAns = userMapper.updateAcbNumber(order.getUsername(), -order.getAcb());
-            if(1 != userAcbChangeAns)
-            {
-                isOrderCompleted = false;
+            if (1 != userAcbChangeAns) {
                 throw new RuntimeException();
             }
-            AcbBorder acbBorder =  new AcbBorder();
+            AcbBorder acbBorder = new AcbBorder();
             acbBorder.setTime(order.getTime());
-            acbBorder.setMark("订单号："+order.getId());
+            acbBorder.setMark("订单号：" + order.getId());
             acbBorder.setReason(6);
             acbBorder.setAcbchange(-order.getAcb());
             acbBorder.setUsername(order.getUsername());
             Integer borderAns = acbBorderMapper.insertAcbBorder(acbBorder);
-            if(1 != borderAns)
-            {
-                isOrderCompleted = false;
+            if (1 != borderAns) {
                 throw new RuntimeException();
             }
-        }catch (RuntimeException e)
-        {
+        } catch (RuntimeException e) {
             throw e;
-        }finally {
-            return isOrderCompleted;
         }
+        return true;
+
     }
 }

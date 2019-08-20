@@ -36,15 +36,19 @@ public class ProblemTagServiceImpl implements ProblemTagService {
         return list;
     }
 
-    // 贴标签奖励 ACB
+    /**
+     * 贴标签奖励 ACB
+     */
     @Override
     public int addTag(Integer pid, String username, Integer tagid, Integer rating) {
         User user = userMapper.queryUserByName(username);
-        if (user == null)
+        if (user == null) {
             return 0;
+        }
 
-        if (user.getRating() == -100000)
+        if (user.getRating() == -100000) {
             rating = 700;
+        }
         int num = problemTagMapper.addTag(pid, username, tagid, rating);
         /**
          * 判断是否贴过标签 奖励 ACB
@@ -95,7 +99,9 @@ public class ProblemTagServiceImpl implements ProblemTagService {
         }
         String ret = "[";
         for (int i = 0; i <= 6; ++i) {
-            if (i != 0) ret += ",";
+            if (i != 0) {
+                ret += ",";
+            }
             ret += (b[i] != 0 ? a[i] * 100.0 / b[i] : "0");
         }
         return ret + "]";

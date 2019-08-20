@@ -4,7 +4,7 @@ import com.fjut.oj.interceptor.CheckUserPrivate;
 import com.fjut.oj.pojo.t_clock_in;
 import com.fjut.oj.service.ClockInService;
 import com.fjut.oj.interceptor.CheckUserIsLogin;
-import com.fjut.oj.util.IPTool;
+import com.fjut.oj.util.IpTools;
 import com.fjut.oj.util.JsonInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -86,7 +86,7 @@ public class ClockInController {
         JsonInfo jsonInfo = new JsonInfo();
         Date time = new Date();
         String sign = "日常";
-        String ip = IPTool.getClientIpAddress(req);
+        String ip = IpTools.getClientIpAddress(req);
         Integer todytimes = 1;
         t_clock_in clockIn = new t_clock_in();
         clockIn.setUsername(username);

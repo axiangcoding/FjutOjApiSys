@@ -13,7 +13,7 @@ import java.util.Properties;
 
 
 /**
- * @Author: axiang [20190731] 与本地评测机的通讯
+ * @author axiang [20190731] 与本地评测机的通讯
  */
 @Component
 public class LocalJudgeHttp extends Thread {

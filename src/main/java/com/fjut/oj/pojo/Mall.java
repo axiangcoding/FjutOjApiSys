@@ -1,7 +1,5 @@
 package com.fjut.oj.pojo;
 
-import org.apache.ibatis.type.IntegerTypeHandler;
-
 import java.util.Date;
 
 /**

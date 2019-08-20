@@ -80,7 +80,7 @@ public class NewDiscussController {
         Integer id = Integer.parseInt(idStr);
         Double priority = Double.parseDouble(priorityStr);
 
-        Integer num = newDiscussService.updateDisscussPirority(id, priority);
+        Integer num = newDiscussService.updateDiscussPirority(id, priority);
         if (num == 0) {
             jsonInfo.setFail("修改失败！");
         } else {

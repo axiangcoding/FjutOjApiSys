@@ -10,15 +10,21 @@ import java.util.List;
  */
 public interface UserMapper {
 
+    int insertUser(@Param("user") User user);
+
+    void deleteUserByUsername(@Param("username") String username);
+
+    /**
+     * 查询全部用户数量
+     *
+     * @return
+     */
     Integer queryUserCount();
 
     User queryByUsernameAndPassword(@Param("username") String username);
 
     List<AwardInfo> queryAwardInfo(@Param("username") String username);
 
-    int insertUser(@Param("user") User user);
-
-    List<User> queryAll();
 
     User queryUserByName(@Param("username") String username);
 
@@ -26,7 +32,6 @@ public interface UserMapper {
 
     int updateUserByUsername(@Param("user") User user);
 
-    void deleteUserByUsername(@Param("username") String username);
 
     List<UserRadar1> queryUserRadar1(@Param("user") String user);
 

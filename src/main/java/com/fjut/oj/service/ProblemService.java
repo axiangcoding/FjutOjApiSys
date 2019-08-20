@@ -2,11 +2,14 @@ package com.fjut.oj.service;
 
 import com.fjut.oj.pojo.Problem;
 import com.fjut.oj.pojo.Problems1;
-import com.fjut.oj.pojo.Problemsample;
-import com.fjut.oj.util.problemHTML;
+import com.fjut.oj.pojo.ProblemSample;
+import com.fjut.oj.util.ProblemHTML;
 
 import java.util.List;
 
+/**
+ * @author cjt
+ */
 public interface ProblemService {
 
     List<Problem> queryAllProblems();        //查询所有的题目
@@ -63,9 +66,9 @@ public interface ProblemService {
 
     List<Integer> getProblemsByOjPid(int oj, String ojspid);
 
-    Integer saveProblemHTML(Integer pid, problemHTML ph);
+    Integer saveProblemHTML(Integer pid, ProblemHTML ph);
 
-    Problemsample getProblemHTMLProblemSample(Integer pid);
+    ProblemSample getProblemHTMLProblemSample(Integer pid);
 
     Problem queryProblemByOjidAndOjspid(Integer ojid, String ojspid);
 

@@ -42,12 +42,13 @@ public class SubmitterImp implements Submitter {
         status.setCodelen(codelen);
 
         System.out.println(status.toString());
-
-        statusService.insertStatus(status); // 把这个提交记录插入到表中
+        // 把这个提交记录插入到表中
+        statusService.insertStatus(status);
 
         SubmitInfo submitInfo = new SubmitInfo(rid, ppid + "", language, code, false);
-        submitVJ(submitInfo, ojid); // 插入到对应的 oj 评测机队列里
-        System.out.println("success       ++++++++++");
+        // 插入到对应的 oj 评测机队列里
+        submitVJ(submitInfo, ojid);
+        System.out.println("success++++++++++");
         System.out.println(submitInfo.toString());
         return 0;
     }

@@ -1,7 +1,7 @@
 package com.fjut.oj.mapper;
 
 import com.fjut.oj.pojo.*;
-import com.fjut.oj.util.problemHTML;
+import com.fjut.oj.util.ProblemHTML;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -165,9 +165,9 @@ public interface ProblemMapper {
 
     List<Integer> getProblemsByOjPid(@Param("oj") Integer oj, @Param("ojspid") String ojspid);
 
-    Integer saveProblemHTMLProblemView(@Param("pid") Integer pid, @Param("ph") problemHTML ph);
+    Integer saveProblemHTMLProblemView(@Param("pid") Integer pid, @Param("ph") ProblemHTML ph);
 
-    Integer saveProblemHTMLProblemSample(@Param("pid") Integer pid, @Param("ph") problemHTML ph);
+    Integer saveProblemHTMLProblemSample(@Param("pid") Integer pid, @Param("ph") ProblemHTML ph);
 
     /*
     Integer editProblemDis();
@@ -186,7 +186,7 @@ public interface ProblemMapper {
 
     List<t_problemview> getProblemHTMLProblemView(@Param("pid") Integer pid);
 
-    Problemsample getProblemHTMLProblemSample(@Param("pid") Integer pid);
+    ProblemSample getProblemHTMLProblemSample(@Param("pid") Integer pid);
 
     Problem queryProblemByOjidAndOjspid(@Param("ojid") Integer ojid, @Param("ojspid") String ojspid);
 

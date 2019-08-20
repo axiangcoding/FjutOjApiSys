@@ -16,6 +16,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * @author cjt
+ */
 @Service("UserService")
 public class UserServiceImpl implements UserService {
 
@@ -28,15 +31,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public int queryUserCount() {
         return userMapper.queryUserCount();
-    }
-
-    @Override
-    public boolean check(String username, String password) {
-        User user = userMapper.queryByUsernameAndPassword(username);
-        if (user != null && user.getPassword().equals(password)) {
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -63,11 +57,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.getUserByUsernameAndPassword(username, password);
     }
 
-    @Override
-    public List<User> queryAll() {
-        List<User> list = userMapper.queryAll();
-        return list;
-    }
 
     @Override
     public void deleteUserByUsername(String username) {
@@ -108,7 +97,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> queryAcnumTop10() {
+    public List<User> queryAcNumTop10() {
         List<User> list = userMapper.queryAcnumTop10();
         return list;
     }

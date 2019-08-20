@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fjut.oj.mapper.AllUsersRankMapper">
     <select id="queryAllUsersRank" resultType="com.fjut.oj.pojo.User">
-        select *
-        from users
-        order by acnum
-        desc
+        SELECT *
+        FROM users
+        ORDER BY acnum
+        DESC
         LIMIT #{start}, 50
     </select>
 

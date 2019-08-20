@@ -91,7 +91,6 @@ public class FileController {
         MultipartFile multipartFile = multipartRequest.getFile("file");
         // 保存文件名为原名
         String filePath = baseFilePath + multipartFile.getOriginalFilename();
-        System.out.println(filePath);
         try {
             InputStream is = multipartFile.getInputStream();
             OutputStream out = new FileOutputStream(filePath);
@@ -111,7 +110,6 @@ public class FileController {
         JsonInfo jsonInfo = new JsonInfo();
         List<LocalJudgeFile> judgeFiles = new ArrayList<>();
         File baseDir = new File(baseJudgeFilePath);
-        System.out.println(baseJudgeFilePath);
         if (baseDir.isDirectory()) {
             File[] problemDir = baseDir.listFiles();
             for (File problemFile : problemDir) {

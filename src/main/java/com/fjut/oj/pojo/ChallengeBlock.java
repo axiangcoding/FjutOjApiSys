@@ -1,6 +1,9 @@
 package com.fjut.oj.pojo;
 
-// 挑战模式块
+/**
+ * 挑战模块
+ * @author axiang
+ */
 public class ChallengeBlock {
 
     private Integer id;

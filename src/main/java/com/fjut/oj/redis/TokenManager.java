@@ -4,7 +4,7 @@ import com.fjut.oj.pojo.TokenModel;
 
 /**
  * 对token进行操作
- * @Author: axiang [20190705]
+ * @author axiang [20190705]
  */
 public interface TokenManager {
     /**

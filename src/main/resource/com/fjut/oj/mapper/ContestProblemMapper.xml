@@ -3,15 +3,15 @@
 <mapper namespace="com.fjut.oj.mapper.ContestProblemMapper">
 
     <select id="getContestProblemsByCid" resultType="com.fjut.oj.pojo.ContestProblem">
-        select *
-        from contestproblems
-        where cid=#{cid}
+        SELECT *
+        FROM contestproblems
+        WHERE cid=#{cid}
     </select>
 
     <insert id="insertContestProblem" parameterType="com.fjut.oj.pojo.ContestProblem">
-         insert into
+         INSERT INTO
          consterproblems
-         values(
+         VALUES(
          #{contestProblem.cid},
          #{contestProblem.pid},
          #{contestProblem.tpid}

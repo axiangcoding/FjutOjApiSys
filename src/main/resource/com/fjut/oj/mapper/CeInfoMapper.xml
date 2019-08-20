@@ -3,19 +3,19 @@
 <mapper namespace="com.fjut.oj.mapper.CeInfoMapper">
 
     <select id="queryAllCeInfo" resultType="com.fjut.oj.pojo.CeInfo">
-        select *
-        from ceinfo
+        SELECT *
+        FROM ceinfo
     </select>
 
     <select id="queryCeInfo" resultType="com.fjut.oj.pojo.CeInfo">
-        select *
-        from ceinfo
-        where rid = #{rid}
+        SELECT *
+        FROM ceinfo
+        WHERE rid = #{rid}
     </select>
 
     <insert id="insertCeInfo" parameterType="com.fjut.oj.pojo.CeInfo">
-        insert into ceinfo
-        values(
+        INSERT INTO ceinfo
+        VALUES(
           #{ce.rid},
           #{ce.info}
         )

@@ -1,7 +1,7 @@
 package com.fjut.oj.exception;
 
 /**
- * @Author: axiang [2019/7/12] 请求者请求私密内容异常
+ * @author axiang [2019/7/12] 请求者请求私密内容异常
  */
 
 public class NotOwnerException extends RuntimeException {

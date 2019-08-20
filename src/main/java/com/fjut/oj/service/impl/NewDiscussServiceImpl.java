@@ -40,7 +40,7 @@ public class NewDiscussServiceImpl implements NewDiscussService {
     }
 
     @Override
-    public Integer updateDisscussPirority(Integer id, Double priority){
+    public Integer updateDiscussPirority(Integer id, Double priority){
         return newDiscussMapper.updateDisscussPirority(id,priority);
     }
 }

@@ -5,38 +5,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2015/6/6.
+ * @author QAQ [20150606]
  */
-public class problemHTML {
+public class ProblemHTML {
 
     public String getTitle() {
         return Title;
     }
+
     public String getDis() {
         return Dis;
     }
+
     public String getInput() {
         return Input;
     }
+
     public String getOutput() {
         return Output;
     }
+
     public List<String> getSampleInput() {
         return SampleInput;
     }
+
     public List<String> getSampleOutput() {
         return SampleOutput;
     }
+
     public String getTimeLimit() {
         return TimeLimit;
     }
+
     public String getMenoryLimit() {
         return MenoryLimit;
     }
+
     public String getInt64() {
         return Int64;
     }
-    public int getSpj(){return spj?1:0;}
+
+    public int getSpj() {
+        return spj ? 1 : 0;
+    }
+
     public boolean isSpj() {
         return spj;
     }
@@ -51,38 +63,46 @@ public class problemHTML {
     private String MenoryLimit;
     private String Int64;
     private boolean spj;
-    private boolean admin=false;
+    private boolean admin = false;
     private int pid;
     private boolean isInContest = false;
-    public void setPid(int pid){this.pid=pid;}
-    public void setSpj(int i){spj=(i!=0);}
-    public problemHTML(){
-        Dis="";
-        Input="";
-        Output="";
-        TimeLimit="";
-        MenoryLimit="";
-        Int64="";
-        spj=false;
-        SampleInput=new ArrayList<String>();
-        SampleOutput=new ArrayList<String>();
+
+    public void setPid(int pid) {
+        this.pid = pid;
     }
-    public problemHTML(int pid){
-        Dis="";
-        Input="";
-        Output="";
-        TimeLimit="";
-        MenoryLimit="";
-        Int64="";
-        spj=false;
-        SampleInput=new ArrayList<String>();
-        SampleOutput=new ArrayList<String>();
-        this.pid=pid;
+
+    public void setSpj(int i) {
+        spj = (i != 0);
+    }
+
+    public ProblemHTML() {
+        Dis = "";
+        Input = "";
+        Output = "";
+        TimeLimit = "";
+        MenoryLimit = "";
+        Int64 = "";
+        spj = false;
+        SampleInput = new ArrayList<String>();
+        SampleOutput = new ArrayList<String>();
+    }
+
+    public ProblemHTML(int pid) {
+        Dis = "";
+        Input = "";
+        Output = "";
+        TimeLimit = "";
+        MenoryLimit = "";
+        Int64 = "";
+        spj = false;
+        SampleInput = new ArrayList<String>();
+        SampleOutput = new ArrayList<String>();
+        this.pid = pid;
     }
 
     @Override
     public String toString() {
-        return "problemHTML{" +
+        return "ProblemHTML{" +
                 "Title='" + Title + '\'' +
                 ", Dis='" + Dis + '\'' +
                 ", Input='" + Input + '\'' +
@@ -159,52 +179,52 @@ public class problemHTML {
         isInContest = inContest;
     }
 
-    private String getTitleHTML(){
-        return "<h1 style='text-align:center'>"+Title+"</h1>";
+    private String getTitleHTML() {
+        return "<h1 style='text-align:center'>" + Title + "</h1>";
     }
 
-    private String getLimitHTML(){
-        String s="";
-        s+="<div class='row'>" +
+    private String getLimitHTML() {
+        String s = "";
+        s += "<div class='row'>" +
                 "<div style='text-align:center'>" +
-                "TimeLimit:"+TimeLimit+"&nbsp;&nbsp;MemoryLimit:"+MenoryLimit+
-                "</div>"+
+                "TimeLimit:" + TimeLimit + "&nbsp;&nbsp;MemoryLimit:" + MenoryLimit +
+                "</div>" +
                 "</div>";
         return s;
     }
 
-    private String getInt64HTML(){
-        String s="";
-        s+="<div class='row'>" +
+    private String getInt64HTML() {
+        String s = "";
+        s += "<div class='row'>" +
                 "<div style='text-align:center'>" +
-                "64-bit integer IO format:<span class='badge'>" + Int64 +"</span>"+
-                "</div>"+
+                "64-bit integer IO format:<span class='badge'>" + Int64 + "</span>" +
+                "</div>" +
                 "</div>";
         return s;
     }
 
-    private String getSpjHTML(){
-        String s="";
-        if(spj){
-            s+="<div class='row'>" +
+    private String getSpjHTML() {
+        String s = "";
+        if (spj) {
+            s += "<div class='row'>" +
                     "<center>" +
                     "Special Judge" + "red" +
-                    "</center>"+
+                    "</center>" +
                     "</div>";
         }
         return s;
     }
 
-    private String edit(String href,String s){
+    private String edit(String href, String s) {
         return "<a class=\"btn btn-default btn-sm\" style=\"\n" +
                 "    margin-top: -16px;\n" +
                 "    margin-right: -16px;\n" +
                 "    float: right;\n" +
                 "    border-radius: 0px 0px 0px 6px;\n" +
-                "\" href='"+href+"'>"+s+"</a>";
+                "\" href='" + href + "'>" + s + "</a>";
     }
 
-    public void addSample(String sampleinput,String sampleoutput){
+    public void addSample(String sampleinput, String sampleoutput) {
         SampleInput.add(sampleinput);
         SampleOutput.add(sampleoutput);
     }

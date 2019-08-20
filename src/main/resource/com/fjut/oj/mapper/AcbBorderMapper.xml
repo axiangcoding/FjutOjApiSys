@@ -10,7 +10,7 @@
         mark,
         time
         )
-        values
+        VALUES
         (
         #{acbBorder.username},
         #{acbBorder.acbchange},

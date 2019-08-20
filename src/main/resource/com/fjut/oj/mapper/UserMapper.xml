@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fjut.oj.mapper.UserMapper">
-
-    <select id="queryUserCount" resultType="java.lang.Integer">
-        SELECT count(*)
-        FROM users
-    </select>
-
     <insert id="insertUser" parameterType="com.fjut.oj.pojo.User">
           INSERT INTO users
           VALUES(
@@ -37,6 +31,11 @@
           )
     </insert>
 
+    <select id="queryUserCount" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM users
+    </select>
+
     <select id="queryAwardInfo" resultType="com.fjut.oj.pojo.AwardInfo">
         SELECT time,contest_level,awards_level,text FROM t_team_member_info
         WHERE username1 = #{username} OR username2 = #{username} OR username3 = #{username}
@@ -54,10 +53,6 @@
         </where>
     </select>
 
-    <select id="queryAll" resultType="com.fjut.oj.pojo.User">
-        SELECT *
-        FROM Users
-    </select>
 
     <select id="queryUserByName" resultType="com.fjut.oj.pojo.User">
         SELECT *

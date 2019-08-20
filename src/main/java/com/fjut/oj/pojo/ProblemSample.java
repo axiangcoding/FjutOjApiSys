@@ -1,6 +1,9 @@
 package com.fjut.oj.pojo;
 
-public class Problemsample {
+/**
+ * @author cjt
+ */
+public class ProblemSample {
     private Integer pid;
     private Integer id;
     private String  input;

@@ -11,6 +11,15 @@ import java.util.List;
 public interface ChallengeMapper {
 
     /**
+     * 插入一条开启模块记录
+     *
+     * @param username
+     * @param blockId
+     * @return
+     */
+    Integer insertOpenBlock(@Param("username") String username, @Param("blockId") Integer blockId);
+
+    /**
      * 获取全部挑战模块
      *
      * @return ChallengeBlockForUser
@@ -33,7 +42,6 @@ public interface ChallengeMapper {
      */
     ChallengeBlock queryChallengeBlockByBlockId(@Param("blockId") Integer blockId);
 
-
     /**
      * 获取用户显示的挑战模块ID
      *
@@ -41,7 +49,6 @@ public interface ChallengeMapper {
      * @return
      */
     List<Integer> queryShowedChallengeBlocksByUsername(@Param("username") String username);
-
 
     /**
      * 获取全部挑战模块的解锁条件
@@ -60,7 +67,7 @@ public interface ChallengeMapper {
 
 
     /**
-     * 根据模块ID 获取挑战模式中某个模块的解锁条件
+     * 根据模块ID 获取挑战模式中某个模块的解锁条件（前置模块）
      *
      * @param blockId
      * @return
@@ -106,6 +113,7 @@ public interface ChallengeMapper {
 
     /**
      * 获取题号为pid的题目隶属于哪个模块
+     *
      * @param pid
      * @return
      */
@@ -113,9 +121,20 @@ public interface ChallengeMapper {
 
     /**
      * 获取题目隶属挑战模块的后置模块（所有可能会解锁的待解锁模块）
-     * @param pid
+     *
+     * @param blockId
      * @return
      */
-    List<Integer> queryBelongBlocksByPid(@Param("pid") Integer pid);
+    List<Integer> queryBelongBlocksByBlockId(@Param("blockId") Integer blockId);
+
+    /**
+     * 获取挑战模块的以获得分值情况
+     *
+     * @param username
+     * @param blockId
+     * @return
+     */
+    Integer queryBlockSolvedScore(@Param("username") String username, @Param("blockId") Integer blockId);
+
 
 }

@@ -1,7 +1,7 @@
 package com.fjut.oj.exception;
 
 /**
- * @Author: axiang [20190707] 不是管理员异常
+ * @author axiang [20190707] 不是管理员异常
  */
 public class NotAdminException extends RuntimeException {
     public NotAdminException() {

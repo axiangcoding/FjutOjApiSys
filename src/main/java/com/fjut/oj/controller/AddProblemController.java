@@ -11,7 +11,7 @@ import com.fjut.oj.judge.entity.OJ.PKU.PKU;
 import com.fjut.oj.judge.util.HTML.problemHTML;
 import com.fjut.oj.pojo.Problem;
 import com.fjut.oj.pojo.ProblemView;
-import com.fjut.oj.pojo.Problemsample;
+import com.fjut.oj.pojo.ProblemSample;
 import com.fjut.oj.service.ProblemSampleService;
 import com.fjut.oj.service.ProblemService;
 import com.fjut.oj.service.ProblemViewService;
@@ -22,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author cjt
@@ -149,7 +148,7 @@ public class AddProblemController {
         System.out.println(problemView.toString());
         Integer addnum2 = problemViewService.insertProblemView(problemView);
 
-        Problemsample problemsample = new Problemsample();
+        ProblemSample problemsample = new ProblemSample();
         problemsample.setPid(newpid);
         problemsample.setId(0);
         problemsample.setInput(p.getSampleInput().get(0));

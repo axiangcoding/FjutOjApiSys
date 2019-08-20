@@ -31,25 +31,28 @@ import java.util.List;
  * 对HttpClient的封装
  * 使用同一个MyClient类进行操作可以保存其cookie和session信息
  * 可以实现先登录，然后获取登录后页面的操作
- * Created by Administrator on 2015/6/7.
+ *
+ * add by axiang 祖传代码，部分类已经废弃，但小心谨慎更改！！！
+ *
+ * @author QAQ [20150607]
  */
-public class MyClient extends DefaultHttpClient{
-    public List<Pair<String,String>> header = new ArrayList<>();
+public class MyClient extends DefaultHttpClient {
+    public List<Pair<String, String>> header = new ArrayList<>();
 
-    public MyClient(){
+    public MyClient() {
         super();
         HttpClientParams.setCookiePolicy(getParams(), CookiePolicy.BROWSER_COMPATIBILITY);
     }
 
     public MyClient(ClientConnectionManager ccm, HttpParams params) {
-        super(ccm,params);
+        super(ccm, params);
     }
 
     public static MyClient getMyClient() {
-        HttpClient base = new DefaultHttpClient() ;
+        HttpClient base = new DefaultHttpClient();
         try {
             SSLContext ctx = SSLContext.getInstance("TLS");
-            X509TrustManager tm = new X509TrustManager(){
+            X509TrustManager tm = new X509TrustManager() {
                 @Override
                 public void checkClientTrusted(java.security.cert.X509Certificate[] x509Certificates, String s) throws java.security.cert.CertificateException {
 
@@ -65,7 +68,7 @@ public class MyClient extends DefaultHttpClient{
                     return new java.security.cert.X509Certificate[0];
                 }
             };
-            ctx.init(null, new TrustManager[] { tm }, null);
+            ctx.init(null, new TrustManager[]{tm}, null);
             SSLSocketFactory ssf = new SSLSocketFactory(ctx);
             ssf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
             ClientConnectionManager ccm = base.getConnectionManager();
@@ -81,11 +84,12 @@ public class MyClient extends DefaultHttpClient{
 
     /**
      * 对url提交一个post请求
-     * @param URL 提交地址
+     *
+     * @param URL  提交地址
      * @param form 表单的key value
      * @return 返回的页面内容  如果为nul表示错误
      */
-    public synchronized String Post(String URL,List<BasicNameValuePair> form){
+    public synchronized String Post(String URL, List<BasicNameValuePair> form) {
         HttpEntity entity;
         try {
             entity = new UrlEncodedFormEntity(form, "UTF-8");
@@ -107,15 +111,16 @@ public class MyClient extends DefaultHttpClient{
      * 获取指定url的内容，指定了utf-8编码
      * 要获取登录后才能显示的页面，要先用Post提交登录表单，然后get指定页面（先后必须使用同一个MyClient对象）
      * 返回的页面没有执行页面的js脚本代码
+     *
      * @param URL 地址
      * @return 返回地址的Document类  为null表示获取失败
      */
-    public Document get(String URL){
+    public Document get(String URL) {
         HttpEntity entity = null;
         try {
             HttpGet httpget = new HttpGet(URL);
             httpget.getParams().setBooleanParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, false);
-            if(header!=null) {
+            if (header != null) {
                 for (Pair<String, String> pair : header) {
                     httpget.setHeader(pair.getKey(), pair.getValue());
                 }
@@ -129,12 +134,12 @@ public class MyClient extends DefaultHttpClient{
         }
     }
 
-    public String getString(String URL){
+    public String getString(String URL) {
         HttpEntity entity = null;
         try {
             HttpGet httpget = new HttpGet(URL);
             httpget.getParams().setBooleanParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, false);
-            if(header!=null) {
+            if (header != null) {
                 for (Pair<String, String> pair : header) {
                     httpget.setHeader(pair.getKey(), pair.getValue());
                 }
@@ -147,13 +152,12 @@ public class MyClient extends DefaultHttpClient{
             return null;
         }
     }
-    private String HttpEntityToString(HttpEntity entity){
+
+    private String HttpEntityToString(HttpEntity entity) {
         if (entity != null) {
-            //System.out.println("Response content lenght:"  + entity.getContentLength());
             String content;
             try {
                 content = EntityUtils.toString(entity);
-                //Tool.debug("Response content:" + content);
                 return content;
             } catch (IOException e) {
                 e.printStackTrace();

@@ -12,6 +12,7 @@ public class ViewUserStatus {
     private String nick;
     private String ruser;
     private Integer pid;
+    private Integer cid;
     private Integer lang;
     private Date submitTime;
     private Integer result;
@@ -53,6 +54,14 @@ public class ViewUserStatus {
 
     public void setPid(Integer pid) {
         this.pid = pid;
+    }
+
+    public Integer getCid() {
+        return cid;
+    }
+
+    public void setCid(Integer cid) {
+        this.cid = cid;
     }
 
     public Integer getLang() {

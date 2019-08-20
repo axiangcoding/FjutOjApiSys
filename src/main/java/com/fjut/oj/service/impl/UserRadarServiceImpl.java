@@ -27,14 +27,10 @@ public class UserRadarServiceImpl implements UserRadarService {
     public String getUserRadar(String user) {
         List<UserRadar1> listUserRadar1 = userMapper.queryUserRadar1(user);
         List<UserRadar2> listUserRadar2 = userMapper.queryUserRadar2(user);
-
-        System.out.println(user + "******");
-
         int[] a = new int[7];
         int[] b = new int[7];
         try {
             for (UserRadar1 userRadar1: listUserRadar1) {
-                System.out.println(userRadar1.toString());
                 int x = userRadar1.getTtype();
                 if (x >=0 && x<= 6){
                     a[x] = userRadar1.getNum() == null ? 0 : userRadar1.getNum();
@@ -56,7 +52,6 @@ public class UserRadarServiceImpl implements UserRadarService {
             }
             ret += (b[i] !=0 ? a[i] * 100.0/b[i]:"0");
         }
-        System.out.println(ret);
         return ret + "]";
     }
 }

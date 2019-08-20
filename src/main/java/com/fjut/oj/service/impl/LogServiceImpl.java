@@ -16,8 +16,7 @@ import java.util.List;
 public class LogServiceImpl implements LogService {
     @Autowired
     LogMapper logMapper;
-
-
+    
     @Override
     public Integer insertLog(Log log) {
         return logMapper.insertLog(log);

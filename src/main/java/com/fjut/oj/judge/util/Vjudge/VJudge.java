@@ -19,13 +19,6 @@ public class VJudge {
 
     public VJudge(){//初始化
 
-        //System.out.println("create Main!!!");
-        /* 本地判题机
-        for(int i = 0; i< 1; i++){
-            s.add(new SubmitterLocal(0,"","",-1,this));
-        }
-        */
-
         AccountConfig accountConfig = new AccountConfig();
 
         String ojkeys[] = Submitter.oj_keys;

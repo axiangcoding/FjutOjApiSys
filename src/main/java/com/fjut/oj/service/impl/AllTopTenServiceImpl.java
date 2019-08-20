@@ -13,12 +13,13 @@ import java.util.List;
 public class AllTopTenServiceImpl implements AllTopTenService {
     @Autowired
     private UserMapper userMapper;
+
     @Autowired
     private WeekRankRecordService weekRankRecordService;
 
     @Override
     public List<User> getRatingTOP() {
-        return userMapper.getRatingTop(0,10);
+        return userMapper.getRatingTop(0, 10);
     }
 
     @Override

@@ -5,6 +5,6 @@
         SELECT COUNT(*)
         FROM
         t_viewcode
-        WHERE username=#{username} and pid=#{pid}
+        WHERE username=#{username} AND pid=#{pid}
     </select>
 </mapper>

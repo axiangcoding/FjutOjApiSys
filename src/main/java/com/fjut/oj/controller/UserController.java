@@ -77,6 +77,14 @@ public class UserController {
         return jsonInfo;
     }
 
+    @PostMapping("/logout")
+    @CheckUserPrivate
+    public JsonInfo logoutUser(@RequestParam("username")String username)
+    {
+        tokenManager.deleteToken(username);
+        return new JsonInfo("SUCCESS","下线成功");
+    }
+
     /**
      * 注册一个用户
      *

@@ -22,7 +22,7 @@ public class SubmitInfo {
 
     @Override
     public String toString() {
-        return "SubmitInfo{" +
+        return "SubmitInfo {" +
                 "rid=" + rid +
                 ", pid='" + pid + '\'' +
                 ", code='" + code + '\'' +

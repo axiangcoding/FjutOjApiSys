@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * TODO: Controller中全部更改后废弃
+ * @author cjt
+ */
 public class JsonMsg {
 
     private int code;

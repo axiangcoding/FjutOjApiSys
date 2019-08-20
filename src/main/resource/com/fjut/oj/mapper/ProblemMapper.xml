@@ -230,7 +230,7 @@
 
     </insert>
 
-    <insert id="saveProblemHTMLProblemSample" parameterType="com.fjut.oj.pojo.Problemsample">
+    <insert id="saveProblemHTMLProblemSample" parameterType="com.fjut.oj.pojo.ProblemSample">
         INSERT INTO t_problem_sample
         VALUES(?,?,?,?)
         #{pid}, #{ph.id}, #{ph.Input}, #{ph.Output}
@@ -242,7 +242,7 @@
         WHERE pid= #{pid}
     </select>
 
-    <select id="getProblemHTMLProblemSample" resultType="com.fjut.oj.pojo.Problemsample">
+    <select id="getProblemHTMLProblemSample" resultType="com.fjut.oj.pojo.ProblemSample">
         SELECT *
         FROM t_problem_sample
         WHERE pid = #{pid}

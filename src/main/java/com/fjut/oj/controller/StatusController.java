@@ -47,8 +47,8 @@ public class StatusController {
     private CodeViewService codeViewService;
 
 
-    @RequestMapping("/GAllStatus")
-    public JsonInfo queryAllStatus(@RequestParam("pagenum") String pageNumStr) {
+    @GetMapping("/getAllStatusByPage")
+    public JsonInfo queryAllStatus(@RequestParam("pageNum") String pageNumStr) {
         JsonInfo jsonInfo = new JsonInfo();
         int pageNum = Integer.parseInt(pageNumStr);
         Integer num = statusService.allStatusNum();

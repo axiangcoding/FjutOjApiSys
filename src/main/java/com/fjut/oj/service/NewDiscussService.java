@@ -16,5 +16,5 @@ public interface NewDiscussService {
 
     Integer queryDiscussCountById(Integer id);
 
-    Integer updateDisscussPirority(Integer id, Double priority);
+    Integer updateDiscussPirority(Integer id, Double priority);
 }

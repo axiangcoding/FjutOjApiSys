@@ -1,8 +1,8 @@
 package com.fjut.oj.service;
 
-import com.fjut.oj.pojo.Problemsample;
+import com.fjut.oj.pojo.ProblemSample;
 
 public interface ProblemSampleService {
 
-    public Integer insertProblemSample(Problemsample problemsample);
+    Integer insertProblemSample(ProblemSample problemsample);
 }

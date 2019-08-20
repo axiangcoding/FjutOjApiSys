@@ -1,62 +1,66 @@
 package com.fjut.oj.pojo.enums;
 
 /**
- * Created by Administrator on 2015/5/22.
+ * @author QAQ [20150522]
  */
-public enum Result{
-        PENDING(0),
-        AC(1),
-        WA(2),
-        CE(3),
-        RE(4),
-        TLE(5),
-        MLE(6),
-        OLE(7),
-        PE(8),
-        DANGER(9),
-        RUNNING(10),
-        ERROR(11),
-        JUDGING(12),
-        SC(13);
+public enum Result {
+    PENDING(0),
+    AC(1),
+    WA(2),
+    CE(3),
+    RE(4),
+    TLE(5),
+    MLE(6),
+    OLE(7),
+    PE(8),
+    DANGER(9),
+    RUNNING(10),
+    ERROR(11),
+    JUDGING(12),
+    SC(13);
 
-        int value;
-        Result(int v){
-                value=v;
-        }
+    int value;
 
-        public int getValue() {
-                return value;
-        }
+    Result(int v) {
+        value = v;
+    }
 
-        public void setValue(int value) {
-                this.value = value;
-        }
+    public int getValue() {
+        return value;
+    }
 
-        public boolean isAc(){
-                return this == Result.AC;
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public boolean isAc() {
+        return this == Result.AC;
+    }
+
+    public boolean isErr() {
+        return this == Result.WA ||
+                this == Result.CE ||
+                this == Result.RE ||
+                this == Result.TLE ||
+                this == Result.MLE ||
+                this == Result.OLE ||
+                this == Result.PE;
+    }
+
+    public boolean isPd() {
+        return this == Result.PENDING ||
+                this == Result.DANGER ||
+                this == Result.RUNNING ||
+                this == Result.ERROR ||
+                this == Result.JUDGING;
+    }
+
+    public static Result getResultById(int value) {
+        for (Result r : Result.values()) {
+            if (r.value == value) {
+                return r;
+            }
         }
-        public boolean isErr(){
-                return  this == Result.WA||
-                        this == Result.CE||
-                        this == Result.RE||
-                        this == Result.TLE||
-                        this == Result.MLE||
-                        this == Result.OLE||
-                        this == Result.PE;
-        }
-        public boolean isPd(){
-                return this == Result.PENDING||
-                        this == Result.DANGER||
-                        this == Result.RUNNING||
-                        this == Result.ERROR||
-                        this == Result.JUDGING;
-        }
-        public static Result getResultById(int value){
-                for(Result r: Result.values()){
-                        if(r.value == value) {
-                                return r;
-                        }
-                }
-                return null;
-        }
+        return null;
+    }
 }

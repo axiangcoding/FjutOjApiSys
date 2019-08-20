@@ -29,7 +29,7 @@ import java.util.Date;
 /**
  * TODO: 暂时设计为得到Exception直接保存到数据库中，后面设置定时任务将文件中的日志写入数据库
  *
- * @Author: axiang [20190620]
+ * @author axiang [20190620]
  * 全局异常处理类，将异常信息保存到数据库中，只返回前端带错误提示的JSON字符串
  * 返回JSON字符串结构为：{code:400 msg:"异常信息" datas:[]}
  */

@@ -8,7 +8,10 @@ import java.util.List;
 
 public interface WeekRankRecordService {
     void add(WeekRankRecord weekRankRecord, int day, int value);
+
     void addStatus(WeekRankRecord weekRankRecord, SubmisssionRecord submisssionRecord);
+
     void sort(WeekRankRecord weekRankRecord);
+
     List<User> getActiveRank();
 }

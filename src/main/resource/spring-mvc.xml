@@ -17,7 +17,7 @@
                                 expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
     </context:component-scan>
 
-    <context:property-placeholder location="classpath:oj-config.properties" />
+    <context:property-placeholder location="classpath:oj-config.properties"/>
 
     <mvc:annotation-driven/>
     <mvc:default-servlet-handler/>
@@ -42,8 +42,6 @@
         <property name="prefix" value="/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-
-
 
 
 </beans>

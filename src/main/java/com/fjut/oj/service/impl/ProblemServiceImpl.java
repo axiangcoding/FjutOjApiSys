@@ -3,10 +3,10 @@ package com.fjut.oj.service.impl;
 import com.fjut.oj.mapper.ProblemMapper;
 import com.fjut.oj.pojo.Problem;
 import com.fjut.oj.pojo.Problems1;
-import com.fjut.oj.pojo.Problemsample;
+import com.fjut.oj.pojo.ProblemSample;
 import com.fjut.oj.pojo.t_problemview;
 import com.fjut.oj.service.ProblemService;
-import com.fjut.oj.util.problemHTML;
+import com.fjut.oj.util.ProblemHTML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -100,7 +100,7 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     @Override
-    public Problemsample getProblemHTMLProblemSample(Integer pid) {
+    public ProblemSample getProblemHTMLProblemSample(Integer pid) {
         return problemMapper.getProblemHTMLProblemSample(pid);
     }
 
@@ -228,7 +228,7 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     @Override
-    public Integer saveProblemHTML(Integer pid, problemHTML ph) {
+    public Integer saveProblemHTML(Integer pid, ProblemHTML ph) {
         if (ph == null) {
             return 0;
         }
@@ -242,7 +242,7 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     public String getP(int pid, String edit, int num) {
-        problemHTML p = getProblemHTML(pid);
+        ProblemHTML p = getProblemHTML(pid);
         if (edit.equals("dis")) {
             return p.getDis();
         }
@@ -277,9 +277,9 @@ public class ProblemServiceImpl implements ProblemService {
         return true;
     }
 
-    public problemHTML getProblemHTML(int pid) {
+    public ProblemHTML getProblemHTML(int pid) {
         Problem p = problemMapper.queryProblemById(pid);
-        problemHTML ph = new problemHTML((pid));
+        ProblemHTML ph = new ProblemHTML((pid));
         Problem problem = problemMapper.queryProblemById(pid);
         List<t_problemview> problemview = problemMapper.getProblemHTMLProblemView(pid);
         try {
@@ -296,7 +296,7 @@ public class ProblemServiceImpl implements ProblemService {
                 ph.setDis(pv.getDis());
                 ph.setInput(pv.getInput());
                 ph.setOutput(pv.getOutput());
-                Problemsample problemsample = problemMapper.getProblemHTMLProblemSample(pid);
+                ProblemSample problemsample = problemMapper.getProblemHTMLProblemSample(pid);
                 ph.addSample(problemsample.getInput(), problemsample.getOutput());
 
                 return ph;

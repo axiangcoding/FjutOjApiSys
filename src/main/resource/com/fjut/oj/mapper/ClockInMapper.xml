@@ -14,10 +14,10 @@
 
     <select id="queryAllClockInByUsername" resultType="com.fjut.oj.pojo.t_clock_in">
         SELECT * FROM t_clock_in WHERE username = #{username}
-            ORDER BY time DESC
-            <if test="pageNum != null">
-                LIMIT #{pageNum},10
-            </if>
+        ORDER BY time DESC
+        <if test="pageNum != null">
+            LIMIT #{pageNum},10
+        </if>
     </select>
 
     <select id="queryClockInByUsernameAndDate" resultType="com.fjut.oj.pojo.t_clock_in">
@@ -28,7 +28,7 @@
             ORDER BY time DESC;
     </select>
 
-    <insert id="insertClockIn" parameterType="com.fjut.oj.pojo.t_clock_in" >
+    <insert id="insertClockIn" parameterType="com.fjut.oj.pojo.t_clock_in">
         INSERT INTO t_clock_in(
             username,
             time,

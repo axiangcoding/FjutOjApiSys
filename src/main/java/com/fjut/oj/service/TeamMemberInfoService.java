@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface TeamMemberInfoService {
 
-    public List<TeamMemberInfo> queryAllTeamMemberInfo(Integer start);
+    List<TeamMemberInfo> queryAllTeamMemberInfo(Integer start);
 
-    public Integer queryAllCountTeamMemberInfo();
+    Integer queryAllCountTeamMemberInfo();
 
-    public TeamMemberInfo queryTeamMemberInfoById(Integer id);
+    TeamMemberInfo queryTeamMemberInfoById(Integer id);
 
-    public Integer insertTeamMemberInfo(TeamMemberInfo teamMemberInfo);
+    Integer insertTeamMemberInfo(TeamMemberInfo teamMemberInfo);
 
-    public Integer replaceTeamMemberInfo(TeamMemberInfo teamMemberInfo);
+    Integer replaceTeamMemberInfo(TeamMemberInfo teamMemberInfo);
 }

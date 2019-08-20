@@ -13,16 +13,16 @@ public class RES {
     private String CEInfo;
     private int score;
 
-    public RES(){
-        R= Result.PENDING;
-        Time="-";
-        Memory="-";
-        CEInfo="";
+    public RES() {
+        R = Result.PENDING;
+        Time = "-";
+        Memory = "-";
+        CEInfo = "";
         score = -1;
     }
 
-    public boolean canReturn(){
-        return R!=Result.PENDING &&R!=Result.JUDGING&&R!=Result.RUNNING;
+    public boolean canReturn() {
+        return R != Result.PENDING && R != Result.JUDGING && R != Result.RUNNING;
     }
 
     public String getCEInfo() {
@@ -66,8 +66,8 @@ public class RES {
         this.score = score;
     }
 
-    public int getUseTime(){
-        return Integer.parseInt(Time.substring(0, getTime().length()-2));
+    public int getUseTime() {
+        return Integer.parseInt(Time.substring(0, getTime().length() - 2));
     }
 
     @Override

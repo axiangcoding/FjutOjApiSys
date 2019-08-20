@@ -1,17 +1,30 @@
 package com.fjut.oj.util;
 
 /**
- * Created by Administrator on 2015/11/22 0022.
+ * @author QAQ [20151122]
  */
-public class Pair<K,V> {
+public class Pair<K, V> {
     K key;
     V value;
-    public Pair(K k,V v){
-        this.key=k;
-        this.value=v;
+
+    public Pair(K k, V v) {
+        this.key = k;
+        this.value = v;
     }
-    public K getKey(){return key;}
-    public V getValue(){return value;}
-    public void setKey(K k){this.key=k;}
-    public void setValue(V v){this.value=v;}
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+
+    public void setKey(K k) {
+        this.key = k;
+    }
+
+    public void setValue(V v) {
+        this.value = v;
+    }
 }

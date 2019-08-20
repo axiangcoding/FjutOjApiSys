@@ -45,9 +45,6 @@ public class ClockInServiceImpl implements ClockInService {
     @Override
     public boolean insertClockIn(t_clock_in clockin) {
         int ret = clockInMapper.insertClockIn(clockin);
-        if (ret == 1)
-            return true;
-        else
-            return false;
+        return ret == 1;
     }
 }
