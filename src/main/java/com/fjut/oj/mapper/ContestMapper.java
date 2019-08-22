@@ -3,12 +3,30 @@ package com.fjut.oj.mapper;
 import com.fjut.oj.pojo.*;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author cjt
  */
 public interface ContestMapper {
+    /**
+     * 新建一个比赛
+     *
+     * @param contest
+     * @return
+     */
+    Integer insertContest(@Param("contest") Contest contest);
+
+    /**
+     * 插入多条比赛题目
+     *
+     * @param problems
+     * @return
+     */
+    Integer insertContestProblem(@Param("contestProblems") ArrayList<ContestProblem> problems);
+
+
     /**
      * 根据条件一次性查询20条比赛列表
      *
@@ -44,6 +62,7 @@ public interface ContestMapper {
 
     /**
      * 根据多重条件查询比赛的提交数量，一次30条
+     *
      * @param cid
      * @param nick
      * @param pid
@@ -83,11 +102,9 @@ public interface ContestMapper {
 
     Integer getContestUser(@Param("cid") Integer cid, @Param("username") String username);
 
-    Integer insertContest(@Param("contest") Contest contest);
 
     Integer getMaxContestId();
 
-    Integer insertContestProblem(@Param("contestProblem") ContestProblem contestProblem);
 
     Integer insertContestuser(@Param("contestuser") Contestuser contestuser);
 

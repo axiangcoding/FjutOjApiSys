@@ -1,11 +1,69 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fjut.oj.mapper.ContestMapper">
+    <insert id="insertContest" parameterType="com.fjut.oj.pojo.Contest"
+            useGeneratedKeys="true" keyColumn="contest.id" keyProperty="contest.id">
+        INSERT INTO
+        contest
+        (
+        name,
+        beginTime,
+        endTime,
+        rankType,
+        ctype,
+        password,
+        registerstarttime,
+        registerendtime,
+        info,
+        computerating,
+        createuser,
+        kind,
+        problemCanPutTag,
+        statusReadOut,
+        registerShowComplete,
+        hideRankMinute,
+        isHideOthersStatus,
+        isHideOthersStatusInfo
+        )
+        VALUES(
+        #{contest.name},
+        #{contest.beginTime},
+        #{contest.endTime},
+        #{contest.rankType},
+        #{contest.ctype},
+        #{contest.password},
+        #{contest.registerstarttime},
+        #{contest.registerendtime},
+        #{contest.info},
+        0,
+        #{contest.createuser},
+        #{contest.kind},
+        0,
+        0,
+        0,
+        0,
+        0,
+        0)
+    </insert>
+
+    <insert id="insertContestProblem" parameterType="java.util.ArrayList">
+    INSERT INTO
+        contestproblems
+        VALUES
+        <foreach collection="contestProblems" index="index" separator="," item="item">
+            (
+            #{item.cid},
+            #{item.pid},
+            #{item.tpid}
+            )
+        </foreach>
+
+    </insert>
 
     <select id="queryContestByCondition" resultType="com.fjut.oj.pojo.Contest">
         SELECT * FROM contest
         WHERE kind = #{kind}
-        ORDER BY endTime &lt; now(),beginTime DESC
+        ORDER BY endTime &lt; now(),beginTime DESC, id DESC
         LIMIT #{startIndex}, 20
     </select>
 
@@ -105,30 +163,7 @@
         where cid = #{cid} and username = #{username}
     </select>
 
-    <insert id="insertContest" parameterType="com.fjut.oj.pojo.Contest">
-        insert into
-        contest
-        values(
-        #{contest.id},
-        #{contest.name},
-        #{contest.beginTime},
-        #{contest.endTime},
-        #{contest.rankType},
-        #{contest.ctype},
-        #{contest.password},
-        "2015-08-11 18:00:00",
-        "2015-07-17 18:55:00",
-        "",
-        0,
-        "admin",
-        #{contest.kind},
-        0,
-        0,
-        0,
-        0,
-        0,
-        0)
-    </insert>
+
 
     <select id="getMaxContestId" resultType="java.lang.Integer">
         select MAX(id)
@@ -136,15 +171,6 @@
     </select>
 
 
-    <insert id="insertContestProblem" parameterType="com.fjut.oj.pojo.ContestProblem">
-        insert into
-        contestproblems
-        values(
-          #{contestProblem.cid},
-          #{contestProblem.pid},
-          #{contestProblem.tpid}
-        )
-    </insert>
 
     <insert id="insertContestuser" parameterType="com.fjut.oj.pojo.Contestuser">
         insert into
@@ -157,4 +183,6 @@
           #{contestuser.time}
         )
     </insert>
+
+
 </mapper>

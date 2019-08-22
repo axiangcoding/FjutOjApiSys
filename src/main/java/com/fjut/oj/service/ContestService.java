@@ -4,7 +4,26 @@ import com.fjut.oj.pojo.*;
 
 import java.util.List;
 
+/**
+ * @author axiang [20190817]
+ */
 public interface ContestService {
+
+    /**
+     * 新建一个比赛
+     * @param contest
+     * @return
+     */
+    Integer insertContest(Contest contest);
+
+    /**
+     * 插入一个比赛的题目
+     *
+     * @param cid
+     * @param pidStr
+     * @return
+     */
+    Integer insertContestProblem(Integer cid, String pidStr);
 
     /**
      * 根据条件获取比赛列表，一次20条
@@ -73,11 +92,11 @@ public interface ContestService {
 
     Integer getContestUser(Integer cid, String username);
 
-    Integer insertContest(Contest contest);
+
 
     Integer getMaxContestId();
 
-    Integer insertContestProblem(ContestProblem contestProblem);
+
 
     Integer insertContestuser(Contestuser contestuser);
 

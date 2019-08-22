@@ -1,11 +1,13 @@
 package com.fjut.oj.controller;
 
+import com.fjut.oj.interceptor.CheckUserIsAdmin;
 import com.fjut.oj.pojo.*;
 import com.fjut.oj.service.ContestService;
 import com.fjut.oj.util.JsonInfo;
 import com.fjut.oj.util.JsonMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +29,66 @@ public class ContestController {
 
     @Autowired
     private ContestService contestService;
+
+
+    @CheckUserIsAdmin
+    @Transactional(rollbackFor = RuntimeException.class)
+    @RequestMapping("/insertContest")
+    public JsonInfo insertContest(@RequestParam("username") String username,
+                                  @RequestParam("name") String contestTitle,
+                                  @RequestParam("beginTime") String beginTimeStr,
+                                  @RequestParam("endTime") String endTimeStr,
+                                  @RequestParam("ctype") String cTypeStr,
+                                  @RequestParam("registerBeginTime") String registerBeginTimeStr,
+                                  @RequestParam("registerEndTime") String registerEndTimeStr,
+                                  @RequestParam("info") String info,
+                                  @RequestParam("kind") String kindStr,
+                                  @RequestParam("pidList") String pidList) {
+        JsonInfo jsonInfo = new JsonInfo();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date beginTime;
+        Date endTime;
+        Date registerBeginTime;
+        Date registerEndTime;
+        Integer cType;
+        Integer kind;
+        try{
+            beginTime = simpleDateFormat.parse(beginTimeStr);
+            endTime = simpleDateFormat.parse(endTimeStr);
+            registerBeginTime = simpleDateFormat.parse(registerBeginTimeStr);
+            registerEndTime = simpleDateFormat.parse(registerEndTimeStr);
+            cType = Integer.parseInt(cTypeStr);
+            kind = Integer.parseInt(kindStr);
+        }catch (Exception e)
+        {
+            return new JsonInfo("ERROR","参数错误");
+        }
+        Contest contest = new Contest();
+        contest.setName(contestTitle);
+        contest.setBeginTime(beginTime);
+        contest.setEndTime(endTime);
+        // FIXME: 暂时未用上，设置为0
+        contest.setRankType(0);
+        contest.setCtype(cType);
+        // 密码非空
+        contest.setPassword("");
+        contest.setRegisterstarttime(registerBeginTime);
+        contest.setRegisterendtime(registerEndTime);
+        contest.setInfo(info);
+        contest.setKind(kind);
+        contest.setCreateuser(username);
+        Integer ans = contestService.insertContest(contest);
+        if( 0 == ans)
+        {
+            return new JsonInfo("ERROR","比赛添加失败");
+        }
+        Integer ansCount = contestService.insertContestProblem(contest.getId(), pidList);
+        if( 0 < ansCount)
+        {
+            jsonInfo.setSuccess("比赛添加成功！请到比赛页面查看！");
+        }
+        return jsonInfo;
+    }
 
     /**
      * TODO: 还有筛选条件未用上
@@ -129,8 +191,8 @@ public class ContestController {
 //        String endTime = request.getParameter("endTime");
 //        String rankTypeStr = request.getParameter("rankType") == null ? "2" : request.getParameter("rankType");
 //        Integer rankType = Integer.parseInt(rankTypeStr);
-//        String ctypeStr = request.getParameter("ctype") == null ? "0" : request.getParameter("ctype");
-//        Integer ctype = Integer.parseInt(ctypeStr);
+//        String cTypeStr = request.getParameter("ctype") == null ? "0" : request.getParameter("ctype");
+//        Integer ctype = Integer.parseInt(cTypeStr);
 //        String password = request.getParameter("password") == null ? "" : request.getParameter("password");
 //        //String registerstarttime = request.getParameter("registerstarttime");
 //        //String registerendtime = request.getParameter("registerendtime");
@@ -152,29 +214,29 @@ public class ContestController {
         return JsonMsg.success().addInfo("新建比赛成功");
     }
 
-    @RequestMapping("/IContestProblems")
-    @ResponseBody
-    public JsonMsg IContestProblems(HttpServletRequest request, HttpServletResponse response) {
-        String pidStr = request.getParameter("pid");
-        String tpidStr = request.getParameter("tpid");
-        if (pidStr == null || tpidStr == null) {
-            return JsonMsg.fail().addInfo("信息不足");
-        }
-
-        Integer oldid = contestService.getMaxContestId();
-        Integer cid = oldid;
-        Integer pid = Integer.parseInt(pidStr);
-        Integer tpid = Integer.parseInt(tpidStr);
-        ContestProblem contestProblem = new ContestProblem();
-        contestProblem.setCid(cid);
-        contestProblem.setPid(pid);
-        contestProblem.setTpid(tpid);
-        Integer num = contestService.insertContestProblem(contestProblem);
-        if (num == 0) {
-            return JsonMsg.fail().addInfo("新增比赛题目失败");
-        }
-        return JsonMsg.success().addInfo("新增比赛题目成功");
-    }
+//    @RequestMapping("/IContestProblems")
+//    @ResponseBody
+//    public JsonMsg IContestProblems(HttpServletRequest request, HttpServletResponse response) {
+//        String pidStr = request.getParameter("pid");
+//        String tpidStr = request.getParameter("tpid");
+//        if (pidStr == null || tpidStr == null) {
+//            return JsonMsg.fail().addInfo("信息不足");
+//        }
+//
+//        Integer oldid = contestService.getMaxContestId();
+//        Integer cid = oldid;
+//        Integer pid = Integer.parseInt(pidStr);
+//        Integer tpid = Integer.parseInt(tpidStr);
+//        ContestProblem contestProblem = new ContestProblem();
+//        contestProblem.setCid(cid);
+//        contestProblem.setPid(pid);
+//        contestProblem.setTpid(tpid);
+//        Integer num = contestService.insertContestProblem(contestProblem);
+//        if (num == 0) {
+//            return JsonMsg.fail().addInfo("新增比赛题目失败");
+//        }
+//        return JsonMsg.success().addInfo("新增比赛题目成功");
+//    }
 
     @RequestMapping("/IContestuser")
     @ResponseBody

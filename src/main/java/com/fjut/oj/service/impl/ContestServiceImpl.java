@@ -7,6 +7,7 @@ import com.fjut.oj.util.ResultString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,28 @@ public class ContestServiceImpl implements ContestService {
 
     @Autowired
     private ContestMapper contestMapper;
+
+    @Override
+    public Integer insertContest(Contest contest) {
+        return contestMapper.insertContest(contest);
+    }
+
+    @Override
+    public Integer insertContestProblem(Integer cid, String pidStr) {
+        ArrayList<ContestProblem> contestProblems = new ArrayList<>();
+        String[] pids = pidStr.split(" ");
+        int index = 0;
+        for(String pid:pids)
+        {
+            ContestProblem contestProblem = new ContestProblem();
+            contestProblem.setCid(cid);
+            contestProblem.setPid(index);
+            contestProblem.setTpid(Integer.parseInt(pid));
+            contestProblems.add(contestProblem);
+            index++;
+        }
+        return contestMapper.insertContestProblem(contestProblems);
+    }
 
     @Override
     public List<Contest> queryContestByCondition(Integer startIndex, Integer kind) {
@@ -114,20 +137,14 @@ public class ContestServiceImpl implements ContestService {
         return contestMapper.getContestUser(cid, username);
     }
 
-    @Override
-    public Integer insertContest(Contest contest) {
-        return contestMapper.insertContest(contest);
-    }
+
 
     @Override
     public Integer getMaxContestId() {
         return contestMapper.getMaxContestId();
     }
 
-    @Override
-    public Integer insertContestProblem(ContestProblem contestProblem) {
-        return contestMapper.insertContestProblem(contestProblem);
-    }
+
 
     @Override
     public Integer insertContestuser(Contestuser contestuser) {
