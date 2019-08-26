@@ -12,7 +12,12 @@ import java.util.List;
  */
 public interface StatusMapper {
 
-    List<Status> ShowAllStatus();
+    /**
+     * 查询全部提交记录
+     *
+     * @return
+     */
+    List<Status> queryAllStatus();
 
     List<Status> getAllStatusByUsername(@Param("username") String username);
 

@@ -11,21 +11,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author cjt
+ */
 @Service("StatusService")
 public class StatusServiceImpl implements StatusService {
 
     @Autowired
     private StatusMapper statusMapper;
-
-    @Override
-    public List<Status> ShowAllStatus() {
-        List<Status> list = statusMapper.ShowAllStatus();
-        for (Status element : list) {
-            element.setOtherinfo(ResultString.getResultString(element.getResult()));
-            element.setSubmitlanguage(ResultString.getSubmitLanguage(element.getLang()));
-        }
-        return list;
-    }
 
     @Override
     public List<Status> getAllStatusByUsername(String username) {

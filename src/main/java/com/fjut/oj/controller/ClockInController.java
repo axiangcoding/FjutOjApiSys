@@ -1,7 +1,7 @@
 package com.fjut.oj.controller;
 
 import com.fjut.oj.interceptor.CheckUserPrivate;
-import com.fjut.oj.pojo.t_clock_in;
+import com.fjut.oj.pojo.TableClockIn;
 import com.fjut.oj.service.ClockInService;
 import com.fjut.oj.interceptor.CheckUserIsLogin;
 import com.fjut.oj.util.IpTools;
@@ -39,7 +39,7 @@ public class ClockInController {
         } else {
             pageNum = Integer.parseInt(pageNumStr);
         }
-        List<t_clock_in> clockIns = clockInService.queryAllClockInByUsername(username, pageNum);
+        List<TableClockIn> clockIns = clockInService.queryAllClockInByUsername(username, pageNum);
         if (null != clockIns) {
             jsonInfo.setSuccess();
             jsonInfo.addInfo(clockIns);
@@ -55,7 +55,7 @@ public class ClockInController {
     public JsonInfo queryAllClockInByDate(@RequestParam("date") String dateStr) throws ParseException {
         JsonInfo jsonInfo = new JsonInfo();
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
-        List<t_clock_in> clockIns = clockInService.queryAllClockInByDate(date);
+        List<TableClockIn> clockIns = clockInService.queryAllClockInByDate(date);
         if (null != clockIns) {
             jsonInfo.setSuccess();
             jsonInfo.addInfo(clockIns);
@@ -70,7 +70,7 @@ public class ClockInController {
     public JsonInfo queryClockInByUserAndDate(@RequestParam("username") String username) {
         JsonInfo jsonInfo = new JsonInfo();
         Date date = new Date();
-        List<t_clock_in> clockIns = clockInService.queryClockInByUsernameAndDate(username, date);
+        List<TableClockIn> clockIns = clockInService.queryClockInByUsernameAndDate(username, date);
         if (0 != clockIns.size()) {
             jsonInfo.setSuccess();
             jsonInfo.addInfo(clockIns);
@@ -88,7 +88,7 @@ public class ClockInController {
         String sign = "日常";
         String ip = IpTools.getClientIpAddress(req);
         Integer todytimes = 1;
-        t_clock_in clockIn = new t_clock_in();
+        TableClockIn clockIn = new TableClockIn();
         clockIn.setUsername(username);
         clockIn.setTime(time);
         clockIn.setSign(sign);

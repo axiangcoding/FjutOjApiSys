@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fjut.oj.mapper.StatusMapper">
 
-    <select id="ShowAllStatus" resultType="com.fjut.oj.pojo.Status">
+    <select id="queryAllStatus" resultType="com.fjut.oj.pojo.Status">
         SELECT id,ruser,pid,lang,submitTime,result,score,timeUsed,memoryUsed,codelen
         FROM statu ORDER BY id DESC
     </select>

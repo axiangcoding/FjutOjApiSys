@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fjut.oj.mapper.BugReportMapper">
+    <insert id="insertBugReport">
+        INSERT INTO t_bug_report
+        (
+        username,
+        title,
+        type,
+        text,
+        time,
+        isFixed
+        )
+        VALUES
+        (
+        #{tableBugReport.username},
+        #{tableBugReport.title},
+        #{tableBugReport.type},
+        #{tableBugReport.text},
+        #{tableBugReport.time},
+        #{tableBugReport.isFixed}
+        );
+
+    </insert>
+
+    <select id="queryBugReportByCondition" resultType="com.fjut.oj.pojo.TableBugReport">
+        SELECT * FROM t_bug_report
+        LIMIT #{startIndex}, 20
+    </select>
+</mapper>

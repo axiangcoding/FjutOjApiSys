@@ -2,7 +2,8 @@
 SQLyog Enterprise Trial - MySQL GUI v7.11 
 MySQL - 8.0.15 : Database - oj
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -237,7 +238,7 @@ CREATE TABLE `t_challenge_problem` (
   UNIQUE KEY `tpid` (`tpid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-/*Table structure for table `t_clock_in` */
+/*Table structure for table `TableClockIn` */
 
 DROP TABLE IF EXISTS `t_clock_in`;
 

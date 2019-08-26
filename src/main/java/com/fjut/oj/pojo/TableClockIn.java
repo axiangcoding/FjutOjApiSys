@@ -1,18 +1,12 @@
 package com.fjut.oj.pojo;
 
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * @Author: wyx
- * @Despriction:
- * @Date:Created in 9:25 2019/6/10
- * @Modify By:
+ * @author: axiang [20190610]
  */
-public class t_clock_in {
+public class TableClockIn {
     private Integer id;
     private String username;
     private Date time;

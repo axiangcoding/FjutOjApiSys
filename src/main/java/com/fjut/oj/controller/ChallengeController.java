@@ -1,6 +1,5 @@
 package com.fjut.oj.controller;
 
-import com.fjut.oj.exception.NotLoginException;
 import com.fjut.oj.exception.NotOwnerException;
 import com.fjut.oj.pojo.*;
 import com.fjut.oj.pojo.enums.ChallengeBlockType;
@@ -10,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @Author: axiang [20190625]
@@ -25,6 +27,7 @@ public class ChallengeController {
 
     /**
      * 获取用户的挑战模块
+     *
      * @param username
      * @return
      */
@@ -70,6 +73,7 @@ public class ChallengeController {
 
     /**
      * 获取解锁条件
+     *
      * @param blockIdStr
      * @return
      */
@@ -89,6 +93,7 @@ public class ChallengeController {
 
     /**
      * 获取模块详情
+     *
      * @param blockIdStr
      * @param username
      * @return
@@ -127,6 +132,7 @@ public class ChallengeController {
 
     /**
      * 获取模块的题目
+     *
      * @param username
      * @param blockIdStr
      * @param pageNumStr
@@ -179,28 +185,20 @@ public class ChallengeController {
     }
 
     /**
-     * TODO: 非常重要的挑战模块解锁逻辑！！！
-     * 更新挑战模块开放模块
-     * 逻辑如下：
-     *      已知进入本控制器的前置条件：用户在解决完一道题后发出更新挑战模式开放模块的请求
-     *      先获取该题隶属挑战模块，如果不属于任何模块则直接退出，如果属于进入下一步骤
-     *      获取题目隶属挑战模块的后置模块（所有可能会解锁的待解锁模块）
-     *      依次对这些可能会解锁的待解锁模块计算解锁条件，条件全部满足则解锁
+     * TODO: 挑战模块解锁验证
+     *
      * @param username
      * @param pid
      * @return
      */
     @PostMapping("/updateOpenBlock")
-    public JsonInfo updateOpenBlock(@RequestParam("username")String username,
-                                    @RequestParam("pid")Integer pid){
+    public JsonInfo updateOpenBlock(@RequestParam("username") String username,
+                                    @RequestParam("pid") Integer pid) {
         JsonInfo jsonInfo = new JsonInfo();
-
-
 
 
         return jsonInfo;
     }
-
 
 
 }

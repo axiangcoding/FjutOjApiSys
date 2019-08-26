@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface StatusService {
 
-    List<Status> ShowAllStatus(); // 获取所有的提交情况
+
 
     List<Status> getAllStatusByUsername(String username);
 

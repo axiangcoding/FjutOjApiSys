@@ -2,17 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fjut.oj.mapper.ClockInMapper">
 
-    <select id="queryAllClockInByDate" parameterType="java.util.Date" resultType="com.fjut.oj.pojo.t_clock_in">
+    <select id="queryAllClockInByDate" parameterType="java.util.Date" resultType="com.fjut.oj.pojo.TableClockIn">
         SELECT * FROM t_clock_in WHERE to_days(time) = to_days(#{time})
             ORDER BY time DESC
     </select>
 
-    <select id="queryAllClockIn" resultType="com.fjut.oj.pojo.t_clock_in">
+    <select id="queryAllClockIn" resultType="com.fjut.oj.pojo.TableClockIn">
         SELECT * FROM t_clock_in
             ORDER BY time DESC
     </select>
 
-    <select id="queryAllClockInByUsername" resultType="com.fjut.oj.pojo.t_clock_in">
+    <select id="queryAllClockInByUsername" resultType="com.fjut.oj.pojo.TableClockIn">
         SELECT * FROM t_clock_in WHERE username = #{username}
         ORDER BY time DESC
         <if test="pageNum != null">
@@ -20,7 +20,7 @@
         </if>
     </select>
 
-    <select id="queryClockInByUsernameAndDate" resultType="com.fjut.oj.pojo.t_clock_in">
+    <select id="queryClockInByUsernameAndDate" resultType="com.fjut.oj.pojo.TableClockIn">
         SELECT *
             FROM
             t_clock_in
@@ -28,7 +28,7 @@
             ORDER BY time DESC;
     </select>
 
-    <insert id="insertClockIn" parameterType="com.fjut.oj.pojo.t_clock_in">
+    <insert id="insertClockIn" parameterType="com.fjut.oj.pojo.TableClockIn">
         INSERT INTO t_clock_in(
             username,
             time,
