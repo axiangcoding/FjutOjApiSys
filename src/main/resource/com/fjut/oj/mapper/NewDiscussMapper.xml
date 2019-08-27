@@ -3,22 +3,22 @@
 <mapper namespace="com.fjut.oj.mapper.NewDiscussMapper">
 
     <select id="queryDiscussByPage" resultType="com.fjut.oj.pojo.NewDiscuss">
-        select *
-        from newdiscuss
-        order by priority,discussid
-        desc
+        SELECT *
+        FROM newdiscuss
+        ORDER BY priority,discussid
+        DESC
         limit #{start}, 50
     </select>
 
     <select id="queryDiscussCount" resultType="java.lang.Integer">
-        select count(*)
-        from newdiscuss
+        SELECT COUNT(*)
+        FROM newdiscuss
     </select>
 
     <insert id="insertDiscuss" parameterType="com.fjut.oj.pojo.NewDiscuss">
-        insert into
+        INSERT INTO
         newdiscuss(title,`time`,author,priority)
-        values(
+        VALUES(
          #{newDiscuss.title},
          #{newDiscuss.time},
          #{newDiscuss.author},
@@ -39,9 +39,9 @@
     </select>
 
     <update id="updateDisscussPirority">
-        update newdiscuss
-        set `priority` = #{priority}
-        where discussid = #{id}
+        UPDATE newdiscuss
+        SET `priority` = #{priority}
+        WHERE discussid = #{id}
     </update>
 
 </mapper>

@@ -39,16 +39,6 @@ ALTER TABLE userper
     28：称号管理；29：组队管理';
 /* 对 userper 的修改 end */
 
-/* 新建表 begin*/
-CREATE TABLE t_bug_report
-(
-    id       INT(11) AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(30) NOT NULL,
-    text     VARCHAR(255),
-    time     DATETIME
-);
-/* 新建表 end*/
-
 /* 对视图的修改 begin*/
 DROP VIEW contestusersolve_view;
 

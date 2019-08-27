@@ -137,7 +137,7 @@
         AS ruser,statu.pid,statu.cid,lang,submittime,result,score,timeused,memoryUsed,codelen
         FROM statu
         where cid=#{cid}
-        order by id
+        ORDER BY id
         desc
         limit #{pagenum},50
     </select>

@@ -3,17 +3,17 @@
 <mapper namespace="com.fjut.oj.mapper.NewDiscussReplyMapper">
 
     <select id="queryDiscussReplyById" resultType="com.fjut.oj.pojo.NewDiscussReply">
-        select *
-        from newdiscussreply
-        where discussid = #{id}
-        order by replyid
+        SELECT *
+        FROM newdiscussreply
+        WHERE discussid = #{id}
+        ORDER by replyid
         limit #{start}, 50
     </select>
 
     <insert id="insertDiscussReply" parameterType="com.fjut.oj.pojo.NewDiscussReply">
-        insert into
+        INSERT INTO
         newdiscussreply
-        values(
+        VALUES(
         #{newdiscussreply.discussid},
         #{newdiscussreply.replyid},
         #{newdiscussreply.time},
@@ -23,9 +23,9 @@
     </insert>
 
     <select id="quertCountReplies" resultType="java.lang.Integer">
-        select count(*)
-        from newdiscussreply
-        where #{discussid} = discussid
+        SELECT COUNT(*)
+        FROM newdiscussreply
+        WHERE #{discussid} = discussid
     </select>
 
 </mapper>

@@ -5,9 +5,9 @@
     <select id="queryAllTeamMemberInfo" resultType="com.fjut.oj.pojo.TeamMemberInfo">
         select *
         from t_team_member_info
-        order by time
-        desc
-        limit #{start},50
+        ORDER BY time
+        DESC
+        limit #{start}, 50
     </select>
 
     <select id="queryAllCountTeamMemberInfo" resultType="java.lang.Integer">

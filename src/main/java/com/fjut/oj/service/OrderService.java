@@ -1,6 +1,6 @@
 package com.fjut.oj.service;
 
-import com.fjut.oj.pojo.Order;
+import com.fjut.oj.pojo.TableOrder;
 
 /**
  * @author axiang [20190807]
@@ -8,8 +8,8 @@ import com.fjut.oj.pojo.Order;
 public interface OrderService {
     /**
      * 插入订单
-     * @param order
+     * @param tableOrder
      * @return
      */
-    boolean insertOrder(Order order);
+    boolean insertOrder(TableOrder tableOrder);
 }

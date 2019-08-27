@@ -5,6 +5,7 @@ import com.fjut.oj.pojo.Problems1;
 import com.fjut.oj.pojo.ProblemSample;
 import com.fjut.oj.util.ProblemHTML;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,6 +60,16 @@ public interface ProblemService {
      * @return
      */
     Integer updateProblemType(Integer pid, Integer type);
+
+    /**
+     * 设置题目类型 ptype = 0 为本地， ptype = 1为第三方
+     *
+     * @param pIds
+     * @param type
+     * @return
+     */
+    Integer updateSomeProblemType(ArrayList<Integer> pIds, Integer type);
+
 
     Integer setProblemVisiablePid(Integer pid);
 

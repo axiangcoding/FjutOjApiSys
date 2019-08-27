@@ -3,9 +3,10 @@ package com.fjut.oj.pojo;
 import java.util.Date;
 
 /**
- * @Author: axiang [2019/8/7]
+ * 订单表
+ * @Author: axiang [20190807]
  */
-public class Order {
+public class TableOrder {
     private Integer id;
     private String username;
     private Integer goodsId;

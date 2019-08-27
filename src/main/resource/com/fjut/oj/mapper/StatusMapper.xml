@@ -47,7 +47,7 @@
         select *
         from statu
         where pid = #{pid}
-        order by id desc
+        ORDER by id desc
     </select>
 
     <select id="queryAllStatusByConditions" resultType="com.fjut.oj.pojo.ViewUserStatus">
@@ -75,8 +75,6 @@
             LIMIT #{start}, 50
         </if>
     </select>
-
-
 
     <select id="queryCountAllStatusByConditions" resultType="java.lang.Integer">
         select COUNT(*)
@@ -164,6 +162,5 @@
             FROM statu WHERE ruser = #{username}
             GROUP BY ruser,pid
     </select>
-
 
 </mapper>

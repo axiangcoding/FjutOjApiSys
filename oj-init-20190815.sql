@@ -929,7 +929,7 @@ DROP TABLE IF EXISTS `v_user_status`;
 /*!50001 DROP TABLE IF EXISTS `v_user_status` */;
 /*!50001 DROP VIEW IF EXISTS `v_user_status` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_user_status` AS select `statu`.`id` AS `id`,`users`.`nick` AS `nick`,`statu`.`ruser` AS `ruser`,`statu`.`pid` AS `pid`,`statu`.`lang` AS `lang`,`statu`.`submitTime` AS `submitTime`,`statu`.`result` AS `result`,`statu`.`score` AS `score`,`statu`.`timeUsed` AS `timeUsed`,`statu`.`memoryUsed` AS `memoryUsed`,`statu`.`codelen` AS `codelen`,`statu`.`code` AS `code` from (`statu` join `users`) where (`statu`.`ruser` = `users`.`username`) order by `statu`.`id` desc */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_user_status` AS select `statu`.`id` AS `id`,`users`.`nick` AS `nick`,`statu`.`ruser` AS `ruser`,`statu`.`pid` AS `pid`,`statu`.`lang` AS `lang`,`statu`.`submitTime` AS `submitTime`,`statu`.`result` AS `result`,`statu`.`score` AS `score`,`statu`.`timeUsed` AS `timeUsed`,`statu`.`memoryUsed` AS `memoryUsed`,`statu`.`codelen` AS `codelen`,`statu`.`code` AS `code` from (`statu` join `users`) where (`statu`.`ruser` = `users`.`username`) tableOrder by `statu`.`id` desc */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

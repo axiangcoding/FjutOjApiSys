@@ -1,15 +1,18 @@
 package com.fjut.oj.pojo;
 
-// 题目表
+/**
+ * 题目表
+ * @author cjt
+ */
 public class Problem {
-    static public int LOCAL = 0;
-    static public int OTHEROJ = 1;
-    static public int ONLYDES = 2;
+    private static int LOCAL = 0;
+    private static int OTHEROJ = 1;
+    private static int ONLYDES = 2;
     private boolean spj;
-    public int totalSubmit;
-    public int totalSubmitUser;
-    public int totalAc;
-    public int totalAcUser;
+    private int totalSubmit;
+    private int totalSubmitUser;
+    private int totalAc;
+    private int totalAcUser;
     private Integer pid;
     private Integer ptype;
     private String  title;
@@ -19,7 +22,7 @@ public class Problem {
     private String  author;
     public  Double  radio;
     public String  strRadio;
-    public String owner;
+    private String owner;
 
     public Problem() {
     }

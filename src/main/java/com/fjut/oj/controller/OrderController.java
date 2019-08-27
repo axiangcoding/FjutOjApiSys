@@ -1,18 +1,15 @@
 package com.fjut.oj.controller;
 
 import com.fjut.oj.interceptor.CheckUserPrivate;
-import com.fjut.oj.pojo.AcbBorder;
 import com.fjut.oj.pojo.Mall;
-import com.fjut.oj.pojo.Order;
+import com.fjut.oj.pojo.TableOrder;
 import com.fjut.oj.service.AcbBorderService;
 import com.fjut.oj.service.MallService;
 import com.fjut.oj.service.OrderService;
 import com.fjut.oj.service.UserService;
 import com.fjut.oj.util.JsonInfo;
-import org.codehaus.jackson.node.BooleanNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -68,15 +65,15 @@ public class OrderController {
 
         Integer acbChange = mall.getAcb() * buyNum;
         Date currentDate = new Date();
-        Order order = new Order();
-        order.setUsername(username);
-        order.setAcb(acbChange);
-        order.setIsCancel(false);
-        order.setGoodsId(goodsId);
-        order.setTime(currentDate);
+        TableOrder tableOrder = new TableOrder();
+        tableOrder.setUsername(username);
+        tableOrder.setAcb(acbChange);
+        tableOrder.setIsCancel(false);
+        tableOrder.setGoodsId(goodsId);
+        tableOrder.setTime(currentDate);
         // TODO:购买成功虚拟物品后添加记录的逻辑还没写
         // 更新订单记录
-        boolean isOrderCompleted = orderService.insertOrder(order);
+        boolean isOrderCompleted = orderService.insertOrder(tableOrder);
         if(isOrderCompleted)
         {
             jsonInfo.setSuccess("购买成功！");

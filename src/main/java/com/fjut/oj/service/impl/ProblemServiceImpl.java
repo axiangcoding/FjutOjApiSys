@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -200,8 +201,14 @@ public class ProblemServiceImpl implements ProblemService {
 
     @Override
     public Integer updateProblemType(Integer pid, Integer type) {
-        return problemMapper.updateProblemType(pid,type);
+        return problemMapper.updateProblemType(pid, type);
     }
+
+    @Override
+    public Integer updateSomeProblemType(ArrayList<Integer> pIds, Integer type) {
+        return problemMapper.updateSomeProblemType(pIds, type);
+    }
+
 
     @Override
     public Integer setProblemVisiablePid(Integer pid) {

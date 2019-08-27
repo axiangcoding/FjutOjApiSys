@@ -19,7 +19,7 @@
         SELECT *
         FROM t_problem_tag_record
         WHERE pid=#{pid}
-        order by rating desc,username  limit #{from},#{num}
+        ORDER by rating desc,username  limit #{from},#{num}
     </select>
 
     <insert id="addTag" parameterType="com.fjut.oj.pojo.t_problem_tag_record">

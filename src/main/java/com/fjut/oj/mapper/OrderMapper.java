@@ -1,6 +1,6 @@
 package com.fjut.oj.mapper;
 
-import com.fjut.oj.pojo.Order;
+import com.fjut.oj.pojo.TableOrder;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -9,8 +9,8 @@ import org.apache.ibatis.annotations.Param;
 public interface OrderMapper {
     /**
      * 插入订单信息
-     * @param order
+     * @param tableOrder
      * @return
      */
-    Integer insertOrder(@Param("order")Order order);
+    Integer insertOrder(@Param("tableOrder") TableOrder tableOrder);
 }

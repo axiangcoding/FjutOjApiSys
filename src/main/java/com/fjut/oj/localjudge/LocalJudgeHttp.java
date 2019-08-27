@@ -7,10 +7,6 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.Properties;
-
 
 /**
  * @author axiang [20190731] 与本地评测机的通讯
@@ -24,7 +20,7 @@ public class LocalJudgeHttp extends Thread {
     public String submitToLocalJudge(LocalJudgeSubmitInfo localJudgeSubmitInfo) {
         try {
             String postURL = localJudgePath;
-            PostMethod postMethod = null;
+            PostMethod postMethod;
             postMethod = new PostMethod(postURL);
             postMethod.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;");
             NameValuePair[] data = new NameValuePair[]{
@@ -50,7 +46,7 @@ public class LocalJudgeHttp extends Thread {
     public String getResultFromLocalJudge(Integer rid) {
         try {
             String postURL = localJudgePath;
-            PostMethod postMethod = null;
+            PostMethod postMethod;
             postMethod = new PostMethod(postURL);
             postMethod.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;");
             NameValuePair[] data = new NameValuePair[]{

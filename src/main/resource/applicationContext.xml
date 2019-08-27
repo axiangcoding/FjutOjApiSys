@@ -17,8 +17,10 @@
 
     <!--全局异常处理器    -->
     <bean id="GlobalExceptionHandler" class="com.fjut.oj.exception.GlobalExceptionHandler"/>
+
     <!--Swagger的配置    -->
     <bean class="com.fjut.oj.config.SwaggerConfig"/>
+
     <!--Spring线程池-->
     <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
         <!-- 核心线程数 -->

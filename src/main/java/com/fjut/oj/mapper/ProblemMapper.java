@@ -4,6 +4,7 @@ import com.fjut.oj.pojo.*;
 import com.fjut.oj.util.ProblemHTML;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -156,6 +157,17 @@ public interface ProblemMapper {
      * @return
      */
     Integer updateProblemType(@Param("pid") Integer pid, @Param("type") Integer type);
+
+    /**
+     *
+     * 设置题目类型 ptype = 0 为本地， ptype = 1为第三方
+     *
+     * @param pIds
+     * @param type
+     * @return
+     */
+    Integer updateSomeProblemType(@Param("pIds") ArrayList<Integer> pIds, @Param("type") Integer type);
+
 
     Integer setProblemVisiablePid(@Param("pid") Integer pid);
 

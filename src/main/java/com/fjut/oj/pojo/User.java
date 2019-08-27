@@ -1,6 +1,10 @@
 package com.fjut.oj.pojo;
 
-// 用户表
+/**
+ * 用户表
+ * @author cjt
+ *
+ */
 public class User {
     private String  username;
     private String  password;
@@ -8,7 +12,8 @@ public class User {
     private Integer gender;
     private String  school;
     private String  Email;
-    private String  motto;          // 签名
+    /** 签名 */
+    private String  motto;
     private String  registertime;
     private Integer type;
     private String  Mark;
@@ -16,7 +21,8 @@ public class User {
     private Integer ratingnum;
     private Integer acb;
     private String  name;
-    private String  faculty;        // 学院
+    /**  学院 */
+    private String  faculty;
     private String  major;
     private String  cla;
     private String  no;

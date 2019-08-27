@@ -74,11 +74,10 @@ public class ProblemController {
      * @return
      */
     @GetMapping("/getProblemSolve")
-    public JsonInfo queryProblemsByConditions(@RequestParam(value = "username",required = false) String username) {
+    public JsonInfo queryProblemsByConditions(@RequestParam(value = "username", required = false) String username) {
         JsonInfo jsonInfo = new JsonInfo();
         List<ViewUserSolve> solves = new ArrayList<>();
-        if("".equals(username)||null == username)
-        {
+        if ("".equals(username) || null == username) {
             jsonInfo.setSuccess();
             jsonInfo.addInfo(solves);
             return jsonInfo;
@@ -205,36 +204,40 @@ public class ProblemController {
     }
 
     /**
-     * FIXME: 运行速度太慢，多行sql多次连接数据库，等待改进
+     * FIXME: 无法正确得到返回JSON内容
      * 更新所有题目的类型
+     *
      * @return
      */
     @PostMapping("/updateAllProblemType")
     @Transactional(rollbackFor = RuntimeException.class)
-    public JsonInfo updateAllProblemType(){
+    public JsonInfo updateAllProblemType() {
         JsonInfo jsonInfo = new JsonInfo();
         File baseDir = new File(baseJudgeFilePath);
+        System.out.println(baseJudgeFilePath);
         if (baseDir.isDirectory()) {
-            jsonInfo.setSuccess();
+            ArrayList<Integer> localIds = new ArrayList<>();
+            ArrayList<Integer> notLocalIds = new ArrayList<>();
             File[] problemDir = baseDir.listFiles();
             for (File problemFile : problemDir) {
                 String problemId = problemFile.getName();
                 File[] problemDetailFile = problemFile.listFiles();
-                if( 0 == problemDetailFile.length )
-                {
-                    problemService.updateProblemType(Integer.parseInt(problemId),1);
-                }
-                else{
-                    problemService.updateProblemType(Integer.parseInt(problemId),0);
+                if (0 != problemDetailFile.length) {
+                    localIds.add(Integer.parseInt(problemId));
+                } else {
+                    notLocalIds.add(Integer.parseInt(problemId));
                 }
             }
-        }else {
+            Integer localProblemUpdateCount = problemService.updateSomeProblemType(localIds, 0);
+            Integer notLocalProblemUpdateCount = problemService.updateSomeProblemType(notLocalIds, 1);
+            System.out.println(localProblemUpdateCount + " " + notLocalProblemUpdateCount);
+            jsonInfo.setSuccess("已修改成功 " + localProblemUpdateCount + " 条题目状态为本地题目， " +
+                    notLocalProblemUpdateCount + " 条题目状态为第三方题目");
+        } else {
             jsonInfo.setFail("找不到题库目录！");
         }
-
         return jsonInfo;
     }
-
 
 
     /**

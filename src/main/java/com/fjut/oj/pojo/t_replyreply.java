@@ -4,7 +4,6 @@ import java.util.Date;
 
 // 讨论答复表
 public class t_replyreply {
-
     private Integer did;
     private Integer rid;
     private Integer rrid;

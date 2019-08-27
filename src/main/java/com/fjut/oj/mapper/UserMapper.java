@@ -30,8 +30,7 @@ public interface UserMapper {
 
     Integer getUserByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 
-    int updateUserByUsername(@Param("user") User user);
-
+    Integer updateUserByUsername(@Param("user") User user);
 
     List<UserRadar1> queryUserRadar1(@Param("user") String user);
 

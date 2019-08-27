@@ -5,7 +5,7 @@
     <select id="queryAllProblems" resultType="com.fjut.oj.pojo.Problem">
           select *
           from problem
-          order by pid
+          ORDER by pid
     </select>
 
     <insert id="insertProblem" parameterType="com.fjut.oj.pojo.Problem">
@@ -66,7 +66,7 @@
           select *
           from problem
           WHERE ojid = 0
-          order by pid
+          ORDER BY pid
           LIMIT #{from}, #{to}
     </select>
 
@@ -84,7 +84,7 @@
         <where>
             title like '%${title}%'
         </where>
-        order by pid
+        ORDER BY pid
         LIMIT #{pid1}, 50
     </select>
 
@@ -196,6 +196,14 @@
         UPDATE problem SET ptype = #{type} WHERE pid = #{pid}
     </update>
 
+    <update id="updateSomeProblemType" parameterType="java.util.ArrayList">
+        <foreach collection="pIds" index="index" item="item">
+        UPDATE problem SET
+            ptype = #{type}
+        WHERE pid = #{item};
+        </foreach>
+    </update>
+
     <update id="setProblemVisiablePid" parameterType="com.fjut.oj.pojo.Problem">
         update problem set visiable=1-visiable
         where pid=#{pid}
@@ -213,6 +221,7 @@
         where pid in
         (select tpid from contestproblems where cid = #{cid})
     </update>
+
 
 
 
