@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fjut.oj.mapper.KeyValueMapper">
+    <insert id="insertKeyValue">
+        INSERT INTO t_kv
+        VALUES(#{tableKeyValue.key}, #{tableKeyValue.value})
+    </insert>
+
+    <select id="queryAllKeyValues" resultType="com.fjut.oj.pojo.TableKeyValue">
+        SELECT * FROM t_kv
+    </select>
+
+    <select id="queryValueByKey" resultType="com.fjut.oj.pojo.TableKeyValue">
+        SELECT * FROM t_kv
+        WHERE `key`=#{key}
+    </select>
+
+</mapper>

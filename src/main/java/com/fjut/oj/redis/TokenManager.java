@@ -7,6 +7,7 @@ import com.fjut.oj.pojo.TokenModel;
  * @author axiang [20190705]
  */
 public interface TokenManager {
+
     /**
      * 创建一个token，关联上指定用户
      * @param username
@@ -20,6 +21,13 @@ public interface TokenManager {
      * @return
      */
     boolean checkToken(TokenModel model);
+
+    /**
+     * 使用token类生成加密字符串
+     * @param model
+     * @return
+     */
+    String createAuth(TokenModel model);
 
 
     /**

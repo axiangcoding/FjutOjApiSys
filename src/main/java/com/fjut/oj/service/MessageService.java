@@ -1,14 +1,15 @@
 package com.fjut.oj.service;
 
-import com.fjut.oj.pojo.t_message;
-import org.springframework.stereotype.Service;
+import com.fjut.oj.pojo.TableMessage;
 
 
 import java.util.List;
 
-
+/**
+ * @author axiang [20190620]
+ */
 public interface MessageService {
-    Integer insertMessage(t_message message);
+    Integer insertMessage(TableMessage message);
 
     Integer deleteMessageByMid(int mid);
 
@@ -22,9 +23,9 @@ public interface MessageService {
 
     Integer queryUnReadMessageCountByUser(String username);
 
-    List<t_message> queryAllMessageByUser(String username, Integer startIndex);
+    List<TableMessage> queryAllMessageByUser(String username, Integer startIndex);
 
-    List<t_message> queryUnReadMessageByUser(String username, int startIndex);
+    List<TableMessage> queryUnReadMessageByUser(String username, int startIndex);
 
 
 }

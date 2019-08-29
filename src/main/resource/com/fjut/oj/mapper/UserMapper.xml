@@ -54,7 +54,7 @@
     </select>
 
 
-    <select id="queryUserByName" resultType="com.fjut.oj.pojo.User">
+    <select id="queryUserByUsername" resultType="com.fjut.oj.pojo.User">
         SELECT *
         FROM users
         <where>

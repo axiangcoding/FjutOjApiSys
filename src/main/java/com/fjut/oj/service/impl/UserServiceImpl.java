@@ -1,15 +1,13 @@
 package com.fjut.oj.service.impl;
 
-import com.fjut.oj.mapper.StatusMapper;
-import com.fjut.oj.mapper.UserMapper;
-import com.fjut.oj.pojo.AwardInfo;
-import com.fjut.oj.pojo.RatingGraph;
-import com.fjut.oj.pojo.User;
+import com.fjut.oj.mapper.*;
+import com.fjut.oj.pojo.*;
+import com.fjut.oj.service.ChallengeService;
 import com.fjut.oj.service.UserService;
 import com.fjut.oj.util.ResultString;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -26,6 +24,15 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Autowired
+    private UserAuthMapper userAuthMapper;
+
+    @Autowired
+    private MessageMapper messageMapper;
+
+    @Autowired
+    private ChallengeService challengeService;
+
+    @Autowired
     private StatusMapper statusMapper;
 
     @Override
@@ -34,12 +41,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean insertUser(User user) {
-        int num = userMapper.insertUser(user);
-        if (num == 1) {
+    @Transactional(rollbackFor = RuntimeException.class)
+    public boolean insertUser(User user, TableUserAuth userAuth) {
+        Integer ansUser = userMapper.insertUser(user);
+        Integer ansAuth = userAuthMapper.insertUserAuth(userAuth);
+        //用户注册成功
+        if (1 == ansUser && 1 == ansAuth) {
+            // 发送欢迎消息
+            TableMessage message = new TableMessage();
+            message.setStatus(0);
+            message.setUser(user.getUsername());
+            message.setTitle("欢迎您，新用户！");
+            message.setText("Talk is cheap, show me the code! <br />" +
+                    "欢迎您，新朋友！" +
+                    "<br />欢迎来到一码当先的世界，请在首页上跟随教程熟悉我们吧！");
+            message.setTime(new Date());
+            // 七天后过期
+            message.setDeadline(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 7)));
+            messageMapper.insertMessage(message);
+            // 解锁挑战模块
+            challengeService.insertOpenBlock(user.getUsername(), 1);
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -49,7 +74,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUsername(String username) {
-        return userMapper.queryUserByName(username);
+        return userMapper.queryUserByUsername(username);
     }
 
     @Override

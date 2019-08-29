@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fjut.oj.mapper.UserAuthMapper">
+    <insert id="insertUserAuth">
+        INSERT INTO t_user_auth
+        (
+        username,
+        salt,
+        password,
+        attempt_login_fail_count,
+        locked,
+        unlock_time,
+        last_login_time
+        )
+        VALUES
+        (
+        #{tableUserAuth.username},
+        #{tableUserAuth.salt},
+        #{tableUserAuth.password},
+        #{tableUserAuth.attemptLoginFailCount},
+        #{tableUserAuth.locked},
+        #{tableUserAuth.unlockTime},
+        #{tableUserAuth.lastLoginTime}
+        );
+
+    </insert>
+
+    <update id="updateUserAuthAttemptFailAddOneByUsername">
+        UPDATE t_user_auth
+        SET attempt_login_fail_count = attempt_login_fail_count+1
+        WHERE username = #{username}
+    </update>
+
+    <update id="updateUserAuthAttemptFailSetZeroByUsername">
+        UPDATE t_user_auth
+        SET attempt_login_fail_count = 0
+        WHERE username = #{username}
+    </update>
+
+    <update id="updateUserAuthUnlockTimeByUsername">
+        UPDATE t_user_auth
+        SET unlock_time = #{unlockTime}
+        WHERE username = #{username}
+    </update>
+
+    <select id="queryUserAuthCountByUsername" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM t_user_auth
+        WHERE username = #{username}
+    </select>
+
+    <select id="queryUserAuthByUsernameAndPassword" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM t_user_auth
+        WHERE username = #{username} AND password=#{password};
+    </select>
+
+    <select id="queryUserAuthSaltByUsername" resultType="java.lang.String">
+        SELECT salt FROM t_user_auth
+        WHERE username = #{username}
+    </select>
+
+    <select id="queryUserAuthAttemptNumberByUsername" resultType="java.lang.Integer">
+        SELECT attempt_login_fail_count
+        FROM t_user_auth
+        WHERE username = #{username}
+    </select>
+
+    <select id="queryUserAuthUnlockTimeByUsername" resultType="java.util.Date">
+        SELECT unlock_time FROM t_user_auth
+        WHERE username = #{username}
+    </select>
+
+
+</mapper>

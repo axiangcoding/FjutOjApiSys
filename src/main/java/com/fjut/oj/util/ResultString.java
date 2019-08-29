@@ -1,5 +1,8 @@
 package com.fjut.oj.util;
 
+/**
+ * @author cjt
+ */
 public class ResultString {
     public static String getResultString(int resultId) {
         if (resultId == 0) {

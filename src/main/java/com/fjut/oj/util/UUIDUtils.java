@@ -3,7 +3,7 @@ package com.fjut.oj.util;
 import java.util.UUID;
 
 /**
- * @Author: axiang [20190827]
+ * @uthor axiang [a20190827]
  */
 public class UUIDUtils {
 

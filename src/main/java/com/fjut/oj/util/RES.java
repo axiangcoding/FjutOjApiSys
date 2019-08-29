@@ -3,7 +3,8 @@ package com.fjut.oj.util;
 import com.fjut.oj.pojo.enums.Result;
 
 /**
- * Created by Administrator on 2015/6/7.
+ *
+ * @author Administrator [20150607].
  */
 public class RES {
 

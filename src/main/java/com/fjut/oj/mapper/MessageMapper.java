@@ -1,6 +1,6 @@
 package com.fjut.oj.mapper;
 
-import com.fjut.oj.pojo.t_message;
+import com.fjut.oj.pojo.TableMessage;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public interface MessageMapper {
      * @param message
      * @return
      */
-    Integer insertMessage(@Param("message") t_message message);
+    Integer insertMessage(@Param("message") TableMessage message);
 
     /**
      * 删除一条消息
@@ -65,7 +65,7 @@ public interface MessageMapper {
      * @param startIndex
      * @return
      */
-    List<t_message> queryUnReadMessageByUser(@Param("username") String username, @Param("startIndex") int startIndex);
+    List<TableMessage> queryUnReadMessageByUser(@Param("username") String username, @Param("startIndex") int startIndex);
 
     /**
      * 查询用户全部消息，返回10条
@@ -73,6 +73,6 @@ public interface MessageMapper {
      * @param startIndex
      * @return
      */
-    List<t_message> queryAllMessageByUser(@Param("username") String username, @Param("startIndex") int startIndex);
+    List<TableMessage> queryAllMessageByUser(@Param("username") String username, @Param("startIndex") int startIndex);
 
 }

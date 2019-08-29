@@ -29,6 +29,7 @@
     -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
     </bean>
     <!-- 配置一个可以执行批量的sqlSession -->
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
@@ -42,12 +43,12 @@
     </bean>
 
     <!-- 配置事务管理器 -->
-    <bean id="transactionManager"
+    <bean id="transactionManager1"
           class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven transaction-manager="transactionManager1"/>
 
-    <bean id="SpringApplicationContext" class="com.fjut.oj.judge.util.ApplicationContextHelper"/>
+
 
 </beans>

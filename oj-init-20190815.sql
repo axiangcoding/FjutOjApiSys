@@ -374,7 +374,7 @@ CREATE TABLE `t_mall` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-/*Table structure for table `t_message` */
+/*Table structure for table `TableMessage` */
 
 DROP TABLE IF EXISTS `t_message`;
 

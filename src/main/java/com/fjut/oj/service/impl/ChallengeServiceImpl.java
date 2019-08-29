@@ -1,13 +1,14 @@
 package com.fjut.oj.service.impl;
 
 import com.fjut.oj.mapper.ChallengeMapper;
+import com.fjut.oj.mapper.MessageMapper;
 import com.fjut.oj.pojo.*;
 import com.fjut.oj.service.ChallengeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.management.RuntimeMBeanException;
+import java.util.Date;
 import java.util.List;
 
 @Service("ChallengeService")
@@ -15,6 +16,32 @@ public class ChallengeServiceImpl implements ChallengeService {
 
     @Autowired
     ChallengeMapper challengeMapper;
+
+    @Autowired
+    MessageMapper messageMapper;
+
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public boolean insertOpenBlock(String username, Integer blockId) {
+        ChallengeBlock challengeBlock;
+        challengeBlock = challengeMapper.queryChallengeBlockByBlockId(blockId);
+
+        // 开启模块时发送一条开启消息
+        TableMessage message = new TableMessage();
+        message.setStatus(0);
+        message.setUser(username);
+        message.setTitle("祝贺你，开启模块： " + challengeBlock.getName());
+        message.setText("Talk is cheap, show me the code! <br />" +
+                "恭喜你，开启模块 " + challengeBlock.getName() +
+                "<br />");
+        message.setTime(new Date());
+        // 七天后过期
+        message.setDeadline(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 7)));
+
+        Integer ans = messageMapper.insertMessage(message);
+        Integer ans2 = challengeMapper.insertOpenBlock(username, blockId);
+        return ans == 1 && ans2 == 1;
+    }
 
     /**
      * 更新挑战模块开放模块
@@ -46,15 +73,13 @@ public class ChallengeServiceImpl implements ChallengeService {
             for (ChallengeConditionForBlock conditionBlock : conditionForBlocks) {
                 // 取得模块获得分数
                 Integer score = challengeMapper.queryBlockSolvedScore(username, conditionBlock.getBlockId());
-                if(null == score || score < conditionBlock.getNum()){
+                if (null == score || score < conditionBlock.getNum()) {
                     canOpen = false;
                     break;
                 }
             }
-            if(canOpen)
-            {
-                Integer ans = challengeMapper.insertOpenBlock(username,belongBlock);
-                // TODO：发送一条消息
+            if (canOpen) {
+                insertOpenBlock(username, belongBlock);
             }
         }
 

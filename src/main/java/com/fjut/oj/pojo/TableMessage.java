@@ -1,19 +1,28 @@
 package com.fjut.oj.pojo;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 import java.util.Date;
 
-// 用户 message 消息
-public class t_message {
+/**
+ * 用户 message 消息
+ *
+ * @author axiang [20190828]
+ */
+
+public class TableMessage {
 
     private Integer mid;
-    private String  user;
-    private Integer statu;  // 0 未读 1 已读
-    private String  title;
-    private String  text;
-    private Date    time;
-    private Date    deadline; // 过期时间
+    private String user;
+    /**
+     * 0 未读 1 已读
+     */
+    private Integer statu;
+    private String title;
+    private String text;
+    private Date time;
+    /**
+     * 过期时间
+     */
+    private Date deadline;
 
     public Integer getMid() {
         return mid;
@@ -74,12 +83,12 @@ public class t_message {
 
     @Override
     public String toString() {
-        return "mid: "+mid.toString()+
-                " username: "+user+
-                " status: "+statu+
-                " title: "+title+
-                " text: "+text+
-                " time: "+time+
-                " deadline: "+deadline;
+        return "mid: " + mid.toString() +
+                " username: " + user +
+                " status: " + statu +
+                " title: " + title +
+                " text: " + text +
+                " time: " + time +
+                " deadline: " + deadline;
     }
 }

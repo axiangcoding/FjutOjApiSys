@@ -38,4 +38,6 @@
             <bean class="java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy" />
         </property>
     </bean>
+
+    <bean id="SpringApplicationContext" class="com.fjut.oj.judge.util.ApplicationContextHelper"/>
 </beans>

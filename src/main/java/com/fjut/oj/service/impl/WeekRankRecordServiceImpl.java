@@ -149,7 +149,7 @@ public class WeekRankRecordServiceImpl implements WeekRankRecordService {
         }
         List<User> rank_user = new ArrayList<>();
         for (int i = 0; i < rank.size(); i++) {
-            User user = userMapper.queryUserByName(rank.get(i));
+            User user = userMapper.queryUserByUsername(rank.get(i));
             rank_user.add(user);
         }
         return rank_user;

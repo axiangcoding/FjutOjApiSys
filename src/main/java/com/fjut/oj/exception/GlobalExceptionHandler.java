@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
@@ -82,7 +83,7 @@ public class GlobalExceptionHandler {
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public JsonInfo handleException(Exception e) {
+    public JsonInfo handleException(Exception e, HttpServletResponse response) {
         String msg;
         LOGGER.error("服务运行异常", e);
         if (e instanceof NullPointerException) {

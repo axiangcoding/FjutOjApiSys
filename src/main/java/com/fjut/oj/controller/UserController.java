@@ -1,14 +1,16 @@
 package com.fjut.oj.controller;
 
+import com.fjut.oj.interceptor.CheckUserIsLogin;
 import com.fjut.oj.interceptor.CheckUserPrivate;
-import com.fjut.oj.pojo.TokenModel;
+import com.fjut.oj.pojo.TableUserAuth;
 import com.fjut.oj.pojo.User;
+import com.fjut.oj.redis.TokenManager;
 import com.fjut.oj.service.StatusService;
 import com.fjut.oj.service.UserRadarService;
 import com.fjut.oj.service.UserService;
-import com.fjut.oj.interceptor.CheckUserIsLogin;
-import com.fjut.oj.redis.TokenManager;
 import com.fjut.oj.util.JsonInfo;
+import com.fjut.oj.util.SHAUtils;
+import com.fjut.oj.util.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -42,48 +44,6 @@ public class UserController {
     @Autowired
     private TokenManager tokenManager;
 
-    /**
-     * 登录认证，redis做鉴权
-     *
-     * @param username
-     * @param password
-     * @return
-     */
-    @PostMapping("/login")
-    public JsonInfo doLogin(@RequestParam(value = "username", required = false) String username, @RequestParam(value = "password", required = false) String password) {
-        JsonInfo jsonInfo = new JsonInfo();
-        if (null == username || null == password) {
-            jsonInfo.setFail("用户名或者密码为空！");
-            return jsonInfo;
-        }
-        User user = userService.getUserByUsername(username);
-        Integer count = userService.getUserByUsernameAndPassword(username, password);
-        if (null == user) {
-            // 用户名不存在
-            jsonInfo.setFail("用户名不存在");
-
-        } else if (count == 0) {
-            // 用户名和密码不匹配
-            jsonInfo.setFail("用户名或密码不匹配");
-        } else {
-            // 用户名和密码匹配
-            jsonInfo.setSuccess("用户名和密码正确");
-            TokenModel tokenModel = tokenManager.createToken(username);
-            // TODO:做的简单字符串拼接，后期需要做一定的加密
-            String auth = tokenModel.getUsername() + "_" + tokenModel.getToken();
-            jsonInfo.addInfo(username);
-            jsonInfo.addInfo(auth);
-        }
-        return jsonInfo;
-    }
-
-    @PostMapping("/logout")
-    @CheckUserPrivate
-    public JsonInfo logoutUser(@RequestParam("username")String username)
-    {
-        tokenManager.deleteToken(username);
-        return new JsonInfo("SUCCESS","下线成功");
-    }
 
     /**
      * 注册一个用户
@@ -92,29 +52,52 @@ public class UserController {
      * @return
      */
     @PostMapping("/insertUser")
-    public JsonInfo insertUser(HttpServletRequest req) {
+    public JsonInfo insertUser(HttpServletRequest req,
+                               @RequestParam("username") String username,
+                               @RequestParam("password") String password,
+                               @RequestParam("nick") String nick,
+                               @RequestParam(value = "gender", required = false) String genderStr,
+                               @RequestParam(value = "school", required = false) String school,
+                               @RequestParam(value = "Email", required = false) String Email,
+                               @RequestParam(value = "motto", required = false) String motto,
+                               @RequestParam(value = "type", required = false) String typeStr,
+                               @RequestParam(value = "Mark", required = false) String Mark
+    ) {
         JsonInfo jsonInfo = new JsonInfo();
         User tmp = userService.getUserByUsername(req.getParameter("username"));
         if (null != tmp) {
             jsonInfo.setFail("用户名已经存在");
             return jsonInfo;
         }
-        User user = new User();
-        user.setUsername(req.getParameter("username"));
-        user.setPassword(req.getParameter("password"));
-        user.setNick(req.getParameter("nick") == null ? " " : req.getParameter("nick"));
-        user.setGender(Integer.parseInt(req.getParameter("gender") == null ? "0" : req.getParameter("gender")));
-        user.setSchool(req.getParameter("school") == null ? " " : req.getParameter("school"));
-        user.setEmail(req.getParameter("Email") == null ? " " : req.getParameter("Email"));
-        user.setMotto(req.getParameter("motto") == null ? " " : req.getParameter("motto"));
-
         Date currentTime = new Date();
         String dateString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(currentTime);
-        user.setRegistertime(dateString);
 
-        user.setType(Integer.parseInt(req.getParameter("type") == null ? "0" : req.getParameter("type")));
-        user.setMark(req.getParameter("Mark") == null ? " " : req.getParameter("Mark"));
-        user.setRating(-100000);
+        User user = new User();
+        TableUserAuth userAuth = new TableUserAuth();
+        String salt = UUIDUtils.getUUID32();
+        // 加盐密码
+        String newPassword = salt + password;
+        // 对加盐密码使用SHA1加密
+        String encryptedPwd = SHAUtils.SHA1(newPassword);
+        userAuth.setUsername(username);
+        userAuth.setSalt(salt);
+        userAuth.setPassword(encryptedPwd);
+        userAuth.setAttemptLoginFailCount(0);
+        userAuth.setLocked(0);
+        userAuth.setUnlockTime(currentTime);
+        userAuth.setLastLoginTime(currentTime);
+
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setNick(nick);
+        user.setGender(Integer.parseInt(genderStr == null ? "0" : genderStr));
+        user.setSchool(school == null ? " " : school);
+        user.setEmail(Email == null ? " " : Email);
+        user.setMotto(motto == null ? " " : motto);
+        user.setRegistertime(dateString);
+        user.setType(Integer.parseInt(typeStr == null ? "0" : typeStr));
+        user.setMark(Mark == null ? " " : Mark);
+        user.setRating(0);
         user.setRatingnum(0);
         user.setAcb(0);
         user.setName(req.getParameter("name") == null ? " " : req.getParameter("name"));
@@ -127,10 +110,8 @@ public class UserController {
         user.setInTeamStatus(Integer.parseInt(req.getParameter("inTeamStatus") == null ? "0" : req.getParameter("inTeamStatus")));
         user.setInTeamLv(Integer.parseInt(req.getParameter("inTeamLv") == null ? "0" : req.getParameter("inTeamLv")));
         user.setRank(Integer.parseInt(req.getParameter("rank") == null ? "2223" : req.getParameter("rank")));
-        // Date graduationTime = new Date();
         user.setGraduationTime(req.getParameter("graduationTime") == null ? "2022-07-01 00:00:00" : req.getParameter("graduationTime"));
-
-        boolean flag = userService.insertUser(user);
+        boolean flag = userService.insertUser(user, userAuth);
         if (flag) {
             jsonInfo.setSuccess("添加用户成功！");
         } else {
@@ -222,10 +203,9 @@ public class UserController {
      * 获取一个用户个人信息界面的信息
      */
     @CheckUserIsLogin
-    @RequestMapping("/GUserInfo")
-    public JsonInfo queryUserInfoByUsername(HttpServletRequest req) {
+    @RequestMapping("/getUserInfo")
+    public JsonInfo queryUserInfoByUsername(@RequestParam("username") String username) {
         JsonInfo jsonInfo = new JsonInfo();
-        String username = req.getParameter("username");
         User user = userService.getUserByUsername(username);
 
         if (null != user) {
@@ -296,10 +276,9 @@ public class UserController {
         return jsonInfo;
     }
 
-    @RequestMapping(value = "/GRatingGraph")
-    public JsonInfo getRatingGraph(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping("/getRatingGraph")
+    public JsonInfo getRatingGraph(@RequestParam("username") String username) {
         JsonInfo jsonInfo = new JsonInfo();
-        String username = request.getParameter("username");
         Map<String, Integer> list = (Map<String, Integer>) userService.getRatingGraph(username);
         if (null != list) {
             jsonInfo.setSuccess();
@@ -310,10 +289,9 @@ public class UserController {
         return jsonInfo;
     }
 
-    @RequestMapping(value = "/GAcGraph")
-    public JsonInfo getAcGraph(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping("/getAcGraph")
+    public JsonInfo getAcGraph(@RequestParam("username") String username) {
         JsonInfo jsonInfo = new JsonInfo();
-        String username = request.getParameter("username");
         //FIXME: 函数错误
         List<Object> list = (List<Object>) userService.getAcGraph(username);
         if (null != list) {

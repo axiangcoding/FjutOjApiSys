@@ -41,7 +41,7 @@ public class ProblemTagServiceImpl implements ProblemTagService {
      */
     @Override
     public int addTag(Integer pid, String username, Integer tagid, Integer rating) {
-        User user = userMapper.queryUserByName(username);
+        User user = userMapper.queryUserByUsername(username);
         if (user == null) {
             return 0;
         }

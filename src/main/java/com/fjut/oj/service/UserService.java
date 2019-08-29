@@ -1,7 +1,7 @@
 package com.fjut.oj.service;
 
+import com.fjut.oj.pojo.TableUserAuth;
 import com.fjut.oj.pojo.User;
-import org.apache.ibatis.type.IntegerTypeHandler;
 
 import java.util.List;
 
@@ -20,13 +20,20 @@ public interface UserService {
      * 插入用户
      *
      * @param user
+     * @param userAuth
      * @return
      */
-    boolean insertUser(User user);
+    boolean insertUser(User user, TableUserAuth userAuth);
 
     int updateUserByUsername(User user);             // 通过用户名更新用户
 
-    User getUserByUsername(String username);          // 通过用户名查找用户
+    /**
+     * 通过用户名查找用户
+     *
+     * @param username
+     * @return
+     */
+    User getUserByUsername(String username);
 
     Integer getUserByUsernameAndPassword(String username, String password); // 用户名密码是否匹配
 

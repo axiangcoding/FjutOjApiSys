@@ -1,9 +1,6 @@
 package com.fjut.oj.service;
 
 import com.fjut.oj.pojo.*;
-import com.fjut.oj.util.JsonInfo;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -11,6 +8,15 @@ import java.util.List;
  * @author axiang
  */
 public interface ChallengeService {
+
+    /**
+     * 插入一条开启模块记录，并发送一条消息记录
+     *
+     * @param username
+     * @param blockId
+     * @return
+     */
+    boolean insertOpenBlock(String username, Integer blockId);
 
     /**
      * 更新挑战模块开放模块

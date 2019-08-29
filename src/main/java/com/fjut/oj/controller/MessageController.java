@@ -1,9 +1,8 @@
 package com.fjut.oj.controller;
 
 import com.fjut.oj.interceptor.CheckUserPrivate;
-import com.fjut.oj.pojo.t_message;
+import com.fjut.oj.pojo.TableMessage;
 import com.fjut.oj.service.MessageService;
-import com.fjut.oj.interceptor.CheckUserIsLogin;
 import com.fjut.oj.util.JsonInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -80,7 +79,7 @@ public class MessageController {
         if (null != pageNum) {
             startIndex = (pageNum - 1) * 10;
         }
-        List<t_message> messages = messageService.queryAllMessageByUser(username, startIndex);
+        List<TableMessage> messages = messageService.queryAllMessageByUser(username, startIndex);
         int countMessage = messageService.queryAllMessageCountByUser(username);
         if (0 != messages.size()) {
             jsonInfo.setSuccess();
@@ -120,7 +119,7 @@ public class MessageController {
         if (null != pageNum) {
             startIndex = (pageNum - 1) * 10;
         }
-        List<t_message> messages = messageService.queryUnReadMessageByUser(username, startIndex);
+        List<TableMessage> messages = messageService.queryUnReadMessageByUser(username, startIndex);
         Integer unReadCount = messageService.queryUnReadMessageCountByUser(username);
         if (0 != messages.size()) {
             jsonInfo.setSuccess();

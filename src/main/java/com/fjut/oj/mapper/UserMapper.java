@@ -25,8 +25,12 @@ public interface UserMapper {
 
     List<AwardInfo> queryAwardInfo(@Param("username") String username);
 
-
-    User queryUserByName(@Param("username") String username);
+    /**
+     * 通过用户名查找用户
+     * @param username
+     * @return
+     */
+    User queryUserByUsername(@Param("username") String username);
 
     Integer getUserByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 

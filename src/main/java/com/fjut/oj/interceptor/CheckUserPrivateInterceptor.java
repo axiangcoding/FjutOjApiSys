@@ -3,7 +3,7 @@ package com.fjut.oj.interceptor;
 import com.fjut.oj.exception.NotOwnerException;
 import com.fjut.oj.redis.TokenManager;
 import com.fjut.oj.pojo.TokenModel;
-import com.fjut.oj.util.IpTools;
+import com.fjut.oj.util.IpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -41,7 +41,7 @@ public class CheckUserPrivateInterceptor extends HandlerInterceptorAdapter {
         if (manager.checkToken(model) && model.getUsername().equals(username)) {
             return true;
         } else {
-            String ip = IpTools.getClientIpAddress(request);
+            String ip = IpUtils.getClientIpAddress(request);
             throw new NotOwnerException("", ip);
         }
     }
