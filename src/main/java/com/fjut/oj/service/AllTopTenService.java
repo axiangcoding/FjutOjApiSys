@@ -8,8 +8,16 @@ import java.util.List;
  * @author axiang [20190810]
  */
 public interface AllTopTenService {
-    List<User> getRatingTOP();
+    /**
+     * 获得积分榜前十
+     *
+     * @return
+     */
+    List<User> getRatingTop();
+
     List<User> getAcbTOP();
+
     List<User> getAcTOP();
+
     List<User> getActiveTop();
 }

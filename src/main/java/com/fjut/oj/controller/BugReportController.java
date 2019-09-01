@@ -1,7 +1,6 @@
 package com.fjut.oj.controller;
 
 import com.fjut.oj.pojo.TableBugReport;
-import com.fjut.oj.pojo.enums.BugType;
 import com.fjut.oj.service.BugReportService;
 import com.fjut.oj.util.JsonInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 
 /**
- * @Author: axiang [20190826]
+ * @author axiang [20190826]
  */
 @Controller
 @CrossOrigin

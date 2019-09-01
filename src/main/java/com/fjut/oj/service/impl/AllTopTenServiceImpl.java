@@ -18,7 +18,7 @@ public class AllTopTenServiceImpl implements AllTopTenService {
     private WeekRankRecordService weekRankRecordService;
 
     @Override
-    public List<User> getRatingTOP() {
+    public List<User> getRatingTop() {
         return userMapper.getRatingTop(0, 10);
     }
 

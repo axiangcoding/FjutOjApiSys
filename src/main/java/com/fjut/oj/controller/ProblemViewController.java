@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * @author cjt axiang [20190808]
+ * @author cjt
  */
 @Controller
 @CrossOrigin

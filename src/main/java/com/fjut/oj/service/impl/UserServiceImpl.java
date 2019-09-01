@@ -178,7 +178,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer addAcnum(String username) {
-        return userMapper.addAcnum(username);
+        return userMapper.updateACNumAddOneByUsername(username);
     }
 
     /**
@@ -199,7 +199,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer updateAcbNumber(String username, Integer acbChange) {
-        return userMapper.updateAcbNumber(username, acbChange);
+        return userMapper.updateACBNumber(username, acbChange);
     }
 
 //        List<String> timeList = new ArrayList<>();

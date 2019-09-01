@@ -22,6 +22,7 @@ public interface AllUsersRankMapper {
 
     /**
      * 查询名字相似用户
+     *
      * @param username
      * @param start
      * @return
@@ -30,6 +31,7 @@ public interface AllUsersRankMapper {
 
     /**
      * 查询名字相似用户的数量
+     *
      * @param username
      * @return
      */

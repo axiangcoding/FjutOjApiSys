@@ -4,10 +4,7 @@ package com.fjut.oj.exception;
 import com.fjut.oj.pojo.Log;
 import com.fjut.oj.service.LogService;
 import com.fjut.oj.util.JsonInfo;
-
-
 import org.apache.log4j.Logger;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.http.HttpStatus;
@@ -20,7 +17,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -29,10 +25,11 @@ import java.util.Date;
 
 /**
  * TODO: 暂时设计为得到Exception直接保存到数据库中，后面设置定时任务将文件中的日志写入数据库
- *
- * @author axiang [20190620]
+ * FIXME: 如果与前端为跨域，前端无法正常得到带错误提示的JSON字符串，只会显示跨域问题，实际上并不是跨域产生的
  * 全局异常处理类，将异常信息保存到数据库中，只返回前端带错误提示的JSON字符串
  * 返回JSON字符串结构为：{code:400 msg:"异常信息" datas:[]}
+ *
+ * @author axiang [20190620]
  */
 @ControllerAdvice()
 @ResponseBody

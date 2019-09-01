@@ -170,14 +170,14 @@
         SELECT `time`,rating FROM t_rating where username = #{username} ORDER BY `time` DESC
     </select>
 
-    <update id="addAcnum">
+    <update id="updateACNumAddOneByUsername">
         update users
         set acnum = acnum + 1
         where username = #{username}
     </update>
 
 
-    <update id="updateAcbNumber">
+    <update id="updateACBNumber">
         UPDATE users
         SET acb = acb + #{acbChange}
         WHERE username = #{username}

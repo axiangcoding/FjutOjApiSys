@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -25,7 +24,8 @@ import java.util.List;
 
 
 /**
- * @Author: axiang [20190702] 文件上传控制器
+ * 文件上传控制器
+ * @author axiang [20190702]
  */
 @Controller
 @CrossOrigin

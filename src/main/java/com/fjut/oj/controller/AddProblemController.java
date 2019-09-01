@@ -52,7 +52,7 @@ public class AddProblemController {
             new CodeVS(),
     };
 
-    @PostMapping("/GAddProblemTitle")
+    @PostMapping("/getAddProblemTitle")
     public JsonMsg getAddProblemTitle(@RequestParam(value = "pid", required = false) String pidStr,
                                       @RequestParam(value = "ojStr", required = false) String ojStr) {
         if (pidStr == null || ojStr == null) {

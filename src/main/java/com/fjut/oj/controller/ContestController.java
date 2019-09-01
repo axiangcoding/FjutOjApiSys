@@ -52,16 +52,15 @@ public class ContestController {
         Date registerEndTime;
         Integer cType;
         Integer kind;
-        try{
+        try {
             beginTime = simpleDateFormat.parse(beginTimeStr);
             endTime = simpleDateFormat.parse(endTimeStr);
             registerBeginTime = simpleDateFormat.parse(registerBeginTimeStr);
             registerEndTime = simpleDateFormat.parse(registerEndTimeStr);
             cType = Integer.parseInt(cTypeStr);
             kind = Integer.parseInt(kindStr);
-        }catch (Exception e)
-        {
-            return new JsonInfo("ERROR","参数错误");
+        } catch (Exception e) {
+            return new JsonInfo("ERROR", "参数错误");
         }
         Contest contest = new Contest();
         contest.setName(contestTitle);
@@ -78,13 +77,11 @@ public class ContestController {
         contest.setKind(kind);
         contest.setCreateuser(username);
         Integer ans = contestService.insertContest(contest);
-        if( 0 == ans)
-        {
-            return new JsonInfo("ERROR","比赛添加失败");
+        if (0 == ans) {
+            return new JsonInfo("ERROR", "比赛添加失败");
         }
         Integer ansCount = contestService.insertContestProblem(contest.getId(), pidList);
-        if( 0 < ansCount)
-        {
+        if (0 < ansCount) {
             jsonInfo.setSuccess("比赛添加成功！请到比赛页面查看！");
         }
         return jsonInfo;
@@ -179,64 +176,6 @@ public class ContestController {
         jsonInfo.setSuccess();
         return jsonInfo;
     }
-
-    @RequestMapping("/IContest")
-    @ResponseBody
-    public JsonMsg IContest(HttpServletRequest request, HttpServletResponse response) {
-//        Contest contest = new Contest();
-//        Integer oldid = contestService.getMaxContestId();
-//        Integer id = oldid + 1;
-//        String name = request.getParameter("name");
-//        String beginTime = request.getParameter("beginTime");
-//        String endTime = request.getParameter("endTime");
-//        String rankTypeStr = request.getParameter("rankType") == null ? "2" : request.getParameter("rankType");
-//        Integer rankType = Integer.parseInt(rankTypeStr);
-//        String cTypeStr = request.getParameter("ctype") == null ? "0" : request.getParameter("ctype");
-//        Integer ctype = Integer.parseInt(cTypeStr);
-//        String password = request.getParameter("password") == null ? "" : request.getParameter("password");
-//        //String registerstarttime = request.getParameter("registerstarttime");
-//        //String registerendtime = request.getParameter("registerendtime");
-//        String kindStr = request.getParameter("kind") == null ? "0" : request.getParameter("kind");
-//        Integer kind = Integer.parseInt(kindStr);
-//
-//        contest.setId(id);
-//        contest.setName(name);
-//        contest.setBeginTime(beginTime);
-//        contest.setEndTime(endTime);
-//        contest.setRankType(rankType);
-//        contest.setCtype(ctype);
-//        contest.setKind(kind);
-//        contest.setPassword(password);
-//        Integer num = contestService.insertContest(contest);
-//        if (num == 0) {
-//            return JsonMsg.fail().addInfo("新建比赛失败");
-//        }
-        return JsonMsg.success().addInfo("新建比赛成功");
-    }
-
-//    @RequestMapping("/IContestProblems")
-//    @ResponseBody
-//    public JsonMsg IContestProblems(HttpServletRequest request, HttpServletResponse response) {
-//        String pidStr = request.getParameter("pid");
-//        String tpidStr = request.getParameter("tpid");
-//        if (pidStr == null || tpidStr == null) {
-//            return JsonMsg.fail().addInfo("信息不足");
-//        }
-//
-//        Integer oldid = contestService.getMaxContestId();
-//        Integer cid = oldid;
-//        Integer pid = Integer.parseInt(pidStr);
-//        Integer tpid = Integer.parseInt(tpidStr);
-//        ContestProblem contestProblem = new ContestProblem();
-//        contestProblem.setCid(cid);
-//        contestProblem.setPid(pid);
-//        contestProblem.setTpid(tpid);
-//        Integer num = contestService.insertContestProblem(contestProblem);
-//        if (num == 0) {
-//            return JsonMsg.fail().addInfo("新增比赛题目失败");
-//        }
-//        return JsonMsg.success().addInfo("新增比赛题目成功");
-//    }
 
     @RequestMapping("/IContestuser")
     @ResponseBody

@@ -14,9 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 /**
- * @author cjt
  * TODO: 把 JsonMsg 替换为 JsonInfo
+ *
+ * @author cjt
  */
 @Controller
 @ResponseBody
@@ -28,11 +30,11 @@ public class NewDiscussReplyController {
     private NewdiscussreplyService newdiscussreplyService;
 
     @RequestMapping("/GDiscussReplyById")
-    public JsonMsg queryDiscussReplyById(HttpServletRequest req, HttpServletResponse resp){
+    public JsonMsg queryDiscussReplyById(HttpServletRequest req, HttpServletResponse resp) {
         String pagenumStr = req.getParameter("pagenum") == null ? "1" : req.getParameter("pagenum");
         Integer pagenum = Integer.parseInt(pagenumStr);
         Integer start = (pagenum - 1) * 50;
-        if (req.getParameter("discussid") == null){
+        if (req.getParameter("discussid") == null) {
             return JsonMsg.fail().addInfo("未传入discussid");
         }
         Integer id = Integer.parseInt(req.getParameter("discussid"));
@@ -43,14 +45,14 @@ public class NewDiscussReplyController {
     }
 
     @RequestMapping("/insertDiscussReply")
-    public JsonMsg insertDiscussReply(HttpServletRequest req, HttpServletResponse resp){
+    public JsonMsg insertDiscussReply(HttpServletRequest req, HttpServletResponse resp) {
         Integer discussid = Integer.parseInt(req.getParameter("discussid"));
-        if (discussid == null){
+        if (discussid == null) {
             return JsonMsg.fail().addInfo("未传入讨论id");
         }
         Integer maxreplyid = newdiscussreplyService.quertCountReplies(discussid);
 
-        if (maxreplyid == null){
+        if (maxreplyid == null) {
             maxreplyid = 0;
         }
         maxreplyid = maxreplyid + 1;

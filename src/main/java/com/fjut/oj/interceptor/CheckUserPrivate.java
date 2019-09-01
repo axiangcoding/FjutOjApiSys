@@ -6,7 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @Author: axiang [20190712] 检查请求内容是否和登录用户一致
+ * 检查请求内容是否和登录用户一致
+ * @author axiang [20190712]
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

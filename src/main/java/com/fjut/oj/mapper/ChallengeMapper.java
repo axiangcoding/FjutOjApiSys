@@ -103,7 +103,6 @@ public interface ChallengeMapper {
 
 
     /**
-     * TODO: 移出到ProblemMapper里面去，Service层也要
      * 根据用户名 获取用户解决的题目和状态
      *
      * @param username

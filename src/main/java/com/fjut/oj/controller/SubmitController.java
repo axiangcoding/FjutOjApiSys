@@ -58,7 +58,7 @@ public class SubmitController {
     @Autowired
     private LocalJudgeHttp localJudgeHttp;
 
-    /* 线程池 */
+    /** 线程池 */
     @Autowired
     private ThreadPoolTaskExecutor executor;
 
@@ -133,11 +133,10 @@ public class SubmitController {
 
 
     /**
-     * FIXME
+     * FIXME: 没有设置事务，方法内代码过长，需要重构
      *
      * @author axiang [20190815] 提交到本地
      */
-
     @CheckUserPrivate
     @PostMapping("/submitProblemToLocal")
     public JsonInfo submitProblemToLocalJudge(@RequestParam("pid") String pidStr,
@@ -179,8 +178,8 @@ public class SubmitController {
         }
         String type = "submit";
         Integer pid = Integer.parseInt(pidStr);
-        Integer maxrid = statusService.queryMaxStatusId();
-        Integer rid = maxrid == null ? 1 : maxrid + 1;
+        Integer maxRid = statusService.queryMaxStatusId();
+        Integer rid = maxRid == null ? 1 : maxRid + 1;
         Integer timeLimit = Integer.parseInt(timeLimitStr);
         Integer MemoryLimit = Integer.parseInt(MemoryLimitStr);
 
@@ -246,9 +245,6 @@ public class SubmitController {
         return jsonInfo;
     }
 
-    /**
-     * 这里的事务注解只有在数据库报错的情况下才会回滚
-     */
     @Transactional(rollbackFor = RuntimeException.class)
     public void getResultFromLocalJudgeSystem(Integer rid, Integer pid, String username) throws InterruptedException {
         Status status = new Status();
@@ -327,7 +323,7 @@ public class SubmitController {
 
     }
 
-    public String handleLocalJudgeReturns(JSONArray retJsonArr, Status status) {
+    private String handleLocalJudgeReturns(JSONArray retJsonArr, Status status) {
         CeInfo ceinfo = new CeInfo();
         String ans;
         String ceStr = "";

@@ -8,7 +8,7 @@
         WHERE username=#{username} AND pid=#{pid}
     </select>
 
-    <select id="queryACProblem" resultType="com.fjut.oj.pojo.UserSolve">
+    <select id="queryACProblemByUsername" resultType="com.fjut.oj.pojo.UserSolve">
         SELECT *
         FROM t_usersolve
         WHERE username=#{username} AND pid=#{pid} AND status=1

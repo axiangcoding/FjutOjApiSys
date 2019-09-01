@@ -87,13 +87,13 @@ public class ClockInController {
         Date time = new Date();
         String sign = "日常";
         String ip = IpUtils.getClientIpAddress(req);
-        Integer todytimes = 1;
+        Integer todayTimes = 1;
         TableClockIn clockIn = new TableClockIn();
         clockIn.setUsername(username);
         clockIn.setTime(time);
         clockIn.setSign(sign);
         clockIn.setIp(ip);
-        clockIn.setTodytimes(todytimes);
+        clockIn.setTodytimes(todayTimes);
         boolean isClockIn = clockInService.insertClockIn(clockIn);
         if (isClockIn) {
             jsonInfo.setSuccess("用户签到成功！");

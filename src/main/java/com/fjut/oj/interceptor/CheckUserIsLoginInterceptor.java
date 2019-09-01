@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Author: axiang [20190705] 判断用户登录状态拦截器
+ * 判断用户登录状态拦截器
+ *
+ * @author axiang [20190705]
  */
 @Component
 public class CheckUserIsLoginInterceptor extends HandlerInterceptorAdapter {
@@ -21,7 +23,7 @@ public class CheckUserIsLoginInterceptor extends HandlerInterceptorAdapter {
 
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         // 如果不是映射到方法上就直接跳过
         if (!(handler instanceof HandlerMethod)) {
             return true;
@@ -31,8 +33,9 @@ public class CheckUserIsLoginInterceptor extends HandlerInterceptorAdapter {
         if (null == checkUserIsLogin) {
             return true;
         }
-        // 从头部获取Token
+        // 从头部获取auth
         String auth = request.getHeader("auth");
+        // 解析为token
         TokenModel model = manager.getToken(auth);
         if (manager.checkToken(model)) {
             return true;

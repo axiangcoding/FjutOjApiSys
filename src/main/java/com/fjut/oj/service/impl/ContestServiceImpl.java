@@ -1,6 +1,7 @@
 package com.fjut.oj.service.impl;
 
 import com.fjut.oj.mapper.ContestMapper;
+import com.fjut.oj.mapper.ContestProblemMapper;
 import com.fjut.oj.pojo.*;
 import com.fjut.oj.service.ContestService;
 import com.fjut.oj.util.ResultString;
@@ -19,6 +20,9 @@ public class ContestServiceImpl implements ContestService {
 
     @Autowired
     private ContestMapper contestMapper;
+
+    @Autowired
+    private ContestProblemMapper contestProblemMapper;
 
     @Override
     public Integer insertContest(Contest contest) {
@@ -39,7 +43,7 @@ public class ContestServiceImpl implements ContestService {
             contestProblems.add(contestProblem);
             index++;
         }
-        return contestMapper.insertContestProblem(contestProblems);
+        return contestProblemMapper.insertContestProblems(contestProblems);
     }
 
     @Override

@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Author: axiang [2019/7/12] 用户是否请求私密内容的拦截器，请求中带用户名时生效
+ * 用户是否请求私密内容的拦截器，请求中带用户名时生效
+ * @author axiang [20190712]
  */
 @Component
 public class CheckUserPrivateInterceptor extends HandlerInterceptorAdapter {
@@ -22,21 +23,21 @@ public class CheckUserPrivateInterceptor extends HandlerInterceptorAdapter {
 
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         // 如果不是映射到方法上就直接跳过
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         CheckUserPrivate checkUserPrivate = handlerMethod.getMethodAnnotation(CheckUserPrivate.class);
         if (null == checkUserPrivate) {
             return true;
         }
-        // 从头部获取Token
+        // 从头部获取auth
         String auth = request.getHeader("auth");
         // 从参数获取username
         String username = request.getParameter("username");
+        // 解析为token
         TokenModel model = manager.getToken(auth);
         if (manager.checkToken(model) && model.getUsername().equals(username)) {
             return true;

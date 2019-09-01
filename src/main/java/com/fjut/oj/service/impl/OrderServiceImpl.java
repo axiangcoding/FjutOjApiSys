@@ -34,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
 
                 throw new RuntimeException();
             }
-            Integer userAcbChangeAns = userMapper.updateAcbNumber(tableOrder.getUsername(), -tableOrder.getAcb());
+            Integer userAcbChangeAns = userMapper.updateACBNumber(tableOrder.getUsername(), -tableOrder.getAcb());
             if (1 != userAcbChangeAns) {
                 throw new RuntimeException();
             }

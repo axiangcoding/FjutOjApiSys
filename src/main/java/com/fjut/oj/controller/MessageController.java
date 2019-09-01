@@ -39,7 +39,8 @@ public class MessageController {
 
     @CheckUserPrivate
     @PostMapping("/setReaded")
-    public JsonInfo setReadedByMid(@RequestParam("username") String username, @RequestParam("mid") String midStr) {
+    public JsonInfo setReadedByMid(@RequestParam("username") String username,
+                                   @RequestParam("mid") String midStr) {
         JsonInfo jsonInfo = new JsonInfo();
         Integer mid = Integer.parseInt(midStr);
         Integer res = messageService.updateMessageStatuByMid(mid, 1);
@@ -75,10 +76,8 @@ public class MessageController {
     public JsonInfo getUserMessage(@RequestParam("username") String username, @RequestParam("pagenum") String pageNumStr) {
         JsonInfo jsonInfo = new JsonInfo();
         Integer pageNum = Integer.parseInt(pageNumStr);
-        Integer startIndex = null;
-        if (null != pageNum) {
-            startIndex = (pageNum - 1) * 10;
-        }
+        Integer startIndex;
+        startIndex = (pageNum - 1) * 10;
         List<TableMessage> messages = messageService.queryAllMessageByUser(username, startIndex);
         int countMessage = messageService.queryAllMessageCountByUser(username);
         if (0 != messages.size()) {
@@ -115,10 +114,8 @@ public class MessageController {
         String username = request.getParameter("username");
         String pageNumStr = request.getParameter("pagenum");
         Integer pageNum = Integer.parseInt(pageNumStr);
-        Integer startIndex = null;
-        if (null != pageNum) {
-            startIndex = (pageNum - 1) * 10;
-        }
+        Integer startIndex;
+        startIndex = (pageNum - 1) * 10;
         List<TableMessage> messages = messageService.queryUnReadMessageByUser(username, startIndex);
         Integer unReadCount = messageService.queryUnReadMessageCountByUser(username);
         if (0 != messages.size()) {

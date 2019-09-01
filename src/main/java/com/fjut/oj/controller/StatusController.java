@@ -1,8 +1,6 @@
 package com.fjut.oj.controller;
 
-import com.fjut.oj.exception.NotLoginException;
 import com.fjut.oj.exception.NotOwnerException;
-import com.fjut.oj.interceptor.CheckUserIsLogin;
 import com.fjut.oj.interceptor.CheckUserPrivate;
 import com.fjut.oj.pojo.Status;
 import com.fjut.oj.pojo.UserSolve;
@@ -111,17 +109,17 @@ public class StatusController {
         String resultStr = req.getParameter("result") == null ? "" : req.getParameter("result");
         String langStr = req.getParameter("lang") == null ? "" : req.getParameter("lang");
         start = (pageNum - 1) * 50;
-        if (pidStr == "") {
+        if (pidStr.equals("")) {
             pid = null;
         } else {
             pid = Integer.parseInt(pidStr);
         }
-        if (resultStr == "" || "All".equals(resultStr)) {
+        if (resultStr.equals("") || "All".equals(resultStr)) {
             result = null;
         } else {
             result = ResultString.getResultString(resultStr);
         }
-        if (langStr == "" || "All".equals(langStr)) {
+        if (langStr.equals("") || "All".equals(langStr)) {
             lang = null;
         } else {
             lang = ResultString.getSubmitLanguage(langStr);
@@ -142,10 +140,9 @@ public class StatusController {
     @CheckUserPrivate
     @GetMapping("/getStatusById")
     public JsonInfo getStatusById(@RequestParam("id") String idStr,
-                                  @RequestParam(value = "username",required = false) String username) {
+                                  @RequestParam(value = "username", required = false) String username) {
         JsonInfo jsonInfo = new JsonInfo();
-        if("".equals(username) || null == username)
-        {
+        if ("".equals(username) || null == username) {
             throw new NotOwnerException();
         }
         Integer id = Integer.parseInt(idStr);
@@ -155,10 +152,10 @@ public class StatusController {
         if (null == viewUserStatus) {
             jsonInfo.setFail("评测信息不存在！");
             return jsonInfo;
-        } else if (viewUserStatus.getRuser().equals(username) || permissionCanViewOthersCode || normalCanViewOthersCode ) {
+        } else if (viewUserStatus.getRuser().equals(username) || permissionCanViewOthersCode || normalCanViewOthersCode) {
             jsonInfo.setSuccess();
             jsonInfo.addInfo(viewUserStatus);
-        } else{
+        } else {
             jsonInfo.setSuccess("权限不足!");
             viewUserStatus.setCode("不允许查看此评测代码，请完成该题解答或者使用ACB购买该题");
             jsonInfo.addInfo(viewUserStatus);

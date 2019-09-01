@@ -4,7 +4,6 @@ import com.fjut.oj.interceptor.CheckUserIsLogin;
 import com.fjut.oj.interceptor.CheckUserPrivate;
 import com.fjut.oj.pojo.TableUserAuth;
 import com.fjut.oj.pojo.User;
-import com.fjut.oj.redis.TokenManager;
 import com.fjut.oj.service.StatusService;
 import com.fjut.oj.service.UserRadarService;
 import com.fjut.oj.service.UserService;
@@ -23,8 +22,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author axiang [20190710]
  * TODO: 界定权限控制，改不合理的传参
+ *
+ * @author axiang [20190710]
+ *
  */
 @Controller
 @CrossOrigin
@@ -40,10 +41,6 @@ public class UserController {
 
     @Autowired
     private UserRadarService userRadarService;
-
-    @Autowired
-    private TokenManager tokenManager;
-
 
     /**
      * 注册一个用户

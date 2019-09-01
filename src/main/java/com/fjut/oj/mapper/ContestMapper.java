@@ -3,7 +3,6 @@ package com.fjut.oj.mapper;
 import com.fjut.oj.pojo.*;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,15 +16,6 @@ public interface ContestMapper {
      * @return
      */
     Integer insertContest(@Param("contest") Contest contest);
-
-    /**
-     * 插入多条比赛题目
-     *
-     * @param problems
-     * @return
-     */
-    Integer insertContestProblem(@Param("contestProblems") ArrayList<ContestProblem> problems);
-
 
     /**
      * 根据条件一次性查询20条比赛列表

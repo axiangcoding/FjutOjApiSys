@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * @Author: axiang [20190625]
+ * @author axiang [20190625]
  */
 @Controller
 @CrossOrigin

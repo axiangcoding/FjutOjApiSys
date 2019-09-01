@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 
 /**
- * @Author: axiang [20190807]
+ * @author axiang [20190807]
  */
 @Controller
 @RequestMapping("/order")

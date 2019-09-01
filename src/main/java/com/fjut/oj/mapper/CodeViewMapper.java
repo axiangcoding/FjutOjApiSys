@@ -2,8 +2,6 @@ package com.fjut.oj.mapper;
 
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
 /**
  * @author axiang [20190810]
  */

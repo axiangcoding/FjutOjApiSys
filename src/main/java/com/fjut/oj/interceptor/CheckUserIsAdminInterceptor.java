@@ -1,8 +1,8 @@
 package com.fjut.oj.interceptor;
 
 import com.fjut.oj.exception.NotAdminException;
-import com.fjut.oj.redis.TokenManager;
 import com.fjut.oj.pojo.TokenModel;
+import com.fjut.oj.redis.TokenManager;
 import com.fjut.oj.service.UserPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
@@ -12,10 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Author: wyx
- * @Despriction:
- * @Date:Created in 16:49 2019/7/7
- * @Modify By:
+ * 检查用户是否为管理员拦截器
+ *
+ * @author axiang [20190707]
  */
 public class CheckUserIsAdminInterceptor extends HandlerInterceptorAdapter {
     @Autowired
@@ -26,7 +25,7 @@ public class CheckUserIsAdminInterceptor extends HandlerInterceptorAdapter {
 
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         // 如果不是映射到方法上就直接跳过
         if (!(handler instanceof HandlerMethod)) {
             return true;
@@ -36,8 +35,9 @@ public class CheckUserIsAdminInterceptor extends HandlerInterceptorAdapter {
         if (null == checkUserIsAdmin) {
             return true;
         }
-        // 从头部获取Token
+        // 从头部获取加密字符串
         String auth = request.getHeader("auth");
+        // 解析为token
         TokenModel model = manager.getToken(auth);
         if (manager.checkToken(model) && permissionService.queryIsAdmin(model.getUsername())) {
 

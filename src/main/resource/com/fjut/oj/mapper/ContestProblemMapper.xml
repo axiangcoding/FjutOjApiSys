@@ -18,4 +18,18 @@
          )
     </insert>
 
+    <insert id="insertContestProblems" parameterType="java.util.ArrayList">
+        INSERT INTO
+        contestproblems
+        VALUES
+        <foreach collection="contestProblems" index="index" separator="," item="item">
+            (
+            #{item.cid},
+            #{item.pid},
+            #{item.tpid}
+            )
+        </foreach>
+
+    </insert>
+
 </mapper>

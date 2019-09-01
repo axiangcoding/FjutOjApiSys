@@ -10,7 +10,6 @@ import com.fjut.oj.util.JsonMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -187,10 +186,6 @@ public class ProblemController {
         return JsonMsg.success().addInfo(list);
     }
 
-    /**
-     * 根据比赛id 查询一个比赛里的题目
-     */
-
 
     /**
      * 查询题目页面数量,根据 num 的不同结果会有不同
@@ -210,7 +205,6 @@ public class ProblemController {
      * @return
      */
     @PostMapping("/updateAllProblemType")
-    @Transactional(rollbackFor = RuntimeException.class)
     public JsonInfo updateAllProblemType() {
         JsonInfo jsonInfo = new JsonInfo();
         File baseDir = new File(baseJudgeFilePath);
@@ -241,6 +235,7 @@ public class ProblemController {
 
 
     /**
+     * FIXME: 假功能
      * 编辑题目信息
      */
     @RequestMapping("/EProblem")

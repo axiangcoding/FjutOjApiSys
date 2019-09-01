@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @Author: axiang [20190717]
+ * @author axiang [20190717]
  */
 @Controller
 @CrossOrigin
