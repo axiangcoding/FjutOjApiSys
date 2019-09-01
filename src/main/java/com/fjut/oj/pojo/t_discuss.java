@@ -2,7 +2,11 @@ package com.fjut.oj.pojo;
 
 import java.util.Date;
 
-// 讨论模块
+/**
+ * 讨论模块
+ *
+ * @author cjt
+ */
 public class t_discuss {
 
     private Integer id;

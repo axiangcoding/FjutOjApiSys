@@ -19,8 +19,8 @@ public class ProblemTagServiceImpl implements ProblemTagService {
     private UserMapper userMapper;
 
     @Override
-    public List<t_problem_tag> queryAllProblemTag() {
-        List<t_problem_tag> list = problemTagMapper.queryAllProblemTag();
+    public List<ProblemTagPO> queryAllProblemTag() {
+        List<ProblemTagPO> list = problemTagMapper.queryAllProblemTag();
         return list;
     }
 
@@ -41,7 +41,7 @@ public class ProblemTagServiceImpl implements ProblemTagService {
      */
     @Override
     public int addTag(Integer pid, String username, Integer tagid, Integer rating) {
-        User user = userMapper.queryUserByUsername(username);
+        UserPO user = userMapper.queryUserByUsername(username);
         if (user == null) {
             return 0;
         }

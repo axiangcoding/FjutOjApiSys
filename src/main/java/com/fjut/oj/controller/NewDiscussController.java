@@ -2,9 +2,9 @@ package com.fjut.oj.controller;
 
 import com.fjut.oj.interceptor.CheckUserIsAdmin;
 import com.fjut.oj.interceptor.CheckUserIsLogin;
+import com.fjut.oj.pojo.JsonInfoVO;
 import com.fjut.oj.pojo.NewDiscuss;
 import com.fjut.oj.service.NewDiscussService;
-import com.fjut.oj.util.JsonInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +29,8 @@ public class NewDiscussController {
 
     @CheckUserIsLogin
     @GetMapping("/getDiscuss")
-    public JsonInfo queryDiscussByPage(@RequestParam(value = "pagenum", required = false) String pageNumStr) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO queryDiscussByPage(@RequestParam(value = "pagenum", required = false) String pageNumStr) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         if (null == pageNumStr) {
             pageNumStr = "1";
         }
@@ -39,16 +39,16 @@ public class NewDiscussController {
         Integer totalNum = newDiscussService.queryDiscussCount();
         Integer totalPage = (totalNum % 50 == 0) ? totalNum / 50 : totalNum / 50 + 1;
         List<NewDiscuss> list = newDiscussService.queryDiscussByPage(start);
-        jsonInfo.setSuccess();
-        jsonInfo.addInfo(totalPage);
-        jsonInfo.addInfo(list);
-        return jsonInfo;
+        JsonInfoVO.setSuccess();
+        JsonInfoVO.addInfo(totalPage);
+        JsonInfoVO.addInfo(list);
+        return JsonInfoVO;
     }
 
     @CheckUserIsLogin
     @PostMapping("/putDiscuss")
-    public JsonInfo insertDiscuss(HttpServletRequest req) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO insertDiscuss(HttpServletRequest req) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         NewDiscuss newDiscuss = new NewDiscuss();
         String title = req.getParameter("title");
 
@@ -65,27 +65,27 @@ public class NewDiscussController {
 
         Integer num = newDiscussService.insertDiscuss(newDiscuss);
         if (num == 0) {
-            jsonInfo.setFail("新建讨论失败！");
+            JsonInfoVO.setFail("新建讨论失败！");
 
         } else {
-            jsonInfo.setSuccess("新建讨论成功！");
+            JsonInfoVO.setSuccess("新建讨论成功！");
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 
     @CheckUserIsAdmin
     @PostMapping("/updatePriority")
-    public JsonInfo updatePriority(@RequestParam("idStr") String idStr, @RequestParam("priorityStr") String priorityStr) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO updatePriority(@RequestParam("idStr") String idStr, @RequestParam("priorityStr") String priorityStr) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         Integer id = Integer.parseInt(idStr);
         Double priority = Double.parseDouble(priorityStr);
 
         Integer num = newDiscussService.updateDiscussPirority(id, priority);
         if (num == 0) {
-            jsonInfo.setFail("修改失败！");
+            JsonInfoVO.setFail("修改失败！");
         } else {
-            jsonInfo.setSuccess("修改成功！");
+            JsonInfoVO.setSuccess("修改成功！");
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 }

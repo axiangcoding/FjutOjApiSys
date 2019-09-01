@@ -87,7 +87,7 @@ public interface ProblemMapper {
     List<Problem> queryProblemByTitle(@Param("title") String title, @Param("pid1") Integer pid1); // 通过题目标题查找题目
 
     /**
-     * 根据题目标题查找题库的数量
+     * 根据题目标题查找题库内相似题目的数量
      *
      * @param title
      * @return

@@ -1,6 +1,6 @@
 package com.fjut.oj.mapper;
 
-import com.fjut.oj.pojo.TableClockIn;
+import com.fjut.oj.pojo.ClockInPO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
@@ -16,14 +16,14 @@ public interface ClockInMapper {
      * @param clockIn
      * @return
      */
-    Integer insertClockIn(@Param("clockin") TableClockIn clockIn);
+    Integer insertClockIn(@Param("clockin") ClockInPO clockIn);
 
     /**
      * 查询全部签到记录
      *
      * @return
      */
-    List<TableClockIn> queryAllClockIn();
+    List<ClockInPO> queryAllClockIn();
 
     /**
      * 通过日期查询所有签到记录
@@ -31,7 +31,7 @@ public interface ClockInMapper {
      * @param time
      * @return
      */
-    List<TableClockIn> queryAllClockInByDate(@Param("time") Date time);
+    List<ClockInPO> queryAllClockInByDate(@Param("time") Date time);
 
     /**
      * 通过用户名查询全部签到记录
@@ -40,7 +40,7 @@ public interface ClockInMapper {
      * @param pageNum
      * @return
      */
-    List<TableClockIn> queryAllClockInByUsername(@Param("username") String username, @Param("pageNum") Integer pageNum);
+    List<ClockInPO> queryAllClockInByUsername(@Param("username") String username, @Param("pageNum") Integer pageNum);
 
     /**
      * 通过用户名和日期查询签到记录
@@ -49,7 +49,7 @@ public interface ClockInMapper {
      * @param date
      * @return
      */
-    List<TableClockIn> queryClockInByUsernameAndDate(@Param("username") String username, @Param("date") Date date);
+    List<ClockInPO> queryClockInByUsernameAndDate(@Param("username") String username, @Param("date") Date date);
 
 
 }

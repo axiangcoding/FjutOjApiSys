@@ -10,8 +10,8 @@ public enum CodeLanguage {
     PYTHON2(3, "Python2"),
     GPP11(4, "G++11"),
     GCC11(5, "GCC11"),
-    VCPP(6, "VC++"),
-    CSHARP(7, "C#"),
+    V_CPP(6, "VC++"),
+    C_SHARP(7, "C#"),
     GO1_8(8, "GO 1.8"),
     JS(9, "JavaScript"),
     PASCAL(10, "Pascal");

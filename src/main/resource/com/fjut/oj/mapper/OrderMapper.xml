@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fjut.oj.mapper.OrderMapper">
-    <insert id="insertOrder" parameterType="com.fjut.oj.pojo.TableOrder" useGeneratedKeys="true" keyProperty="tableOrder.id" keyColumn="id">
+    <insert id="insertOrder" parameterType="com.fjut.oj.pojo.OrderPO" useGeneratedKeys="true" keyProperty="orderDO.id" keyColumn="id">
         INSERT INTO t_order
         (username, goodsId, acb, time, isCancel)
         VALUES (
-            #{tableOrder.username},
-            #{tableOrder.goodsId},
-            #{tableOrder.acb},
-            #{tableOrder.time},
-            #{tableOrder.isCancel}
+            #{orderDO.username},
+            #{orderDO.goodsId},
+            #{orderDO.acb},
+            #{orderDO.time},
+            #{orderDO.isCancel}
         )
     </insert>
 </mapper>

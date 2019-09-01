@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author cjt
- * TODO: 把 JsonMsg 替换为 JsonInfo
+ * TODO: 把 JsonMsg 替换为 JsonInfoVO
  */
 @Controller
 @CrossOrigin

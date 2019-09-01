@@ -1,6 +1,6 @@
 package com.fjut.oj.service;
 
-import com.fjut.oj.pojo.Mall;
+import com.fjut.oj.pojo.MallPO;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * @author axiang [20190717]
  */
 public interface MallService {
-    List<Mall> queryAllMallGoods();
+    List<MallPO> queryAllMallGoods();
 
-    Mall queryMallGoodsById(Integer id);
+    MallPO queryMallGoodsById(Integer id);
 }

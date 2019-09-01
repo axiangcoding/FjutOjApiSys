@@ -1,6 +1,6 @@
 package com.fjut.oj.mapper;
 
-import com.fjut.oj.pojo.TableKeyValue;
+import com.fjut.oj.pojo.KeyValuePO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -14,19 +14,19 @@ public interface KeyValueMapper {
      * @param tableKeyValue
      * @return
      */
-    Integer insertKeyValue(@Param("tableKeyValue") TableKeyValue tableKeyValue);
+    Integer insertKeyValue(@Param("tableKeyValue") KeyValuePO tableKeyValue);
 
     /**
      * 查询表内全部key-value键值对
      * @return
      */
-    List<TableKeyValue> queryAllKeyValues();
+    List<KeyValuePO> queryAllKeyValues();
 
     /**
      * 根据Key获取Value
      * @param key
      * @return
      */
-    TableKeyValue queryValueByKey(@Param("key") String key);
+    KeyValuePO queryValueByKey(@Param("key") String key);
 
 }

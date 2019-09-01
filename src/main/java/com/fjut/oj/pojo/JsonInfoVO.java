@@ -1,4 +1,4 @@
-package com.fjut.oj.util;
+package com.fjut.oj.pojo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,19 +8,19 @@ import java.util.List;
  *
  * @author axiang [20190617]
  */
-public class JsonInfo {
-    private int code;
+public class JsonInfoVO {
+    private Integer code;
     private String msg;
     private List<Object> datas = new ArrayList<>();
     private static String TYPE_SUCCESS = "success";
     private static String TYPE_FAIL = "fail";
     private static String TYPE_ERROR = "error";
 
-    public JsonInfo() {
+    public JsonInfoVO() {
 
     }
 
-    public JsonInfo(String type, String msg) {
+    public JsonInfoVO(String type, String msg) {
         if (TYPE_SUCCESS.equalsIgnoreCase(type)) {
             setSuccess(msg);
         } else if (TYPE_FAIL.equalsIgnoreCase(type)) {
@@ -30,12 +30,8 @@ public class JsonInfo {
         }
     }
 
-    public int getCode() {
+    public Integer getCode() {
         return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
     }
 
     public String getMsg() {
@@ -48,10 +44,6 @@ public class JsonInfo {
 
     public List<Object> getDatas() {
         return datas;
-    }
-
-    public void setDatas(List<Object> datas) {
-        this.datas = datas;
     }
 
     public void setSuccess() {
@@ -90,5 +82,12 @@ public class JsonInfo {
         datas.add(object);
     }
 
-
+    @Override
+    public String toString() {
+        return "JsonInfoVO{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", datas=" + datas +
+                '}';
+    }
 }

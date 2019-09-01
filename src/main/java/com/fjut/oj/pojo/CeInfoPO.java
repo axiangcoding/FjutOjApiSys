@@ -3,7 +3,7 @@ package com.fjut.oj.pojo;
 /**
  * @author axiang
  */
-public class CeInfo {
+public class CeInfoPO {
     Integer rid;
     String info;
 
@@ -25,8 +25,9 @@ public class CeInfo {
 
     @Override
     public String toString() {
-        return "ceInfo: " +
-                "rid = " + rid +
-                " info = " + info;
+        return "CeInfoPO{" +
+                "rid=" + rid +
+                ", info='" + info + '\'' +
+                '}';
     }
 }

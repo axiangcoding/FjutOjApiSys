@@ -2,14 +2,14 @@ package com.fjut.oj.pojo;
 
 /**
  * 挑战模块
+ *
  * @author axiang
  */
-public class ChallengeBlock {
-
+public class ChallengeBlockPO {
     private Integer id;
-    private String  name;
+    private String name;
     private Integer gro;
-    private String  text;
+    private String text;
     private Integer isEditing;
 
     public Integer getId() {
@@ -50,5 +50,16 @@ public class ChallengeBlock {
 
     public void setIsEditing(Integer isEditing) {
         this.isEditing = isEditing;
+    }
+
+    @Override
+    public String toString() {
+        return "ChallengeBlockPO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", gro=" + gro +
+                ", text='" + text + '\'' +
+                ", isEditing=" + isEditing +
+                '}';
     }
 }

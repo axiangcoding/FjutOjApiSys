@@ -23,11 +23,11 @@ public class ChallengeServiceImpl implements ChallengeService {
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
     public boolean insertOpenBlock(String username, Integer blockId) {
-        ChallengeBlock challengeBlock;
+        ChallengeBlockPO challengeBlock;
         challengeBlock = challengeMapper.queryChallengeBlockByBlockId(blockId);
 
         // 开启模块时发送一条开启消息
-        TableMessage message = new TableMessage();
+        MessagePO message = new MessagePO();
         message.setStatus(0);
         message.setUser(username);
         message.setTitle("祝贺你，开启模块： " + challengeBlock.getName());
@@ -87,7 +87,7 @@ public class ChallengeServiceImpl implements ChallengeService {
     }
 
     @Override
-    public List<ChallengeBlockForUser> queryAllChallengeBlocks() {
+    public List<ChallengeBlockBO> queryAllChallengeBlocks() {
         return challengeMapper.queryAllChallengeBlocks();
     }
 
@@ -97,7 +97,7 @@ public class ChallengeServiceImpl implements ChallengeService {
     }
 
     @Override
-    public ChallengeBlock queryChallengeBlockByBlockId(Integer blockId) {
+    public ChallengeBlockPO queryChallengeBlockByBlockId(Integer blockId) {
         return challengeMapper.queryChallengeBlockByBlockId(blockId);
     }
 
@@ -107,7 +107,7 @@ public class ChallengeServiceImpl implements ChallengeService {
     }
 
     @Override
-    public List<t_challenge_condition> queryAllChallengeConditions() {
+    public List<ChallengeConditionPO> queryAllChallengeConditions() {
         return challengeMapper.queryAllChallengeConditions();
     }
 
@@ -117,7 +117,7 @@ public class ChallengeServiceImpl implements ChallengeService {
     }
 
     @Override
-    public List<ChallengeBlockForUser> queryChallengeBlocksScoredByUsername(String username) {
+    public List<ChallengeBlockBO> queryChallengeBlocksScoredByUsername(String username) {
         return challengeMapper.queryChallengeBlocksScoredByUsername(username);
     }
 

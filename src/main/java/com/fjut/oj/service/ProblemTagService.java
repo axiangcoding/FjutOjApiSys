@@ -1,13 +1,13 @@
 package com.fjut.oj.service;
 
-import com.fjut.oj.pojo.t_problem_tag;
+import com.fjut.oj.pojo.ProblemTagPO;
 import com.fjut.oj.pojo.t_problem_tag_record;
 
 import java.util.List;
 
 public interface ProblemTagService {
 
-    List<t_problem_tag> queryAllProblemTag();  // 查询所有标签
+    List<ProblemTagPO> queryAllProblemTag();  // 查询所有标签
 
     List<t_problem_tag_record> problemTagRecord(Integer pid, String username);   // 按照题目 id 或者加上用户名查找一个题目的标签记录
 

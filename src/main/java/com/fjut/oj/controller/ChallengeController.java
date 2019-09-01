@@ -4,7 +4,6 @@ import com.fjut.oj.exception.NotOwnerException;
 import com.fjut.oj.pojo.*;
 import com.fjut.oj.pojo.enums.ChallengeBlockType;
 import com.fjut.oj.service.ChallengeService;
-import com.fjut.oj.util.JsonInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -32,27 +31,27 @@ public class ChallengeController {
      * @return
      */
     @GetMapping("/getAllChallengeBlocks")
-    public JsonInfo queryAllChallengeBlocks(@RequestParam("username") String username) {
-        JsonInfo jsonInfo = new JsonInfo();
-        List<ChallengeBlockForUser> res = new ArrayList<>();
-        List<ChallengeBlockForUser> allBlocks = challengeService.queryAllChallengeBlocks();
+    public JsonInfoVO queryAllChallengeBlocks(@RequestParam("username") String username) {
+        JsonInfoVO jsonInfoVO = new JsonInfoVO();
+        List<ChallengeBlockBO> res = new ArrayList<>();
+        List<ChallengeBlockBO> allBlocks = challengeService.queryAllChallengeBlocks();
         if (null != username && !("").equals(username)) {
-            Map<Integer, ChallengeBlockForUser> map = new TreeMap<>();
+            Map<Integer, ChallengeBlockBO> map = new TreeMap<>();
             List<Integer> showedIds = challengeService.queryShowedChallengeBlocksByUsername(username);
-            for (ChallengeBlockForUser challengeBlock : allBlocks) {
+            for (ChallengeBlockBO challengeBlock : allBlocks) {
                 challengeBlock.setLocked(true);
                 challengeBlock.setGetScore(0);
                 map.put(challengeBlock.getId(), challengeBlock);
             }
             List<Integer> openBlocks = challengeService.queryChallengeOpenBlocksByUsername(username);
             for (Integer openBlockId : openBlocks) {
-                ChallengeBlockForUser temp = map.get(openBlockId);
+                ChallengeBlockBO temp = map.get(openBlockId);
                 temp.setLocked(false);
                 map.put(temp.getId(), temp);
             }
-            List<ChallengeBlockForUser> challengeBlockScored = challengeService.queryChallengeBlocksScoredByUsername(username);
-            for (ChallengeBlockForUser challengeBlock : challengeBlockScored) {
-                ChallengeBlockForUser temp = map.get(challengeBlock.getId());
+            List<ChallengeBlockBO> challengeBlockScored = challengeService.queryChallengeBlocksScoredByUsername(username);
+            for (ChallengeBlockBO challengeBlock : challengeBlockScored) {
+                ChallengeBlockBO temp = map.get(challengeBlock.getId());
                 temp.setGetScore(challengeBlock.getGetScore());
                 map.put(temp.getId(), temp);
             }
@@ -61,14 +60,14 @@ public class ChallengeController {
                     res.add(map.get(key));
                 }
             }
-            List<t_challenge_condition> allConditions = challengeService.queryAllChallengeConditions();
-            jsonInfo.setSuccess();
-            jsonInfo.addInfo(res);
-            jsonInfo.addInfo(allConditions);
+            List<ChallengeConditionPO> allConditions = challengeService.queryAllChallengeConditions();
+            jsonInfoVO.setSuccess();
+            jsonInfoVO.addInfo(res);
+            jsonInfoVO.addInfo(allConditions);
         } else {
-            jsonInfo.setError("参数不正确！");
+            jsonInfoVO.setError("参数不正确！");
         }
-        return jsonInfo;
+        return jsonInfoVO;
     }
 
     /**
@@ -78,17 +77,17 @@ public class ChallengeController {
      * @return
      */
     @GetMapping("/getCondition")
-    public JsonInfo getConditionByBlockId(@RequestParam("blockId") String blockIdStr) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO getConditionByBlockId(@RequestParam("blockId") String blockIdStr) {
+        JsonInfoVO jsonInfoVO = new JsonInfoVO();
         Integer blockId = Integer.parseInt(blockIdStr);
         List<ChallengeConditionForBlock> conditions = challengeService.queryChallengeConditionByBlockId(blockId);
         if (0 < conditions.size()) {
-            jsonInfo.setSuccess("有解锁条件");
-            jsonInfo.addInfo(conditions);
+            jsonInfoVO.setSuccess("有解锁条件");
+            jsonInfoVO.addInfo(conditions);
         } else {
-            jsonInfo.setSuccess("没有解锁条件");
+            jsonInfoVO.setSuccess("没有解锁条件");
         }
-        return jsonInfo;
+        return jsonInfoVO;
     }
 
     /**
@@ -99,16 +98,16 @@ public class ChallengeController {
      * @return
      */
     @GetMapping("/getBlockDetail")
-    public JsonInfo getBlockDetail(
+    public JsonInfoVO getBlockDetail(
             @RequestParam("blockId") String blockIdStr,
             @RequestParam("username") String username) {
-        JsonInfo jsonInfo = new JsonInfo();
+        JsonInfoVO jsonInfoVO = new JsonInfoVO();
         Integer blockId = Integer.parseInt(blockIdStr);
-        ChallengeBlock block = challengeService.queryChallengeBlockByBlockId(blockId);
+        ChallengeBlockPO block = challengeService.queryChallengeBlockByBlockId(blockId);
         // 获取该模块的全部得到分值
-        List<ChallengeBlockForUser> getScores = challengeService.queryChallengeBlocksScoredByUsername(username);
+        List<ChallengeBlockBO> getScores = challengeService.queryChallengeBlocksScoredByUsername(username);
         Integer getScore = 0;
-        for (ChallengeBlockForUser get : getScores) {
+        for (ChallengeBlockBO get : getScores) {
             if (get.getId().equals(blockId)) {
                 getScore = get.getGetScore();
             }
@@ -121,13 +120,13 @@ public class ChallengeController {
             challengeBlockDetail.setType(ChallengeBlockType.getNameByID(block.getGro()));
             challengeBlockDetail.setDes(block.getText());
             challengeBlockDetail.setTotalScore(totalScore);
-            jsonInfo.setSuccess();
-            jsonInfo.addInfo(challengeBlockDetail);
-            jsonInfo.addInfo(getScore);
+            jsonInfoVO.setSuccess();
+            jsonInfoVO.addInfo(challengeBlockDetail);
+            jsonInfoVO.addInfo(getScore);
         } else {
-            jsonInfo.setFail("未找到该挑战模块");
+            jsonInfoVO.setFail("未找到该挑战模块");
         }
-        return jsonInfo;
+        return jsonInfoVO;
     }
 
     /**
@@ -139,11 +138,11 @@ public class ChallengeController {
      * @return
      */
     @GetMapping("/getBlockProblems")
-    public JsonInfo getBlockProblems(
+    public JsonInfoVO getBlockProblems(
             @RequestParam("username") String username,
             @RequestParam("blockId") String blockIdStr,
             @RequestParam("pageNum") String pageNumStr) {
-        JsonInfo jsonInfo = new JsonInfo();
+        JsonInfoVO jsonInfoVO = new JsonInfoVO();
         Integer blockId = Integer.parseInt(blockIdStr);
         Integer pageNum = Integer.parseInt(pageNumStr);
         Integer startIndex = (pageNum - 1) * 15;
@@ -175,13 +174,13 @@ public class ChallengeController {
                     problem.setSolved(2);
                 }
             }
-            jsonInfo.setSuccess();
-            jsonInfo.addInfo(challengeProblems);
-            jsonInfo.addInfo(count);
+            jsonInfoVO.setSuccess();
+            jsonInfoVO.addInfo(challengeProblems);
+            jsonInfoVO.addInfo(count);
         } else {
-            jsonInfo.setFail("模块内没有题目");
+            jsonInfoVO.setFail("模块内没有题目");
         }
-        return jsonInfo;
+        return jsonInfoVO;
     }
 
     /**
@@ -192,12 +191,12 @@ public class ChallengeController {
      * @return
      */
     @PostMapping("/updateOpenBlock")
-    public JsonInfo updateOpenBlock(@RequestParam("username") String username,
-                                    @RequestParam("pid") Integer pid) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO updateOpenBlock(@RequestParam("username") String username,
+                                      @RequestParam("pid") Integer pid) {
+        JsonInfoVO jsonInfoVO = new JsonInfoVO();
 
 
-        return jsonInfo;
+        return jsonInfoVO;
     }
 
 

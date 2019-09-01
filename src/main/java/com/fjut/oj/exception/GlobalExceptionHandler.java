@@ -1,9 +1,8 @@
 package com.fjut.oj.exception;
 
-
-import com.fjut.oj.pojo.Log;
+import com.fjut.oj.pojo.JsonInfoVO;
+import com.fjut.oj.pojo.LogPO;
 import com.fjut.oj.service.LogService;
-import com.fjut.oj.util.JsonInfo;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.RedisConnectionFailureException;
@@ -22,6 +21,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.Date;
+
 
 /**
  * TODO: 暂时设计为得到Exception直接保存到数据库中，后面设置定时任务将文件中的日志写入数据库
@@ -44,11 +44,11 @@ public class GlobalExceptionHandler {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public JsonInfo handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+    public JsonInfoVO handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         String msg = "请求解析失败";
         LOGGER.error(msg, e);
         addExceptionToDatabase(e);
-        return new JsonInfo("ERROR", msg);
+        return new JsonInfoVO("ERROR", msg);
     }
 
     /**
@@ -56,11 +56,11 @@ public class GlobalExceptionHandler {
      */
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public JsonInfo handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+    public JsonInfoVO handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         String msg = "不支持当前请求方法";
         LOGGER.error(msg, e);
         addExceptionToDatabase(e);
-        return new JsonInfo("ERROR", msg);
+        return new JsonInfoVO("ERROR", msg);
     }
 
     /**
@@ -68,11 +68,11 @@ public class GlobalExceptionHandler {
      */
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
-    public JsonInfo handleHttpMediaTypeNotSupportedException(Exception e) {
+    public JsonInfoVO handleHttpMediaTypeNotSupportedException(Exception e) {
         String msg = "不支持当前媒体类型";
         LOGGER.error(msg, e);
         addExceptionToDatabase(e);
-        return new JsonInfo("ERROR", msg);
+        return new JsonInfoVO("ERROR", msg);
     }
 
     /**
@@ -80,7 +80,7 @@ public class GlobalExceptionHandler {
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public JsonInfo handleException(Exception e, HttpServletResponse response) {
+    public JsonInfoVO handleException(Exception e, HttpServletResponse response) {
         String msg;
         LOGGER.error("服务运行异常", e);
         if (e instanceof NullPointerException) {
@@ -107,7 +107,7 @@ public class GlobalExceptionHandler {
             msg = "服务器内部错误！";
             addExceptionToDatabase(e);
         }
-        return new JsonInfo("ERROR", msg);
+        return new JsonInfoVO("ERROR", msg);
     }
 
 
@@ -117,7 +117,7 @@ public class GlobalExceptionHandler {
      * @param e
      */
     private void addExceptionToDatabase(Exception e) {
-        Log log = new Log();
+        LogPO log = new LogPO();
         log.setText(getErrorInfoFromException(e));
         log.setTime(new Date());
         if (e instanceof NotOwnerException) {

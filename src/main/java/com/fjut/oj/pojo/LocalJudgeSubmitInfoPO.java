@@ -1,16 +1,14 @@
 package com.fjut.oj.pojo;
 
-import org.apache.ibatis.type.IntegerTypeHandler;
-
 /**
- * @Author: axiang [2019/7/31]
+ * @author axiang [20190731]
  */
-public class LocalJudgeSubmitInfo {
+public class LocalJudgeSubmitInfoPO {
     private String type;
     private Integer pid;
     private Integer rid;
-    private Integer timelimit;
-    private Integer memorylimit;
+    private Integer timeLimit;
+    private Integer memoryLimit;
     private String code;
     private Integer languageId;
 
@@ -38,20 +36,20 @@ public class LocalJudgeSubmitInfo {
         this.rid = rid;
     }
 
-    public Integer getTimelimit() {
-        return timelimit;
+    public Integer getTimeLimit() {
+        return timeLimit;
     }
 
-    public void setTimelimit(Integer timelimit) {
-        this.timelimit = timelimit;
+    public void setTimeLimit(Integer timeLimit) {
+        this.timeLimit = timeLimit;
     }
 
-    public Integer getMemorylimit() {
-        return memorylimit;
+    public Integer getMemoryLimit() {
+        return memoryLimit;
     }
 
-    public void setMemorylimit(Integer memorylimit) {
-        this.memorylimit = memorylimit;
+    public void setMemoryLimit(Integer memoryLimit) {
+        this.memoryLimit = memoryLimit;
     }
 
     public String getCode() {
@@ -68,5 +66,19 @@ public class LocalJudgeSubmitInfo {
 
     public void setLanguageId(Integer languageId) {
         this.languageId = languageId;
+    }
+
+
+    @Override
+    public String toString() {
+        return "LocalJudgeSubmitInfoPO{" +
+                "type='" + type + '\'' +
+                ", pid=" + pid +
+                ", rid=" + rid +
+                ", timeLimit=" + timeLimit +
+                ", memoryLimit=" + memoryLimit +
+                ", code='" + code + '\'' +
+                ", languageId=" + languageId +
+                '}';
     }
 }

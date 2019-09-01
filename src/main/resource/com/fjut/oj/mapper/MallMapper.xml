@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fjut.oj.mapper.MallMapper">
 
-    <select id="queryAllMallGoods" resultType="com.fjut.oj.pojo.Mall">
+    <select id="queryAllMallGoods" resultType="com.fjut.oj.pojo.MallPO">
         SELECT 	id,
             title,
             acb,
@@ -18,7 +18,7 @@
             t_mall
     </select>
 
-    <select id="queryMallGoodsById" resultType="com.fjut.oj.pojo.Mall">
+    <select id="queryMallGoodsById" resultType="com.fjut.oj.pojo.MallPO">
         SELECT id,
             title,
             acb,

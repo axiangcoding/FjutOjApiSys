@@ -67,7 +67,7 @@ public class HDU {
         languageList.add(new Pair<>(1, CodeLanguage.GCC));
         languageList.add(new Pair<>(4, CodeLanguage.PASCAL));
         languageList.add(new Pair<>(5, CodeLanguage.JAVA));
-        languageList.add(new Pair<>(6, CodeLanguage.CSHARP));
+        languageList.add(new Pair<>(6, CodeLanguage.C_SHARP));
     }
 
     public static String getSubmitURL() {

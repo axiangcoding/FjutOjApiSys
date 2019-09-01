@@ -8,7 +8,7 @@ import java.util.Date;
  * @author axiang [20190828]
  */
 
-public class TableMessage {
+public class MessagePO {
 
     private Integer mid;
     private String user;
@@ -83,12 +83,14 @@ public class TableMessage {
 
     @Override
     public String toString() {
-        return "mid: " + mid.toString() +
-                " username: " + user +
-                " status: " + statu +
-                " title: " + title +
-                " text: " + text +
-                " time: " + time +
-                " deadline: " + deadline;
+        return "MessagePO{" +
+                "mid=" + mid +
+                ", user='" + user + '\'' +
+                ", statu=" + statu +
+                ", title='" + title + '\'' +
+                ", text='" + text + '\'' +
+                ", time=" + time +
+                ", deadline=" + deadline +
+                '}';
     }
 }

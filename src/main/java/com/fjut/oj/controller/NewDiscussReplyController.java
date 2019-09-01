@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * TODO: 把 JsonMsg 替换为 JsonInfo
+ * TODO: 把 JsonMsg 替换为 JsonInfoVO
  *
  * @author cjt
  */

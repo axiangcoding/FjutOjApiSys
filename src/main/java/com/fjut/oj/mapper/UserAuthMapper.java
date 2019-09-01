@@ -1,6 +1,6 @@
 package com.fjut.oj.mapper;
 
-import com.fjut.oj.pojo.TableUserAuth;
+import com.fjut.oj.pojo.UserAuthPO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
@@ -16,7 +16,7 @@ public interface UserAuthMapper {
      * @param tableUserAuth
      * @return
      */
-    Integer insertUserAuth(@Param("tableUserAuth") TableUserAuth tableUserAuth);
+    Integer insertUserAuth(@Param("tableUserAuth") UserAuthPO tableUserAuth);
 
     /**
      * 用户登录的尝试次数+1

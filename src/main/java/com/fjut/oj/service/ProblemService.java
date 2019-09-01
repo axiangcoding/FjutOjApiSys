@@ -1,8 +1,8 @@
 package com.fjut.oj.service;
 
 import com.fjut.oj.pojo.Problem;
-import com.fjut.oj.pojo.Problems1;
 import com.fjut.oj.pojo.ProblemSample;
+import com.fjut.oj.pojo.Problems1;
 import com.fjut.oj.util.ProblemHTML;
 
 import java.util.ArrayList;
@@ -13,8 +13,6 @@ import java.util.List;
  */
 public interface ProblemService {
 
-    List<Problem> queryAllProblems();        //查询所有的题目
-
     Integer insertProblem(Problem problem); // 插入题目
 
     List<Problem> queryProblemsByPage(Integer startIndex);   // 一页一页的查询题目信息
@@ -23,6 +21,11 @@ public interface ProblemService {
 
     Integer queryProblemCountByCondition(Integer tagId, String title);
 
+    /**
+     * 查询某个标题题目的相似题目数量
+     * @param title
+     * @return
+     */
     Integer queryProblemsNumByTitle(String title); // 查询某一题目的题的数量
 
     Integer updateProblemtotalSubmit(Integer pid);

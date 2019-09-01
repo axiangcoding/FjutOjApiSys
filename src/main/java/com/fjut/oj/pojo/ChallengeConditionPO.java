@@ -1,7 +1,11 @@
 package com.fjut.oj.pojo;
 
-// 挑战模式条件
-public class t_challenge_condition {
+/**
+ * 挑战模式条件
+ *
+ * @author axiang [20190901]
+ */
+public class ChallengeConditionPO {
 
     private Integer id;
     private Integer belongBlockId;
@@ -47,5 +51,16 @@ public class t_challenge_condition {
 
     public void setNum(Integer num) {
         this.num = num;
+    }
+
+    @Override
+    public String toString() {
+        return "ChallengeConditionPO{" +
+                "id=" + id +
+                ", belongBlockId=" + belongBlockId +
+                ", type=" + type +
+                ", par=" + par +
+                ", num=" + num +
+                '}';
     }
 }

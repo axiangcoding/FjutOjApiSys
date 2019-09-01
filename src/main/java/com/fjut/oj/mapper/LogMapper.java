@@ -3,7 +3,7 @@ package com.fjut.oj.mapper;
 import java.util.Date;
 import java.util.List;
 
-import com.fjut.oj.pojo.Log;
+import com.fjut.oj.pojo.LogPO;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -16,7 +16,7 @@ public interface LogMapper {
      * @param log
      * @return
      */
-    Integer insertLog(@Param("log") Log log);
+    Integer insertLog(@Param("log") LogPO log);
 
     /**
      * 根据一个时间段查询日志
@@ -26,6 +26,6 @@ public interface LogMapper {
      * @param startIndex
      * @return
      */
-    List<Log> queryLogsByTime(@Param("timeStart") Date DateStart, @Param("timeEnd") Date DateEnd, @Param("startIndex") int startIndex);
+    List<LogPO> queryLogsByTime(@Param("timeStart") Date DateStart, @Param("timeEnd") Date DateEnd, @Param("startIndex") int startIndex);
 
 }

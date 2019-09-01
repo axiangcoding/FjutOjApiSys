@@ -5,7 +5,7 @@ package com.fjut.oj.pojo;
  * @author cjt
  *
  */
-public class User {
+public class UserPO {
     private String  username;
     private String  password;
     private String  nick;
@@ -227,7 +227,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserPO{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", nick='" + nick + '\'' +

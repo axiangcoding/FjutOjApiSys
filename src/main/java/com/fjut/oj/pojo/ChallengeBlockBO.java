@@ -1,23 +1,21 @@
 package com.fjut.oj.pojo;
 
 /**
- * @Author: axiang [20190625] 新的挑战模式模块POJO类，集成了用户的模块信息
+ * 挑战模式模块BO类，集成了用户的模块信息
+ *
+ * @author axiang [20190625]
  */
-public class ChallengeBlockForUser {
+public class ChallengeBlockBO {
     private Integer id;
     private String name;
     private Integer totalScore;
     private String text;
     private Integer getScore;
     private Integer notScore;
-    /**
-     * 是否显示锁定
-     */
-    private boolean isLocked;
-    /**
-     * 是否对用户隐藏
-     */
-    private boolean isHide;
+    /** 是否显示锁定 */
+    private Boolean isLocked;
+    /** 是否对用户隐藏 */
+    private Boolean isHide;
 
 
     public Integer getId() {
@@ -86,11 +84,15 @@ public class ChallengeBlockForUser {
 
     @Override
     public String toString() {
-        return "id: " + id
-                + " name: " + name
-                + " totalScore: " + totalScore
-                + " isLocked: " + isLocked
-                + " isHide: " + isHide
-                + " text: " + (text.length()>10?text.substring(0,10):text)+"....";
+        return "ChallengeBlockBO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", totalScore=" + totalScore +
+                ", text='" + text + '\'' +
+                ", getScore=" + getScore +
+                ", notScore=" + notScore +
+                ", isLocked=" + isLocked +
+                ", isHide=" + isHide +
+                '}';
     }
 }

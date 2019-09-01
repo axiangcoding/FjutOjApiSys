@@ -1,8 +1,8 @@
 package com.fjut.oj.interceptor;
 
 import com.fjut.oj.exception.NotOwnerException;
-import com.fjut.oj.redis.TokenManager;
 import com.fjut.oj.pojo.TokenModel;
+import com.fjut.oj.redis.TokenManager;
 import com.fjut.oj.util.IpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -3,8 +3,8 @@ package com.fjut.oj.service.impl;
 import com.fjut.oj.mapper.AcbBorderMapper;
 import com.fjut.oj.mapper.OrderMapper;
 import com.fjut.oj.mapper.UserMapper;
-import com.fjut.oj.pojo.AcbBorder;
-import com.fjut.oj.pojo.TableOrder;
+import com.fjut.oj.pojo.AcbBorderPO;
+import com.fjut.oj.pojo.OrderPO;
 import com.fjut.oj.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,24 +27,24 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
-    public boolean insertOrder(TableOrder tableOrder) {
+    public boolean insertOrder(OrderPO orderDO) {
         try {
-            Integer orderAns = orderMapper.insertOrder(tableOrder);
+            Integer orderAns = orderMapper.insertOrder(orderDO);
             if (1 != orderAns) {
 
                 throw new RuntimeException();
             }
-            Integer userAcbChangeAns = userMapper.updateACBNumber(tableOrder.getUsername(), -tableOrder.getAcb());
+            Integer userAcbChangeAns = userMapper.updateACBNumber(orderDO.getUsername(), -orderDO.getAcb());
             if (1 != userAcbChangeAns) {
                 throw new RuntimeException();
             }
-            AcbBorder acbBorder = new AcbBorder();
-            acbBorder.setTime(tableOrder.getTime());
-            acbBorder.setMark("订单号：" + tableOrder.getId());
-            acbBorder.setReason(6);
-            acbBorder.setAcbchange(-tableOrder.getAcb());
-            acbBorder.setUsername(tableOrder.getUsername());
-            Integer borderAns = acbBorderMapper.insertAcbBorder(acbBorder);
+            AcbBorderPO acbBorderDO = new AcbBorderPO();
+            acbBorderDO.setTime(orderDO.getTime());
+            acbBorderDO.setMark("订单号：" + orderDO.getId());
+            acbBorderDO.setReason(6);
+            acbBorderDO.setAcbchange(-orderDO.getAcb());
+            acbBorderDO.setUsername(orderDO.getUsername());
+            Integer borderAns = acbBorderMapper.insertAcbBorder(acbBorderDO);
             if (1 != borderAns) {
                 throw new RuntimeException();
             }

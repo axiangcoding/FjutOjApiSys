@@ -1,6 +1,6 @@
 package com.fjut.oj.mapper;
 
-import com.fjut.oj.pojo.t_problem_tag;
+import com.fjut.oj.pojo.ProblemTagPO;
 import com.fjut.oj.pojo.UserTag1;
 import com.fjut.oj.pojo.UserTag2;
 import com.fjut.oj.pojo.t_problem_tag_record;
@@ -18,7 +18,7 @@ public interface ProblemTagMapper {
      *
      * @return
      */
-    List<t_problem_tag> queryAllProblemTag();
+    List<ProblemTagPO> queryAllProblemTag();
 
     List<t_problem_tag_record> problemTagRecord(@Param("pid") Integer pid, @Param("username") String username);
 

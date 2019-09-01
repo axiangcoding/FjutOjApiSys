@@ -1,6 +1,6 @@
 package com.fjut.oj.service;
 
-import com.fjut.oj.pojo.TableMessage;
+import com.fjut.oj.pojo.MessagePO;
 
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
  * @author axiang [20190620]
  */
 public interface MessageService {
-    Integer insertMessage(TableMessage message);
+    Integer insertMessage(MessagePO message);
 
     Integer deleteMessageByMid(int mid);
 
@@ -23,9 +23,9 @@ public interface MessageService {
 
     Integer queryUnReadMessageCountByUser(String username);
 
-    List<TableMessage> queryAllMessageByUser(String username, Integer startIndex);
+    List<MessagePO> queryAllMessageByUser(String username, Integer startIndex);
 
-    List<TableMessage> queryUnReadMessageByUser(String username, int startIndex);
+    List<MessagePO> queryUnReadMessageByUser(String username, int startIndex);
 
 
 }

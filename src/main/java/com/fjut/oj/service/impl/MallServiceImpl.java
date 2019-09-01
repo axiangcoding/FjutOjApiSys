@@ -1,7 +1,7 @@
 package com.fjut.oj.service.impl;
 
 import com.fjut.oj.mapper.MallMapper;
-import com.fjut.oj.pojo.Mall;
+import com.fjut.oj.pojo.MallPO;
 import com.fjut.oj.service.MallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,12 +17,12 @@ public class MallServiceImpl implements MallService {
     MallMapper mallMapper;
 
     @Override
-    public List<Mall> queryAllMallGoods() {
+    public List<MallPO> queryAllMallGoods() {
         return mallMapper.queryAllMallGoods();
     }
 
     @Override
-    public Mall queryMallGoodsById(Integer id) {
+    public MallPO queryMallGoodsById(Integer id) {
         return mallMapper.queryMallGoodsById(id);
     }
 }

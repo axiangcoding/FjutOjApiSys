@@ -1,8 +1,8 @@
 package com.fjut.oj.controller;
 
 import com.fjut.oj.interceptor.CheckUserIsAdmin;
-import com.fjut.oj.pojo.LocalJudgeFile;
-import com.fjut.oj.util.JsonInfo;
+import com.fjut.oj.pojo.JsonInfoVO;
+import com.fjut.oj.pojo.LocalJudgeFilePO;
 import org.codehaus.plexus.util.IOUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -45,8 +45,8 @@ public class FileController {
     private String picVerifyPath;
 
     @PostMapping("/uploadPic")
-    public JsonInfo uploadPicture(HttpServletRequest request) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO uploadPicture(HttpServletRequest request) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         MultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
         MultipartHttpServletRequest multipartRequest = resolver.resolveMultipart(request);
         String username = multipartRequest.getParameter("username");
@@ -66,14 +66,14 @@ public class FileController {
                 System.out.println(multipartFile.getOriginalFilename());
                 out.close();
                 is.close();
-                jsonInfo.setSuccess("文件保存成功！");
+                JsonInfoVO.setSuccess("文件保存成功！");
             } catch (Exception e) {
-                jsonInfo.setError("文件储存错误！");
+                JsonInfoVO.setError("文件储存错误！");
             }
         } else {
-            jsonInfo.setFail("用户名为空！");
+            JsonInfoVO.setFail("用户名为空！");
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 
 
@@ -84,8 +84,8 @@ public class FileController {
      * @return
      */
     @PostMapping("/uploadFile")
-    public JsonInfo uploadFile(HttpServletRequest request) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO uploadFile(HttpServletRequest request) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         MultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
         MultipartHttpServletRequest multipartRequest = resolver.resolveMultipart(request);
         MultipartFile multipartFile = multipartRequest.getFile("file");
@@ -97,23 +97,23 @@ public class FileController {
             IOUtil.copy(is, out);
             out.close();
             is.close();
-            jsonInfo.setSuccess("文件保存成功！");
+            JsonInfoVO.setSuccess("文件保存成功！");
         } catch (Exception e) {
-            jsonInfo.setError("文件储存错误！");
+            JsonInfoVO.setError("文件储存错误！");
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 
     @CheckUserIsAdmin
     @GetMapping("/getLocalJudgeFile")
-    public JsonInfo getLocalJudgeFile() {
-        JsonInfo jsonInfo = new JsonInfo();
-        List<LocalJudgeFile> judgeFiles = new ArrayList<>();
+    public JsonInfoVO getLocalJudgeFile() {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
+        List<LocalJudgeFilePO> judgeFiles = new ArrayList<>();
         File baseDir = new File(baseJudgeFilePath);
         if (baseDir.isDirectory()) {
             File[] problemDir = baseDir.listFiles();
             for (File problemFile : problemDir) {
-                LocalJudgeFile judgeFile = new LocalJudgeFile();
+                LocalJudgeFilePO judgeFile = new LocalJudgeFilePO();
                 String inputFileNamesStr = "";
                 String outputFIleNamesStr = "";
                 String otherFileNamesStr = "";
@@ -146,13 +146,13 @@ public class FileController {
                 judgeFile.setOtherFiles(otherFileNamesStr);
                 judgeFiles.add(judgeFile);
             }
-            jsonInfo.setSuccess();
-            jsonInfo.addInfo(judgeFiles);
+            JsonInfoVO.setSuccess();
+            JsonInfoVO.addInfo(judgeFiles);
         } else {
-            jsonInfo.setFail("未找到目录！");
+            JsonInfoVO.setFail("未找到目录！");
         }
 
-        return jsonInfo;
+        return JsonInfoVO;
     }
 
 }

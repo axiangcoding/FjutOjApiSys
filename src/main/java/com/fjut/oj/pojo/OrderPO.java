@@ -4,15 +4,16 @@ import java.util.Date;
 
 /**
  * 订单表
+ *
  * @Author: axiang [20190807]
  */
-public class TableOrder {
+public class OrderPO {
     private Integer id;
     private String username;
     private Integer goodsId;
     private Integer acb;
     private Date time;
-    private boolean isCancel;
+    private Boolean isCancel;
 
     public Integer getId() {
         return id;
@@ -54,11 +55,23 @@ public class TableOrder {
         this.time = time;
     }
 
-    public boolean getIsCancel() {
+    public Boolean getIsCancel() {
         return isCancel;
     }
 
-    public void setIsCancel(boolean cancel) {
+    public void setIsCancel(Boolean cancel) {
         isCancel = cancel;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderPO{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", goodsId=" + goodsId +
+                ", acb=" + acb +
+                ", time=" + time +
+                ", isCancel=" + isCancel +
+                '}';
     }
 }

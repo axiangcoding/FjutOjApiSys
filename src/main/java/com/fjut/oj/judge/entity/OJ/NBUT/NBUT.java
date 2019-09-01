@@ -114,7 +114,7 @@ public class NBUT extends OTHOJ {
     }
 
     private String getOJVERIFY(){
-        Document d = MyClient.getMyClient().get(url + "/User/login.xhtml?url=%2F");
+        Document d = MyClient.getMyClient().get(url + "/UserPO/login.xhtml?url=%2F");
         if(d==null) return "";
         String s=d.select("#login-left-form").first().html();
         int z=s.indexOf("__OJVERIFY__");
@@ -127,7 +127,7 @@ public class NBUT extends OTHOJ {
         formparams.add(new BasicNameValuePair("username",s.getUsername()));
         formparams.add(new BasicNameValuePair("password",s.getPassword()));
         formparams.add(new BasicNameValuePair("__OJVERIFY__",getOJVERIFY()));
-        if(hc.Post(url+"/User/chklogin.xhtml", formparams)==null) return "error";
+        if(hc.Post(url+"/UserPO/chklogin.xhtml", formparams)==null) return "error";
         else {
             List<NameValuePair> formparams1 = new ArrayList<NameValuePair>();
             formparams1.add(new BasicNameValuePair("language",getTrueLanguage(s.getSubmitInfo().language,s.getSubmitInfo().pid)+""));
@@ -146,7 +146,7 @@ public class NBUT extends OTHOJ {
         formparams.add(new BasicNameValuePair("username",s.getUsername()));
         formparams.add(new BasicNameValuePair("password",s.getPassword()));
         formparams.add(new BasicNameValuePair("__OJVERIFY__",getOJVERIFY()));
-        if(hc.Post(url+"/User/chklogin.xhtml", formparams)==null) return "error";
+        if(hc.Post(url+"/UserPO/chklogin.xhtml", formparams)==null) return "error";
         else {
             Element e;
             Document d = hc.get(url+"/Problem/viewce.xhtml?submitid="+s.getOjsrid());

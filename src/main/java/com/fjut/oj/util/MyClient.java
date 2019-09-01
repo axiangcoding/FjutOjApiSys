@@ -28,11 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * FIXME: add by axiang 祖传代码，部分类已经废弃，但小心谨慎更改！！！
  * 对HttpClient的封装
  * 使用同一个MyClient类进行操作可以保存其cookie和session信息
  * 可以实现先登录，然后获取登录后页面的操作
- *
- * add by axiang 祖传代码，部分类已经废弃，但小心谨慎更改！！！
  *
  * @author QAQ [20150607]
  */

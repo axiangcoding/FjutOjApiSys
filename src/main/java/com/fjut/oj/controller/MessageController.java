@@ -1,9 +1,9 @@
 package com.fjut.oj.controller;
 
 import com.fjut.oj.interceptor.CheckUserPrivate;
-import com.fjut.oj.pojo.TableMessage;
+import com.fjut.oj.pojo.JsonInfoVO;
+import com.fjut.oj.pojo.MessagePO;
 import com.fjut.oj.service.MessageService;
-import com.fjut.oj.util.JsonInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,107 +25,107 @@ public class MessageController {
 
     @CheckUserPrivate
     @PostMapping("/delMessage")
-    public JsonInfo delMessageByMid(@RequestParam("username") String username, @RequestParam("mid") String midStr) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO delMessageByMid(@RequestParam("username") String username, @RequestParam("mid") String midStr) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         Integer mid = Integer.parseInt(midStr);
         int res = messageService.deleteMessageByMid(mid);
         if (1 == res) {
-            jsonInfo.setSuccess();
+            JsonInfoVO.setSuccess();
         } else {
-            jsonInfo.setFail();
+            JsonInfoVO.setFail();
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 
     @CheckUserPrivate
     @PostMapping("/setReaded")
-    public JsonInfo setReadedByMid(@RequestParam("username") String username,
+    public JsonInfoVO setReadedByMid(@RequestParam("username") String username,
                                    @RequestParam("mid") String midStr) {
-        JsonInfo jsonInfo = new JsonInfo();
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         Integer mid = Integer.parseInt(midStr);
         Integer res = messageService.updateMessageStatuByMid(mid, 1);
         if (1 == res) {
-            jsonInfo.setSuccess();
+            JsonInfoVO.setSuccess();
         } else {
-            jsonInfo.setFail();
+            JsonInfoVO.setFail();
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 
     @CheckUserPrivate
     @PostMapping("/setAllMessageRead")
-    public JsonInfo setAllMessageReadByUser(@RequestParam("username") String username) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO setAllMessageReadByUser(@RequestParam("username") String username) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         if ("" != username) {
             int res = messageService.updateAllMessageReadByUser(username);
             if (0 != res) {
-                jsonInfo.setSuccess();
-                jsonInfo.addInfo(res);
+                JsonInfoVO.setSuccess();
+                JsonInfoVO.addInfo(res);
             } else {
-                jsonInfo.setFail();
+                JsonInfoVO.setFail();
             }
 
         } else {
-            jsonInfo.setFail();
+            JsonInfoVO.setFail();
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 
     @CheckUserPrivate
     @GetMapping("/getUserMessage")
-    public JsonInfo getUserMessage(@RequestParam("username") String username, @RequestParam("pagenum") String pageNumStr) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO getUserMessage(@RequestParam("username") String username, @RequestParam("pagenum") String pageNumStr) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         Integer pageNum = Integer.parseInt(pageNumStr);
         Integer startIndex;
         startIndex = (pageNum - 1) * 10;
-        List<TableMessage> messages = messageService.queryAllMessageByUser(username, startIndex);
+        List<MessagePO> messages = messageService.queryAllMessageByUser(username, startIndex);
         int countMessage = messageService.queryAllMessageCountByUser(username);
         if (0 != messages.size()) {
-            jsonInfo.setSuccess();
-            jsonInfo.addInfo(messages);
-            jsonInfo.addInfo(countMessage);
+            JsonInfoVO.setSuccess();
+            JsonInfoVO.addInfo(messages);
+            JsonInfoVO.addInfo(countMessage);
         } else {
-            jsonInfo.setFail();
+            JsonInfoVO.setFail();
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 
     @CheckUserPrivate
     @GetMapping("/getUnReadMessageCount")
-    public JsonInfo getUnReadMessageCountByUser(HttpServletRequest request, HttpServletResponse response) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO getUnReadMessageCountByUser(HttpServletRequest request, HttpServletResponse response) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         String username = request.getParameter("username");
         if (null != username) {
             Integer res = messageService.queryUnReadMessageCountByUser(username);
             if (0 == res) {
-                jsonInfo.setFail();
+                JsonInfoVO.setFail();
             } else {
-                jsonInfo.setSuccess();
+                JsonInfoVO.setSuccess();
             }
-            jsonInfo.addInfo(res);
+            JsonInfoVO.addInfo(res);
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 
     @CheckUserPrivate
     @GetMapping("/getUnReadMessage")
-    public JsonInfo getUnReadMessageByUser(HttpServletRequest request, HttpServletResponse response) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO getUnReadMessageByUser(HttpServletRequest request, HttpServletResponse response) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         String username = request.getParameter("username");
         String pageNumStr = request.getParameter("pagenum");
         Integer pageNum = Integer.parseInt(pageNumStr);
         Integer startIndex;
         startIndex = (pageNum - 1) * 10;
-        List<TableMessage> messages = messageService.queryUnReadMessageByUser(username, startIndex);
+        List<MessagePO> messages = messageService.queryUnReadMessageByUser(username, startIndex);
         Integer unReadCount = messageService.queryUnReadMessageCountByUser(username);
         if (0 != messages.size()) {
-            jsonInfo.setSuccess();
-            jsonInfo.addInfo(messages);
-            jsonInfo.addInfo(unReadCount);
+            JsonInfoVO.setSuccess();
+            JsonInfoVO.addInfo(messages);
+            JsonInfoVO.addInfo(unReadCount);
         } else {
-            jsonInfo.setFail();
+            JsonInfoVO.setFail();
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 
 

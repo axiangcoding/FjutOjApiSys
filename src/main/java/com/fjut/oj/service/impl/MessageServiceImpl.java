@@ -1,7 +1,7 @@
 package com.fjut.oj.service.impl;
 
 import com.fjut.oj.mapper.MessageMapper;
-import com.fjut.oj.pojo.TableMessage;
+import com.fjut.oj.pojo.MessagePO;
 import com.fjut.oj.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class MessageServiceImpl implements MessageService {
 
 
     @Override
-    public Integer insertMessage(TableMessage message) {
+    public Integer insertMessage(MessagePO message) {
         return messageMapper.insertMessage(message);
     }
 
@@ -56,12 +56,12 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<TableMessage> queryAllMessageByUser(String username, Integer startIndex) {
+    public List<MessagePO> queryAllMessageByUser(String username, Integer startIndex) {
         return messageMapper.queryAllMessageByUser(username, startIndex);
     }
 
     @Override
-    public List<TableMessage> queryUnReadMessageByUser(String username, int startIndex) {
+    public List<MessagePO> queryUnReadMessageByUser(String username, int startIndex) {
         return messageMapper.queryUnReadMessageByUser(username, startIndex);
     }
 }

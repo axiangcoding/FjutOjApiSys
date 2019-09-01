@@ -1,7 +1,7 @@
 package com.fjut.oj.service.impl;
 
 import com.fjut.oj.mapper.AllUsersRankMapper;
-import com.fjut.oj.pojo.User;
+import com.fjut.oj.pojo.UserPO;
 import com.fjut.oj.service.AllUserRankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +15,8 @@ public class AllUserRankServiceImpl implements AllUserRankService {
     private AllUsersRankMapper allUsersRankMapper;
 
     @Override
-    public List<User> allUsersRank(String order, String desc,Integer start) {
-        List<User> list = allUsersRankMapper.queryAllUsersRank(order,desc,start);
+    public List<UserPO> allUsersRank(String order, String desc, Integer start) {
+        List<UserPO> list = allUsersRankMapper.queryAllUsersRank(order,desc,start);
         return list;
     }
 
@@ -26,7 +26,7 @@ public class AllUserRankServiceImpl implements AllUserRankService {
     }
 
     @Override
-    public List<User> queryUserByName(String username, Integer start){
+    public List<UserPO> queryUserByName(String username, Integer start){
         return allUsersRankMapper.queryUserByName(username,start);
     }
 }

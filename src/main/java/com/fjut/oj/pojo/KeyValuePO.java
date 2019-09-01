@@ -3,7 +3,7 @@ package com.fjut.oj.pojo;
 /**
  * @author axiang [20190829]
  */
-public class TableKeyValue {
+public class KeyValuePO {
     private String key;
     private String value;
 
@@ -21,5 +21,13 @@ public class TableKeyValue {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return "KeyValuePO{" +
+                "key='" + key + '\'' +
+                ", value='" + value + '\'' +
+                '}';
     }
 }

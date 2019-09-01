@@ -1,6 +1,6 @@
 package com.fjut.oj.mapper;
 
-import com.fjut.oj.pojo.UserPer;
+import com.fjut.oj.pojo.UserPermissionPO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public interface UserPermissionMapper {
      * @param username
      * @return
      */
-    List<UserPer> queryUserPermission(@Param("username") String username);
+    List<UserPermissionPO> queryUserPermission(@Param("username") String username);
 
     /**
      * 获取用户的某项权限是否存在

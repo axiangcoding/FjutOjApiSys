@@ -1,8 +1,8 @@
 package com.fjut.oj.controller;
 
-import com.fjut.oj.pojo.TableKeyValue;
+import com.fjut.oj.pojo.JsonInfoVO;
+import com.fjut.oj.pojo.KeyValuePO;
 import com.fjut.oj.service.KeyValueService;
-import com.fjut.oj.util.JsonInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,16 +19,16 @@ public class SystemController {
     KeyValueService keyValueService;
 
     @GetMapping("/getSystemValue")
-    public JsonInfo queryKeyValue(@RequestParam("key") String key) {
-        JsonInfo jsonInfo = new JsonInfo();
-        TableKeyValue keyValue = keyValueService.queryValueByKey(key);
+    public JsonInfoVO queryKeyValue(@RequestParam("key") String key) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
+        KeyValuePO keyValue = keyValueService.queryValueByKey(key);
         if(null == keyValue)
         {
-            jsonInfo.setFail("找不到键值");
-            return jsonInfo;
+            JsonInfoVO.setFail("找不到键值");
+            return JsonInfoVO;
         }
-        jsonInfo.setSuccess();
-        jsonInfo.addInfo(keyValue);
-        return jsonInfo;
+        JsonInfoVO.setSuccess();
+        JsonInfoVO.addInfo(keyValue);
+        return JsonInfoVO;
     }
 }

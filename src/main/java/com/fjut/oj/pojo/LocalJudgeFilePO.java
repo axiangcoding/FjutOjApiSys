@@ -1,9 +1,10 @@
 package com.fjut.oj.pojo;
 
 /**
- * @Author: axiang [20190814] 从本地判题题库中获取文件详情
+ * 从本地判题题库中获取文件详情
+ * @author axiang [20190814]
  */
-public class LocalJudgeFile {
+public class LocalJudgeFilePO {
     private String problemName;
     private String inputFiles;
     private String outputFiles;
@@ -48,5 +49,16 @@ public class LocalJudgeFile {
 
     public void setOtherFiles(String otherFiles) {
         this.otherFiles = otherFiles;
+    }
+
+    @Override
+    public String toString() {
+        return "LocalJudgeFilePO{" +
+                "problemName='" + problemName + '\'' +
+                ", inputFiles='" + inputFiles + '\'' +
+                ", outputFiles='" + outputFiles + '\'' +
+                ", spjFiles='" + spjFiles + '\'' +
+                ", otherFiles='" + otherFiles + '\'' +
+                '}';
     }
 }

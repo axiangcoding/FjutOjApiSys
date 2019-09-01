@@ -5,10 +5,10 @@ package com.fjut.oj.pojo.enums;
  */
 public enum ChallengeBlockType {
     BASIS(0, "基础"),
-    DATASTRUCTURE(1, "数据结构"),
+    DATA_STRUCTURE(1, "数据结构"),
     MATH(2, "数学"),
     GEOMETRIC(3, "几何"),
-    GRAPHTHEORY(4, "图论"),
+    GRAPH_THEORY(4, "图论"),
     SEARCH(5, "搜索"),
     DP(6, "动态规划");
 

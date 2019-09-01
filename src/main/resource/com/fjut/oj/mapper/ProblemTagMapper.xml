@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fjut.oj.mapper.ProblemTagMapper">
 
-    <select id="queryAllProblemTag" resultType="com.fjut.oj.pojo.t_problem_tag">
+    <select id="queryAllProblemTag" resultType="com.fjut.oj.pojo.ProblemTagPO">
         SELECT * FROM t_problem_tag ORDER BY id
     </select>
 
@@ -33,12 +33,12 @@
          WHERE pid=#{pid} AND username=#{username} AND tagid=#{tagid}
     </delete>
 
-    <insert id="addProblemTag" parameterType="com.fjut.oj.pojo.t_problem_tag">
+    <insert id="addProblemTag" parameterType="com.fjut.oj.pojo.ProblemTagPO">
         INSERT INTO t_problem_tag(name)
         VALUES(#{tagName})
     </insert>
 
-    <update id="renameProblemTag" parameterType="com.fjut.oj.pojo.t_problem_tag">
+    <update id="renameProblemTag" parameterType="com.fjut.oj.pojo.ProblemTagPO">
         UPDATE t_problem_tag
         SET name = #{name}
         WHERE id = #{id}

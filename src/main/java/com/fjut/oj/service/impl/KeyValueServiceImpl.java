@@ -1,7 +1,7 @@
 package com.fjut.oj.service.impl;
 
 import com.fjut.oj.mapper.KeyValueMapper;
-import com.fjut.oj.pojo.TableKeyValue;
+import com.fjut.oj.pojo.KeyValuePO;
 import com.fjut.oj.service.KeyValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,17 +17,17 @@ public class KeyValueServiceImpl implements KeyValueService {
     KeyValueMapper KeyValueMapper;
 
     @Override
-    public Integer insertKeyValue(TableKeyValue tableKeyValue) {
+    public Integer insertKeyValue(KeyValuePO tableKeyValue) {
         return KeyValueMapper.insertKeyValue(tableKeyValue);
     }
 
     @Override
-    public List<TableKeyValue> queryAllKeyValues() {
+    public List<KeyValuePO> queryAllKeyValues() {
         return KeyValueMapper.queryAllKeyValues();
     }
 
     @Override
-    public TableKeyValue queryValueByKey(String key) {
+    public KeyValuePO queryValueByKey(String key) {
         return KeyValueMapper.queryValueByKey(key);
     }
 }

@@ -1,8 +1,8 @@
 package com.fjut.oj.controller;
 
-import com.fjut.oj.pojo.t_problem_tag;
+import com.fjut.oj.pojo.JsonInfoVO;
+import com.fjut.oj.pojo.ProblemTagPO;
 import com.fjut.oj.service.ProblemTagService;
-import com.fjut.oj.util.JsonInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,15 +25,15 @@ public class ProblemTagController {
     private ProblemTagService problemTagService;
 
     @GetMapping("/getAllProblemTag")
-    public JsonInfo queryAllProblemTag() {
-        JsonInfo jsonInfo = new JsonInfo();
-        List<t_problem_tag> list = problemTagService.queryAllProblemTag();
+    public JsonInfoVO queryAllProblemTag() {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
+        List<ProblemTagPO> list = problemTagService.queryAllProblemTag();
         if (0 < list.size()) {
-            jsonInfo.setSuccess();
-            jsonInfo.addInfo(list);
+            JsonInfoVO.setSuccess();
+            JsonInfoVO.addInfo(list);
         } else {
-            jsonInfo.setFail("未找到标签");
+            JsonInfoVO.setFail("未找到标签");
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 }

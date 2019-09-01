@@ -5,9 +5,9 @@ import java.util.Date;
 /**
  * Bug 报告
  *
- * @Author: axiang [20190825]
+ * @author axiang [20190825]
  */
-public class TableBugReport {
+public class BugReportPO {
     private Integer id;
     private String username;
     private String title;
@@ -70,5 +70,18 @@ public class TableBugReport {
 
     public void setIsFixed(Integer isFixed) {
         this.isFixed = isFixed;
+    }
+
+    @Override
+    public String toString() {
+        return "BugReportPO{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", title='" + title + '\'' +
+                ", type=" + type +
+                ", text='" + text + '\'' +
+                ", time=" + time +
+                ", isFixed=" + isFixed +
+                '}';
     }
 }

@@ -1,6 +1,6 @@
 package com.fjut.oj.service;
 
-import com.fjut.oj.pojo.TableBugReport;
+import com.fjut.oj.pojo.BugReportPO;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ public interface BugReportService {
     /**
      * 插入一条bug报告记录
      *
-     * @param tableBugReport
+     * @param bugReportPO
      * @return
      */
-    Integer insertBugReport(TableBugReport tableBugReport);
+    Integer insertBugReport(BugReportPO bugReportPO);
 
     /**
      * FIXME: 条件还没添加上去
@@ -23,6 +23,6 @@ public interface BugReportService {
      * @param startIndex
      * @return
      */
-    List<TableBugReport> queryBugReportByCondition(Integer startIndex);
+    List<BugReportPO> queryBugReportByCondition(Integer startIndex);
 
 }

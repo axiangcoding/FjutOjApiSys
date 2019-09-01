@@ -1,6 +1,6 @@
 package com.fjut.oj.mapper;
 
-import com.fjut.oj.pojo.CeInfo;
+import com.fjut.oj.pojo.CeInfoPO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -15,14 +15,14 @@ public interface CeInfoMapper {
      * @param ce
      * @return
      */
-    Integer insertCeInfo(@Param("ce") CeInfo ce);
+    Integer insertCeInfo(@Param("ce") CeInfoPO ce);
 
     /**
      * 查询全部评测信息
      *
      * @return
      */
-    List<CeInfo> queryAllCeInfo();
+    List<CeInfoPO> queryAllCeInfo();
 
     /**
      * 查询评测信息
@@ -30,7 +30,7 @@ public interface CeInfoMapper {
      * @param rid
      * @return
      */
-    CeInfo queryCeInfo(@Param("rid") Integer rid);
+    CeInfoPO queryCeInfo(@Param("rid") Integer rid);
 
 
 }

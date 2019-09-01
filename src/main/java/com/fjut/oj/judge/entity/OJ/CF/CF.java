@@ -222,7 +222,7 @@ public class CF extends OTHOJ {
         languageList.add(new Pair<>(42,CodeLanguage.GPP11));
 //        languageList.add(new Pair<>(10,CodeLanguage.GCC));
         languageList.add(new Pair<>(43,CodeLanguage.GCC11));
-        //languageList.add(new Pair<>(2,CodeLanguage.VCPP));
+        //languageList.add(new Pair<>(2,CodeLanguage.V_CPP));
         languageList.add(new Pair<>(4,CodeLanguage.PASCAL));
         languageList.add(new Pair<>(9,CodeLanguage.CSHARP));
         languageList.add(new Pair<>(32,CodeLanguage.GO1_8));

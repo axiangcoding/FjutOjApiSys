@@ -1,8 +1,8 @@
 package com.fjut.oj.controller;
 
-import com.fjut.oj.pojo.User;
+import com.fjut.oj.pojo.JsonInfoVO;
+import com.fjut.oj.pojo.UserPO;
 import com.fjut.oj.service.AllTopTenService;
-import com.fjut.oj.util.JsonInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,17 +23,17 @@ public class AllRankController {
     private AllTopTenService allTopTenService;
 
     @GetMapping("/getAllTopBorder")
-    public JsonInfo getAllTopBorder() {
-        JsonInfo jsonInfo = new JsonInfo();
-        List<User> list = allTopTenService.getAcbTOP();
-        List<User> list_1 = allTopTenService.getRatingTop();
-        List<User> list_2 = allTopTenService.getAcTOP();
+    public JsonInfoVO getAllTopBorder() {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
+        List<UserPO> list = allTopTenService.getAcbTOP();
+        List<UserPO> list_1 = allTopTenService.getRatingTop();
+        List<UserPO> list_2 = allTopTenService.getAcTOP();
         // TODO: 活跃榜还没做
 
-        jsonInfo.setSuccess();
-        jsonInfo.addInfo(list);
-        jsonInfo.addInfo(list_1);
-        jsonInfo.addInfo(list_2);
-        return jsonInfo;
+        JsonInfoVO.setSuccess();
+        JsonInfoVO.addInfo(list);
+        JsonInfoVO.addInfo(list_1);
+        JsonInfoVO.addInfo(list_2);
+        return JsonInfoVO;
     }
 }

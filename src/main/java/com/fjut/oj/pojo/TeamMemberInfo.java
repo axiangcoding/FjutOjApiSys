@@ -1,6 +1,10 @@
 package com.fjut.oj.pojo;
 
-// 队伍成员信息
+/**
+ * 队伍成员信息
+ *
+ * @author cjt
+ */
 public class TeamMemberInfo {
 
     private Integer id;

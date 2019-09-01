@@ -107,7 +107,7 @@ public class FOJ  extends OTHOJ{
         languageList.add(new Pair<>(1,CodeLanguage.GCC));
         languageList.add(new Pair<>(2,CodeLanguage.PASCAL));
         languageList.add(new Pair<>(3,CodeLanguage.JAVA));
-        //languageList.add(new Pair<>(4,CodeLanguage.VCPP));
+        //languageList.add(new Pair<>(4,CodeLanguage.V_CPP));
     }
 
     @Override

@@ -42,13 +42,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
-    public boolean insertUser(User user, TableUserAuth userAuth) {
+    public boolean insertUser(UserPO user, UserAuthPO userAuth) {
         Integer ansUser = userMapper.insertUser(user);
         Integer ansAuth = userAuthMapper.insertUserAuth(userAuth);
         //用户注册成功
         if (1 == ansUser && 1 == ansAuth) {
             // 发送欢迎消息
-            TableMessage message = new TableMessage();
+            MessagePO message = new MessagePO();
             message.setStatus(0);
             message.setUser(user.getUsername());
             message.setTitle("欢迎您，新用户！");
@@ -68,12 +68,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int updateUserByUsername(User user) {
+    public int updateUserByUsername(UserPO user) {
         return userMapper.updateUserByUsername(user);
     }
 
     @Override
-    public User getUserByUsername(String username) {
+    public UserPO getUserByUsername(String username) {
         return userMapper.queryUserByUsername(username);
     }
 
@@ -116,14 +116,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> queryRichTop10() {
-        List<User> list = userMapper.queryRichTop10();
+    public List<UserPO> queryRichTop10() {
+        List<UserPO> list = userMapper.queryRichTop10();
         return list;
     }
 
     @Override
-    public List<User> queryAcNumTop10() {
-        List<User> list = userMapper.queryAcnumTop10();
+    public List<UserPO> queryAcNumTop10() {
+        List<UserPO> list = userMapper.queryAcnumTop10();
         return list;
     }
 

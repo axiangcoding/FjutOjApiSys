@@ -1,7 +1,7 @@
 package com.fjut.oj.service;
 
 import com.fjut.oj.pojo.SubmisssionRecord;
-import com.fjut.oj.pojo.User;
+import com.fjut.oj.pojo.UserPO;
 import com.fjut.oj.pojo.WeekRankRecord;
 
 import java.util.List;
@@ -13,5 +13,5 @@ public interface WeekRankRecordService {
 
     void sort(WeekRankRecord weekRankRecord);
 
-    List<User> getActiveRank();
+    List<UserPO> getActiveRank();
 }

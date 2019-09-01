@@ -1,11 +1,11 @@
 package com.fjut.oj.controller;
 
+import com.fjut.oj.pojo.JsonInfoVO;
 import com.fjut.oj.pojo.Problem;
 import com.fjut.oj.pojo.Problems1;
 import com.fjut.oj.pojo.ViewUserSolve;
 import com.fjut.oj.service.ProblemService;
 import com.fjut.oj.service.StatusService;
-import com.fjut.oj.util.JsonInfo;
 import com.fjut.oj.util.JsonMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO: 把 JsonMsg 替换为 JsonInfo
+ * TODO: 把 JsonMsg 替换为 JsonInfoVOVO
  *
  * @author axiang [20190707]
  */
@@ -47,12 +47,12 @@ public class ProblemController {
      * @return
      */
     @GetMapping("/getProblems")
-    public JsonInfo queryProblemsByConditions(@RequestParam(value = "pageNum") String pageNumStr,
-                                              @RequestParam(value = "tagId", required = false) String tagIdStr,
-                                              @RequestParam(value = "title", required = false) String title,
-                                              @RequestParam(value = "username", required = false) String username,
-                                              @RequestParam(value = "isStar", required = false) String isStarStr) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO queryProblemsByConditions(@RequestParam(value = "pageNum") String pageNumStr,
+                                                @RequestParam(value = "tagId", required = false) String tagIdStr,
+                                                @RequestParam(value = "title", required = false) String title,
+                                                @RequestParam(value = "username", required = false) String username,
+                                                @RequestParam(value = "isStar", required = false) String isStarStr) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         Integer pageNum = Integer.parseInt(pageNumStr);
         Integer tagId = null;
         if (tagIdStr != null && !"".equals(tagIdStr)) {
@@ -61,9 +61,9 @@ public class ProblemController {
         Integer startIndex = (pageNum - 1) * 50;
         List<Problem> problems = problemService.queryProblemsByConditions(startIndex, tagId, title);
         Integer problemCount = problemService.queryProblemCountByCondition(tagId, title);
-        jsonInfo.addInfo(problems);
-        jsonInfo.addInfo(problemCount);
-        return jsonInfo;
+        JsonInfoVO.addInfo(problems);
+        JsonInfoVO.addInfo(problemCount);
+        return JsonInfoVO;
     }
 
     /**
@@ -73,17 +73,17 @@ public class ProblemController {
      * @return
      */
     @GetMapping("/getProblemSolve")
-    public JsonInfo queryProblemsByConditions(@RequestParam(value = "username", required = false) String username) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO queryProblemsByConditions(@RequestParam(value = "username", required = false) String username) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         List<ViewUserSolve> solves = new ArrayList<>();
         if ("".equals(username) || null == username) {
-            jsonInfo.setSuccess();
-            jsonInfo.addInfo(solves);
-            return jsonInfo;
+            JsonInfoVO.setSuccess();
+            JsonInfoVO.addInfo(solves);
+            return JsonInfoVO;
         }
         solves = statusService.queryUserSolveProblemByUsername(username);
-        jsonInfo.addInfo(solves);
-        return jsonInfo;
+        JsonInfoVO.addInfo(solves);
+        return JsonInfoVO;
     }
 
 
@@ -119,9 +119,9 @@ public class ProblemController {
      * 通过题目 title 查找题目
      */
     @GetMapping("/getProblemByTitle")
-    public JsonInfo queryProblemByTitle(@RequestParam("title") String title,
+    public JsonInfoVO queryProblemByTitle(@RequestParam("title") String title,
                                         @RequestParam("pagenum") String pageNumStr) {
-        JsonInfo jsonInfo = new JsonInfo();
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         Integer pageNum = Integer.parseInt(pageNumStr == null ? "0" : pageNumStr);
         Integer totalPageNum, totalProblem;
 
@@ -137,21 +137,21 @@ public class ProblemController {
         }
         Integer pid1 = (pageNum - 1) * 50;
         List<Problem> list = problemService.queryProblemByTitle(title, pid1);
-        jsonInfo.setSuccess();
-        jsonInfo.addInfo(totalPageNum);
-        jsonInfo.addInfo(list);
-        return jsonInfo;
+        JsonInfoVO.setSuccess();
+        JsonInfoVO.addInfo(totalPageNum);
+        JsonInfoVO.addInfo(list);
+        return JsonInfoVO;
     }
 
     /**
      * 查询题目数量
      */
     @GetMapping("/getProblemsNum")
-    public JsonInfo queryProblemsNum() {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO queryProblemsNum() {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         Integer num = problemService.queryProblemCount();
-        jsonInfo.addInfo(num);
-        return jsonInfo;
+        JsonInfoVO.addInfo(num);
+        return JsonInfoVO;
     }
 
 
@@ -205,8 +205,8 @@ public class ProblemController {
      * @return
      */
     @PostMapping("/updateAllProblemType")
-    public JsonInfo updateAllProblemType() {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO updateAllProblemType() {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         File baseDir = new File(baseJudgeFilePath);
         System.out.println(baseJudgeFilePath);
         if (baseDir.isDirectory()) {
@@ -225,12 +225,12 @@ public class ProblemController {
             Integer localProblemUpdateCount = problemService.updateSomeProblemType(localIds, 0);
             Integer notLocalProblemUpdateCount = problemService.updateSomeProblemType(notLocalIds, 1);
             System.out.println(localProblemUpdateCount + " " + notLocalProblemUpdateCount);
-            jsonInfo.setSuccess("已修改成功 " + localProblemUpdateCount + " 条题目状态为本地题目， " +
+            JsonInfoVO.setSuccess("已修改成功 " + localProblemUpdateCount + " 条题目状态为本地题目， " +
                     notLocalProblemUpdateCount + " 条题目状态为第三方题目");
         } else {
-            jsonInfo.setFail("找不到题库目录！");
+            JsonInfoVO.setFail("找不到题库目录！");
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 
 

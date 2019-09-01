@@ -4,9 +4,10 @@ import java.util.Date;
 
 /**
  * 用户认证表
- * @Author: axiang [20190828]
+ *
+ * @author axiang [20190828]
  */
-public class TableUserAuth {
+public class UserAuthPO {
     private Integer id;
     private String username;
     private String salt;
@@ -78,5 +79,19 @@ public class TableUserAuth {
 
     public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
+    }
+
+    @Override
+    public String toString() {
+        return "UserAuthPO{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", salt='" + salt + '\'' +
+                ", password='" + password + '\'' +
+                ", attemptLoginFailCount=" + attemptLoginFailCount +
+                ", locked=" + locked +
+                ", unlockTime=" + unlockTime +
+                ", lastLoginTime=" + lastLoginTime +
+                '}';
     }
 }

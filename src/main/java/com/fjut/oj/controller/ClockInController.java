@@ -1,11 +1,11 @@
 package com.fjut.oj.controller;
 
-import com.fjut.oj.interceptor.CheckUserPrivate;
-import com.fjut.oj.pojo.TableClockIn;
-import com.fjut.oj.service.ClockInService;
 import com.fjut.oj.interceptor.CheckUserIsLogin;
+import com.fjut.oj.interceptor.CheckUserPrivate;
+import com.fjut.oj.pojo.ClockInPO;
+import com.fjut.oj.pojo.JsonInfoVO;
+import com.fjut.oj.service.ClockInService;
 import com.fjut.oj.util.IpUtils;
-import com.fjut.oj.util.JsonInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -30,65 +30,65 @@ public class ClockInController {
 
     @CheckUserIsLogin
     @GetMapping("/getUserClockIn")
-    public JsonInfo queryAllClockInByUsername(@RequestParam(value = "username") String username,
-                                              @RequestParam(value = "pagenum", required = false) String pageNumStr) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO queryAllClockInByUsername(@RequestParam(value = "username") String username,
+                                                @RequestParam(value = "pagenum", required = false) String pageNumStr) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         Integer pageNum;
         if (null == pageNumStr) {
             pageNum = null;
         } else {
             pageNum = Integer.parseInt(pageNumStr);
         }
-        List<TableClockIn> clockIns = clockInService.queryAllClockInByUsername(username, pageNum);
+        List<ClockInPO> clockIns = clockInService.queryAllClockInByUsername(username, pageNum);
         if (null != clockIns) {
-            jsonInfo.setSuccess();
-            jsonInfo.addInfo(clockIns);
+            JsonInfoVO.setSuccess();
+            JsonInfoVO.addInfo(clockIns);
         } else {
-            jsonInfo.setFail("未查询到签到记录！");
+            JsonInfoVO.setFail("未查询到签到记录！");
         }
-        return jsonInfo;
+        return JsonInfoVO;
 
     }
 
     @CheckUserIsLogin
     @GetMapping("/getSomedayClockIn")
-    public JsonInfo queryAllClockInByDate(@RequestParam("date") String dateStr) throws ParseException {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO queryAllClockInByDate(@RequestParam("date") String dateStr) throws ParseException {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
-        List<TableClockIn> clockIns = clockInService.queryAllClockInByDate(date);
+        List<ClockInPO> clockIns = clockInService.queryAllClockInByDate(date);
         if (null != clockIns) {
-            jsonInfo.setSuccess();
-            jsonInfo.addInfo(clockIns);
+            JsonInfoVO.setSuccess();
+            JsonInfoVO.addInfo(clockIns);
         } else {
-            jsonInfo.setFail("未查询到签到记录！");
+            JsonInfoVO.setFail("未查询到签到记录！");
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 
     @CheckUserPrivate
     @GetMapping("/getUserTodayClockIn")
-    public JsonInfo queryClockInByUserAndDate(@RequestParam("username") String username) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO queryClockInByUserAndDate(@RequestParam("username") String username) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         Date date = new Date();
-        List<TableClockIn> clockIns = clockInService.queryClockInByUsernameAndDate(username, date);
+        List<ClockInPO> clockIns = clockInService.queryClockInByUsernameAndDate(username, date);
         if (0 != clockIns.size()) {
-            jsonInfo.setSuccess();
-            jsonInfo.addInfo(clockIns);
+            JsonInfoVO.setSuccess();
+            JsonInfoVO.addInfo(clockIns);
         } else {
-            jsonInfo.setFail("未查询到签到记录！");
+            JsonInfoVO.setFail("未查询到签到记录！");
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 
     @CheckUserPrivate
     @PostMapping("/setUserClockIn")
-    public JsonInfo setClockInForNormalUser(HttpServletRequest req, @RequestParam("username") String username) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO setClockInForNormalUser(HttpServletRequest req, @RequestParam("username") String username) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         Date time = new Date();
         String sign = "日常";
         String ip = IpUtils.getClientIpAddress(req);
         Integer todayTimes = 1;
-        TableClockIn clockIn = new TableClockIn();
+        ClockInPO clockIn = new ClockInPO();
         clockIn.setUsername(username);
         clockIn.setTime(time);
         clockIn.setSign(sign);
@@ -96,11 +96,11 @@ public class ClockInController {
         clockIn.setTodytimes(todayTimes);
         boolean isClockIn = clockInService.insertClockIn(clockIn);
         if (isClockIn) {
-            jsonInfo.setSuccess("用户签到成功！");
+            JsonInfoVO.setSuccess("用户签到成功！");
         } else {
-            jsonInfo.setFail("用户签到失败！");
+            JsonInfoVO.setFail("用户签到失败！");
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 
 

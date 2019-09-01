@@ -1,13 +1,9 @@
 package com.fjut.oj.controller;
 
-import com.fjut.oj.pojo.Problem;
-import com.fjut.oj.pojo.ProblemView;
-import com.fjut.oj.pojo.ProblemSample;
-import com.fjut.oj.pojo.UserSolve;
+import com.fjut.oj.pojo.*;
 import com.fjut.oj.service.ProblemService;
 import com.fjut.oj.service.ProblemViewService;
 import com.fjut.oj.service.UserSolveService;
-import com.fjut.oj.util.JsonInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,10 +30,10 @@ public class ProblemViewController {
 
     @RequestMapping("/getProblemView")
     @ResponseBody
-    public JsonInfo queryProblemView(@RequestParam("pid") String pidStr,
-                                     @RequestParam(value = "username",required = false) String username)
+    public JsonInfoVO queryProblemView(@RequestParam("pid") String pidStr,
+                                       @RequestParam(value = "username",required = false) String username)
     {
-        JsonInfo jsonInfo = new JsonInfo();
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         Integer pid = Integer.parseInt(pidStr);
         ProblemView problemView = problemViewService.queryProblemView(pid);
         Problem problem = problemService.queryProblemById(pid);
@@ -50,12 +46,12 @@ public class ProblemViewController {
                 solve = true;
             }
         }
-        jsonInfo.setSuccess();
-        jsonInfo.addInfo(problemView);
-        jsonInfo.addInfo(problem);
-        jsonInfo.addInfo(problemSam);
-        jsonInfo.addInfo(solve);
-        return jsonInfo;
+        JsonInfoVO.setSuccess();
+        JsonInfoVO.addInfo(problemView);
+        JsonInfoVO.addInfo(problem);
+        JsonInfoVO.addInfo(problemSam);
+        JsonInfoVO.addInfo(solve);
+        return JsonInfoVO;
 
     }
 }

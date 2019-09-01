@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 
 /**
  * SHA1加密
+ * 
  * @author axiang [20190828]
  */
 public class SHAUtils {

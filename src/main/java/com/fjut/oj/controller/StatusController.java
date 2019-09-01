@@ -2,15 +2,12 @@ package com.fjut.oj.controller;
 
 import com.fjut.oj.exception.NotOwnerException;
 import com.fjut.oj.interceptor.CheckUserPrivate;
-import com.fjut.oj.pojo.Status;
-import com.fjut.oj.pojo.UserSolve;
-import com.fjut.oj.pojo.ViewUserStatus;
+import com.fjut.oj.pojo.*;
 import com.fjut.oj.pojo.enums.PermissionType;
 import com.fjut.oj.service.CodeViewService;
 import com.fjut.oj.service.StatusService;
 import com.fjut.oj.service.UserPermissionService;
 import com.fjut.oj.service.UserSolveService;
-import com.fjut.oj.util.JsonInfo;
 import com.fjut.oj.util.MapSort;
 import com.fjut.oj.util.ResultString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,24 +43,24 @@ public class StatusController {
 
 
     @GetMapping("/getAllStatusByPage")
-    public JsonInfo queryAllStatus(@RequestParam("pageNum") String pageNumStr) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO queryAllStatus(@RequestParam("pageNum") String pageNumStr) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         int pageNum = Integer.parseInt(pageNumStr);
         Integer num = statusService.allStatusNum();
         if (num == 0) {
-            jsonInfo.setSuccess("数据为空");
+            JsonInfoVO.setSuccess("数据为空");
         }
         int from = (pageNum - 1) * 50;
         List<ViewUserStatus> statuses = statusService.queryStatus(from);
-        jsonInfo.setSuccess();
-        jsonInfo.addInfo(num % 50 == 0 ? num / 50 : num / 50 + 1);
-        jsonInfo.addInfo(statuses);
-        return jsonInfo;
+        JsonInfoVO.setSuccess();
+        JsonInfoVO.addInfo(num % 50 == 0 ? num / 50 : num / 50 + 1);
+        JsonInfoVO.addInfo(statuses);
+        return JsonInfoVO;
     }
 
     @RequestMapping("/GAllStatusByUsername")
-    public JsonInfo queryAllStatusByUsername(HttpServletRequest req, HttpServletResponse resp) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO queryAllStatusByUsername(HttpServletRequest req, HttpServletResponse resp) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         Integer pid;
         String ruser, submitTime;
         String username = req.getParameter("username");
@@ -72,8 +69,8 @@ public class StatusController {
         Map<String, Integer> vis = new TreeMap<String, Integer>();
         UserSolve userSolve = null;
         if (null == username) {
-            jsonInfo.setFail("无用户");
-            return jsonInfo;
+            JsonInfoVO.setFail("无用户");
+            return JsonInfoVO;
         }
         List<Status> list = statusService.getAllStatusByUsername(username);
         for (Status st : list) {
@@ -93,15 +90,15 @@ public class StatusController {
         }
         Map<String, Integer> totalMap = MapSort.sortMapByKey(submitToal);
         Map<String, Integer> acMap = MapSort.sortMapByKey(submitAc);
-        jsonInfo.setSuccess();
-        jsonInfo.addInfo(totalMap);
-        jsonInfo.addInfo(acMap);
-        return jsonInfo;
+        JsonInfoVO.setSuccess();
+        JsonInfoVO.addInfo(totalMap);
+        JsonInfoVO.addInfo(acMap);
+        return JsonInfoVO;
     }
 
     @RequestMapping("/GStatusByConditions")
-    public JsonInfo queryAllStatusByConditions(HttpServletRequest req, HttpServletResponse resp) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO queryAllStatusByConditions(HttpServletRequest req, HttpServletResponse resp) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         Integer pid, result, lang, start;
         Integer pageNum = Integer.parseInt(req.getParameter("pagenum") == null ? "1" : req.getParameter("pagenum"));
         String ruser = req.getParameter("ruser") == null ? "" : req.getParameter("ruser");
@@ -128,39 +125,39 @@ public class StatusController {
         Integer totalPage = totalStatus % 50 == 0 ? totalStatus / 50 : totalStatus / 50 + 1;
         List<ViewUserStatus> list = statusService.queryAllStatusByConditions(ruser, pid, result, lang, start);
         if (0 == list.size()) {
-            jsonInfo.setFail("未找到内容");
+            JsonInfoVO.setFail("未找到内容");
         } else {
-            jsonInfo.setSuccess();
-            jsonInfo.addInfo(totalPage);
-            jsonInfo.addInfo(list);
+            JsonInfoVO.setSuccess();
+            JsonInfoVO.addInfo(totalPage);
+            JsonInfoVO.addInfo(list);
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 
     @CheckUserPrivate
     @GetMapping("/getStatusById")
-    public JsonInfo getStatusById(@RequestParam("id") String idStr,
+    public JsonInfoVO getStatusById(@RequestParam("id") String idStr,
                                   @RequestParam(value = "username", required = false) String username) {
-        JsonInfo jsonInfo = new JsonInfo();
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         if ("".equals(username) || null == username) {
             throw new NotOwnerException();
         }
         Integer id = Integer.parseInt(idStr);
         ViewUserStatus viewUserStatus = statusService.queryStatusViewById(id);
-        boolean permissionCanViewOthersCode = permissionService.queryUserPermissionAvailable(username, PermissionType.viewCode.getCode());
+        boolean permissionCanViewOthersCode = permissionService.queryUserPermissionAvailable(username, PermissionType.VIEW_CODE.getCode());
         boolean normalCanViewOthersCode = codeViewService.queryCanUserViewCodeByPid(username, id);
         if (null == viewUserStatus) {
-            jsonInfo.setFail("评测信息不存在！");
-            return jsonInfo;
+            JsonInfoVO.setFail("评测信息不存在！");
+            return JsonInfoVO;
         } else if (viewUserStatus.getRuser().equals(username) || permissionCanViewOthersCode || normalCanViewOthersCode) {
-            jsonInfo.setSuccess();
-            jsonInfo.addInfo(viewUserStatus);
+            JsonInfoVO.setSuccess();
+            JsonInfoVO.addInfo(viewUserStatus);
         } else {
-            jsonInfo.setSuccess("权限不足!");
+            JsonInfoVO.setSuccess("权限不足!");
             viewUserStatus.setCode("不允许查看此评测代码，请完成该题解答或者使用ACB购买该题");
-            jsonInfo.addInfo(viewUserStatus);
+            JsonInfoVO.addInfo(viewUserStatus);
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 
 }

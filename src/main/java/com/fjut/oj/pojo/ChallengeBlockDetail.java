@@ -1,7 +1,7 @@
 package com.fjut.oj.pojo;
 
 /**
- * @Author: axiang [20190628]
+ * @author axiang [20190628]
  */
 public class ChallengeBlockDetail {
     private Integer id;

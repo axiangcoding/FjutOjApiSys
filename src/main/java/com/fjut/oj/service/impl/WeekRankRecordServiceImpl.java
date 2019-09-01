@@ -3,7 +3,7 @@ package com.fjut.oj.service.impl;
 import com.fjut.oj.mapper.SubmissionRecordMapper;
 import com.fjut.oj.mapper.UserMapper;
 import com.fjut.oj.pojo.SubmisssionRecord;
-import com.fjut.oj.pojo.User;
+import com.fjut.oj.pojo.UserPO;
 import com.fjut.oj.pojo.WeekRankRecord;
 import com.fjut.oj.service.WeekRankRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +74,7 @@ public class WeekRankRecordServiceImpl implements WeekRankRecordService {
     }
 
     @Override
-    public List<User> getActiveRank() {
+    public List<UserPO> getActiveRank() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
@@ -147,9 +147,9 @@ public class WeekRankRecordServiceImpl implements WeekRankRecordService {
             hash_score.put(max_name, 0);
             rank.add(max_name);
         }
-        List<User> rank_user = new ArrayList<>();
+        List<UserPO> rank_user = new ArrayList<>();
         for (int i = 0; i < rank.size(); i++) {
-            User user = userMapper.queryUserByUsername(rank.get(i));
+            UserPO user = userMapper.queryUserByUsername(rank.get(i));
             rank_user.add(user);
         }
         return rank_user;

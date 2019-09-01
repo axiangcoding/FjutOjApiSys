@@ -1,8 +1,8 @@
 package com.fjut.oj.controller;
 
-import com.fjut.oj.pojo.TableBugReport;
+import com.fjut.oj.pojo.BugReportPO;
+import com.fjut.oj.pojo.JsonInfoVO;
 import com.fjut.oj.service.BugReportService;
-import com.fjut.oj.util.JsonInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +21,13 @@ public class BugReportController {
     BugReportService bugReportService;
 
     @PostMapping("/bugReport")
-    public JsonInfo insertBugReport(@RequestParam("username") String username,
-                                    @RequestParam("type") String typeStr,
-                                    @RequestParam("title") String title,
-                                    @RequestParam("text") String text) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO insertBugReport(@RequestParam("username") String username,
+                                      @RequestParam("type") String typeStr,
+                                      @RequestParam("title") String title,
+                                      @RequestParam("text") String text) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         Integer type = Integer.parseInt(typeStr);
-        TableBugReport bugReport = new TableBugReport();
+        BugReportPO bugReport = new BugReportPO();
         bugReport.setUsername(username);
         bugReport.setType(type);
         bugReport.setTitle(title);
@@ -36,12 +36,12 @@ public class BugReportController {
         bugReport.setTime(new Date());
         Integer ans = bugReportService.insertBugReport(bugReport);
         if (1 == ans) {
-            jsonInfo.setSuccess();
+            JsonInfoVO.setSuccess();
 
         } else {
-            jsonInfo.setFail("BUG反馈失败！");
+            JsonInfoVO.setFail("BUG反馈失败！");
         }
 
-        return jsonInfo;
+        return JsonInfoVO;
     }
 }

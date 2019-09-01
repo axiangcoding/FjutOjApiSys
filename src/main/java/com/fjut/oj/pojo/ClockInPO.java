@@ -1,12 +1,11 @@
 package com.fjut.oj.pojo;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * @author: axiang [20190610]
+ * @author axiang [20190610]
  */
-public class TableClockIn {
+public class ClockInPO {
     private Integer id;
     private String username;
     private Date time;
@@ -64,13 +63,14 @@ public class TableClockIn {
 
     @Override
     public String toString() {
-        String str = "id: " + id
-                + " username: " + username
-                + " time: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(time)
-                + " sign: " + sign
-                + " ip: " + ip
-                + " todytimes: " + todytimes;
-        return str;
+        return "ClockInPO{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", time=" + time +
+                ", sign='" + sign + '\'' +
+                ", ip='" + ip + '\'' +
+                ", todytimes=" + todytimes +
+                '}';
     }
 }
 

@@ -1,7 +1,6 @@
 package com.fjut.oj.service;
 
-import com.fjut.oj.pojo.UserPer;
-import org.springframework.stereotype.Service;
+import com.fjut.oj.pojo.UserPermissionPO;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ public interface UserPermissionService {
      * @param username
      * @return
      */
-    List<UserPer> queryUserPermission(String username);
+    List<UserPermissionPO> queryUserPermission(String username);
 
     boolean queryUserPermissionAvailable(String username,Integer id);
 

@@ -1,7 +1,7 @@
 package com.fjut.oj.service.impl;
 
 import com.fjut.oj.mapper.LogMapper;
-import com.fjut.oj.pojo.Log;
+import com.fjut.oj.pojo.LogPO;
 import com.fjut.oj.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +18,12 @@ public class LogServiceImpl implements LogService {
     LogMapper logMapper;
     
     @Override
-    public Integer insertLog(Log log) {
+    public Integer insertLog(LogPO log) {
         return logMapper.insertLog(log);
     }
 
     @Override
-    public List<Log> queryLogsByTime(Date DateStart, Date DateEnd, int startIndex) {
+    public List<LogPO> queryLogsByTime(Date DateStart, Date DateEnd, int startIndex) {
         return logMapper.queryLogsByTime(DateStart, DateEnd, startIndex);
     }
 }

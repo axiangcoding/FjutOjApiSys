@@ -416,7 +416,7 @@ CREATE TABLE `t_problem_sample` (
   PRIMARY KEY (`pid`,`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-/*Table structure for table `t_problem_tag` */
+/*Table structure for table `ProblemTagPO` */
 
 DROP TABLE IF EXISTS `t_problem_tag`;
 
@@ -446,7 +446,7 @@ DROP TABLE IF EXISTS `t_problemview`;
 
 CREATE TABLE `t_problemview` (
   `pid` int(11) NOT NULL,
-  `timelimit` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `timeLimit` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `MenoryLimit` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `Int64` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `spj` int(11) NOT NULL,

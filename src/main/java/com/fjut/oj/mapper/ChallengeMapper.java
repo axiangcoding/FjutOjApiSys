@@ -22,9 +22,9 @@ public interface ChallengeMapper {
     /**
      * 获取全部挑战模块
      *
-     * @return ChallengeBlockForUser
+     * @return ChallengeBlockBO
      */
-    List<ChallengeBlockForUser> queryAllChallengeBlocks();
+    List<ChallengeBlockBO> queryAllChallengeBlocks();
 
     /**
      * 根据ID 获取挑战模块的ID,名称，总分值
@@ -38,9 +38,9 @@ public interface ChallengeMapper {
      * 根据ID 获取挑战模块的表详情
      *
      * @param blockId
-     * @return ChallengeBlock
+     * @return ChallengeBlockPO
      */
-    ChallengeBlock queryChallengeBlockByBlockId(@Param("blockId") Integer blockId);
+    ChallengeBlockPO queryChallengeBlockByBlockId(@Param("blockId") Integer blockId);
 
     /**
      * 获取用户显示的挑战模块ID
@@ -55,7 +55,7 @@ public interface ChallengeMapper {
      *
      * @return
      */
-    List<t_challenge_condition> queryAllChallengeConditions();
+    List<ChallengeConditionPO> queryAllChallengeConditions();
 
     /**
      * 获取用户已开放的挑战模块ID
@@ -81,7 +81,7 @@ public interface ChallengeMapper {
      * @param username
      * @return
      */
-    List<ChallengeBlockForUser> queryChallengeBlocksScoredByUsername(@Param("username") String username);
+    List<ChallengeBlockBO> queryChallengeBlocksScoredByUsername(@Param("username") String username);
 
     /**
      * 根据模块ID和起始INDEX 获取15个题目

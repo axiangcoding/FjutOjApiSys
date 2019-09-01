@@ -27,19 +27,19 @@ public interface ChallengeService {
      */
     boolean updateOpenBlock(String username, Integer pid);
 
-    List<ChallengeBlockForUser> queryAllChallengeBlocks();
+    List<ChallengeBlockBO> queryAllChallengeBlocks();
 
     Integer queryChallengeBlockTotalScoreByBlockId(Integer blockId);
 
-    ChallengeBlock queryChallengeBlockByBlockId(Integer blockId);
+    ChallengeBlockPO queryChallengeBlockByBlockId(Integer blockId);
 
     List<Integer> queryShowedChallengeBlocksByUsername(String username);
 
-    List<t_challenge_condition> queryAllChallengeConditions();
+    List<ChallengeConditionPO> queryAllChallengeConditions();
 
     List<Integer> queryChallengeOpenBlocksByUsername(String username);
 
-    List<ChallengeBlockForUser> queryChallengeBlocksScoredByUsername(String username);
+    List<ChallengeBlockBO> queryChallengeBlocksScoredByUsername(String username);
 
     List<ChallengeConditionForBlock> queryChallengeConditionByBlockId(Integer blockId);
 

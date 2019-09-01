@@ -1,8 +1,8 @@
 package com.fjut.oj.controller;
 
-import com.fjut.oj.pojo.Mall;
+import com.fjut.oj.pojo.JsonInfoVO;
+import com.fjut.oj.pojo.MallPO;
 import com.fjut.oj.service.MallService;
-import com.fjut.oj.util.JsonInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,29 +21,29 @@ public class MallController {
     MallService mallService;
 
     @GetMapping("/getMallGoods")
-    public JsonInfo queryMallGoods() {
-        JsonInfo jsonInfo = new JsonInfo();
-        List<Mall> malls = mallService.queryAllMallGoods();
+    public JsonInfoVO queryMallGoods() {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
+        List<MallPO> malls = mallService.queryAllMallGoods();
         if (0 < malls.size()) {
-            jsonInfo.setSuccess();
-            jsonInfo.addInfo(malls);
+            JsonInfoVO.setSuccess();
+            JsonInfoVO.addInfo(malls);
         } else {
-            jsonInfo.setFail("未找到商品");
+            JsonInfoVO.setFail("未找到商品");
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 
     @GetMapping("/getMallGoodsById")
-    public JsonInfo queryMallGoodsById(@RequestParam("id") Integer id) {
-        JsonInfo jsonInfo = new JsonInfo();
-        Mall mall = mallService.queryMallGoodsById(id);
+    public JsonInfoVO queryMallGoodsById(@RequestParam("id") Integer id) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
+        MallPO mall = mallService.queryMallGoodsById(id);
         if (null != mall) {
-            jsonInfo.setSuccess();
-            jsonInfo.addInfo(mall);
+            JsonInfoVO.setSuccess();
+            JsonInfoVO.addInfo(mall);
         } else {
-            jsonInfo.setFail("未找到该商品！");
+            JsonInfoVO.setFail("未找到该商品！");
         }
-        return jsonInfo;
+        return JsonInfoVO;
     }
 
 }

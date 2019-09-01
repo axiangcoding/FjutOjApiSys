@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 /**
  * Redis操作类，封装了对Redis的一些操作
  *
- * @Author: axiang [20190705]
+ * @author axiang [20190705]
  */
 @Component
 public class RedisTokenManager implements TokenManager {
@@ -19,8 +19,8 @@ public class RedisTokenManager implements TokenManager {
     @Autowired
     private RedisTemplate redis;
 
-    String key = "LongLiveTheKing!";
-
+    /** DES加密值 */
+    private static String key = "LongLiveTheKing!";
 
     /**
      * TODO:暂时只保存用户名和一个UUID生成的无意义的token，如果需要可以添加其他信息，如登录IP等

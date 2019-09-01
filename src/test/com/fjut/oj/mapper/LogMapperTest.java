@@ -1,6 +1,6 @@
 package com.fjut.oj.mapper;
 
-import com.fjut.oj.pojo.Log;
+import com.fjut.oj.pojo.LogPO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class LogMapperTest {
 
     @Test
     public void insertLog() {
-        Log log =new Log();
+        LogPO log =new LogPO();
         log.setText("this is exception");
         log.setTime(new Date());
         log.setIpAddress("admin");

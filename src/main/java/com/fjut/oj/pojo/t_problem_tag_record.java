@@ -1,6 +1,11 @@
 package com.fjut.oj.pojo;
 
-// 用户贴题目标签信息
+/**
+ * 用户贴题目标签信息
+ *
+ * @author cjt
+  */
+
 public class t_problem_tag_record {
 
     private Integer pid;

@@ -3,7 +3,6 @@ package com.fjut.oj.controller;
 import com.fjut.oj.interceptor.CheckUserIsAdmin;
 import com.fjut.oj.pojo.*;
 import com.fjut.oj.service.ContestService;
-import com.fjut.oj.util.JsonInfo;
 import com.fjut.oj.util.JsonMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * TODO: 把 JsonMsg 替换为 JsonInfo
+ * TODO: 把 JsonMsg 替换为 JsonInfoVO
  *
  * @author cjt
  */
@@ -34,17 +33,17 @@ public class ContestController {
     @CheckUserIsAdmin
     @Transactional(rollbackFor = RuntimeException.class)
     @RequestMapping("/insertContest")
-    public JsonInfo insertContest(@RequestParam("username") String username,
-                                  @RequestParam("name") String contestTitle,
-                                  @RequestParam("beginTime") String beginTimeStr,
-                                  @RequestParam("endTime") String endTimeStr,
-                                  @RequestParam("ctype") String cTypeStr,
-                                  @RequestParam("registerBeginTime") String registerBeginTimeStr,
-                                  @RequestParam("registerEndTime") String registerEndTimeStr,
-                                  @RequestParam("info") String info,
-                                  @RequestParam("kind") String kindStr,
-                                  @RequestParam("pidList") String pidList) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO insertContest(@RequestParam("username") String username,
+                                    @RequestParam("name") String contestTitle,
+                                    @RequestParam("beginTime") String beginTimeStr,
+                                    @RequestParam("endTime") String endTimeStr,
+                                    @RequestParam("ctype") String cTypeStr,
+                                    @RequestParam("registerBeginTime") String registerBeginTimeStr,
+                                    @RequestParam("registerEndTime") String registerEndTimeStr,
+                                    @RequestParam("info") String info,
+                                    @RequestParam("kind") String kindStr,
+                                    @RequestParam("pidList") String pidList) {
+        JsonInfoVO jsonInfoVO = new JsonInfoVO();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date beginTime;
         Date endTime;
@@ -60,7 +59,7 @@ public class ContestController {
             cType = Integer.parseInt(cTypeStr);
             kind = Integer.parseInt(kindStr);
         } catch (Exception e) {
-            return new JsonInfo("ERROR", "参数错误");
+            return new JsonInfoVO("ERROR", "参数错误");
         }
         Contest contest = new Contest();
         contest.setName(contestTitle);
@@ -78,13 +77,13 @@ public class ContestController {
         contest.setCreateuser(username);
         Integer ans = contestService.insertContest(contest);
         if (0 == ans) {
-            return new JsonInfo("ERROR", "比赛添加失败");
+            return new JsonInfoVO("ERROR", "比赛添加失败");
         }
         Integer ansCount = contestService.insertContestProblem(contest.getId(), pidList);
         if (0 < ansCount) {
-            jsonInfo.setSuccess("比赛添加成功！请到比赛页面查看！");
+            jsonInfoVO.setSuccess("比赛添加成功！请到比赛页面查看！");
         }
-        return jsonInfo;
+        return jsonInfoVO;
     }
 
     /**
@@ -96,31 +95,31 @@ public class ContestController {
      * @return
      */
     @GetMapping("/getContestByCondition")
-    public JsonInfo getContestByCondition(@RequestParam("pageNum") String pageNumStr,
-                                          @RequestParam("kind") String kindStr) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO getContestByCondition(@RequestParam("pageNum") String pageNumStr,
+                                            @RequestParam("kind") String kindStr) {
+        JsonInfoVO jsonInfoVO = new JsonInfoVO();
         Integer pageNum = Integer.parseInt(pageNumStr);
         Integer startIndex = (pageNum - 1) * 20;
         Integer kind = Integer.parseInt(kindStr);
         List<Contest> list = contestService.queryContestByCondition(startIndex, kind);
         Integer contestNum = contestService.queryContestCountByCondition(kind);
         if (list == null) {
-            jsonInfo.setFail("没有比赛信息！");
-            return jsonInfo;
+            jsonInfoVO.setFail("没有比赛信息！");
+            return jsonInfoVO;
         }
-        jsonInfo.setSuccess();
-        jsonInfo.addInfo(contestNum);
-        jsonInfo.addInfo(list);
-        return jsonInfo;
+        jsonInfoVO.setSuccess();
+        jsonInfoVO.addInfo(contestNum);
+        jsonInfoVO.addInfo(list);
+        return jsonInfoVO;
     }
 
     @GetMapping("/getContestStatusByPage")
-    public JsonInfo getContestStatusByPage(@RequestParam("pageNum") String pageNumStr,
-                                           @RequestParam("cid") String cidStr,
-                                           @RequestParam(value = "nick", required = false) String nick,
-                                           @RequestParam(value = "pid", required = false) String pidStr,
-                                           @RequestParam(value = "result", required = false) String resultStr) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO getContestStatusByPage(@RequestParam("pageNum") String pageNumStr,
+                                             @RequestParam("cid") String cidStr,
+                                             @RequestParam(value = "nick", required = false) String nick,
+                                             @RequestParam(value = "pid", required = false) String pidStr,
+                                             @RequestParam(value = "result", required = false) String resultStr) {
+        JsonInfoVO jsonInfoVO = new JsonInfoVO();
         Integer pageNum = Integer.parseInt(pageNumStr);
         Integer startIndex = (pageNum - 1) * 30;
         if (null != nick && !"".equals(nick)) {
@@ -140,41 +139,41 @@ public class ContestController {
 
         Integer count = contestService.queryContestStatusCountByCondition(cid, nick, pid, result);
         if (0 == count) {
-            jsonInfo.setFail("没有评测记录");
-            return jsonInfo;
+            jsonInfoVO.setFail("没有评测记录");
+            return jsonInfoVO;
         }
         List<ViewUserStatus> viewUserStatuses = contestService.queryContestStatusByCondition(startIndex, cid, nick, pid, result);
-        jsonInfo.setSuccess();
-        jsonInfo.addInfo(viewUserStatuses);
-        jsonInfo.addInfo(count);
-        return jsonInfo;
+        jsonInfoVO.setSuccess();
+        jsonInfoVO.addInfo(viewUserStatuses);
+        jsonInfoVO.addInfo(count);
+        return jsonInfoVO;
     }
 
     @GetMapping("/getContestByCid")
-    public JsonInfo getContestByCid(@RequestParam("cid") String cidStr) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO getContestByCid(@RequestParam("cid") String cidStr) {
+        JsonInfoVO jsonInfoVO = new JsonInfoVO();
         Integer cid = Integer.parseInt(cidStr);
         Contest contest = contestService.queryContestByCid(cid);
         if (null == contest) {
-            jsonInfo.setFail("找不到比赛！");
-            return jsonInfo;
+            jsonInfoVO.setFail("找不到比赛！");
+            return jsonInfoVO;
         }
-        jsonInfo.setSuccess();
-        jsonInfo.addInfo(contest);
-        return jsonInfo;
+        jsonInfoVO.setSuccess();
+        jsonInfoVO.addInfo(contest);
+        return jsonInfoVO;
     }
 
     @GetMapping("/getContestProblem")
-    public JsonInfo getContestProblem(@RequestParam("cid") String cidStr) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO getContestProblem(@RequestParam("cid") String cidStr) {
+        JsonInfoVO jsonInfoVO = new JsonInfoVO();
         Integer cid = Integer.parseInt(cidStr);
         List<ContestProblemInfo> contestProblemInfos = contestService.queryContestProblem(cid);
         if (contestProblemInfos == null) {
-            return new JsonInfo("FAIL", "该比赛内没有题目！");
+            return new JsonInfoVO("FAIL", "该比赛内没有题目！");
         }
-        jsonInfo.addInfo(contestProblemInfos);
-        jsonInfo.setSuccess();
-        return jsonInfo;
+        jsonInfoVO.addInfo(contestProblemInfos);
+        jsonInfoVO.setSuccess();
+        return jsonInfoVO;
     }
 
     @RequestMapping("/IContestuser")

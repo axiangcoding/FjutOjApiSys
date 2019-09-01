@@ -1,9 +1,9 @@
 package com.fjut.oj.pojo;
 
 /**
- * @Author: axiang [201908010]
+ * @author axiang [201908010]
  */
-public class CodeView {
+public class ViewCodePO {
     private String username;
     private Integer pid;
     private Integer type;
@@ -30,5 +30,14 @@ public class CodeView {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "ViewCodePO{" +
+                "username='" + username + '\'' +
+                ", pid=" + pid +
+                ", type=" + type +
+                '}';
     }
 }

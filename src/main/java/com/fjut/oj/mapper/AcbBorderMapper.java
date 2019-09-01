@@ -1,6 +1,6 @@
 package com.fjut.oj.mapper;
 
-import com.fjut.oj.pojo.AcbBorder;
+import com.fjut.oj.pojo.AcbBorderPO;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -10,9 +10,9 @@ public interface AcbBorderMapper {
     /**
      * 插入ACB流水单
      *
-     * @param acbBorder
+     * @param acbBorderDO
      * @return
      */
-    Integer insertAcbBorder(@Param("acbBorder") AcbBorder acbBorder);
+    Integer insertAcbBorder(@Param("acbBorderDO") AcbBorderPO acbBorderDO);
 
 }

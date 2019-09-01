@@ -12,11 +12,11 @@
         )
         VALUES
         (
-        #{acbBorder.username},
-        #{acbBorder.acbchange},
-        #{acbBorder.reason},
-        #{acbBorder.mark},
-        #{acbBorder.time}
+        #{acbBorderDO.username},
+        #{acbBorderDO.acbchange},
+        #{acbBorderDO.reason},
+        #{acbBorderDO.mark},
+        #{acbBorderDO.time}
         );
 
     </insert>

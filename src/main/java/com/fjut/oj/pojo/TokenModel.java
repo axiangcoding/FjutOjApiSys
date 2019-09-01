@@ -1,10 +1,9 @@
 package com.fjut.oj.pojo;
 
 /**
- * @Author: axiang [20190705] Token的Model类
- * @Despriction:
- * @Date:Created in 9:10 2019/7/5
- * @Modify By:
+ * Token的Model类
+ *
+ * @author axiang [20190705]
  */
 public class TokenModel {
     private String username;
@@ -29,5 +28,13 @@ public class TokenModel {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    @Override
+    public String toString() {
+        return "TokenModel{" +
+                "username='" + username + '\'' +
+                ", token='" + token + '\'' +
+                '}';
     }
 }

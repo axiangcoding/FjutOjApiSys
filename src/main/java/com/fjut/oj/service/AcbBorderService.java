@@ -1,6 +1,6 @@
 package com.fjut.oj.service;
 
-import com.fjut.oj.pojo.AcbBorder;
+import com.fjut.oj.pojo.AcbBorderPO;
 
 /**
  * @author axiang
@@ -8,8 +8,8 @@ import com.fjut.oj.pojo.AcbBorder;
 public interface AcbBorderService {
     /**
      * 插入ACB流水单
-     * @param acbBorder
+     * @param acbBorderDO
      * @return
      */
-    Integer insertAcbBorder(AcbBorder acbBorder);
+    Integer insertAcbBorder(AcbBorderPO acbBorderDO);
 }

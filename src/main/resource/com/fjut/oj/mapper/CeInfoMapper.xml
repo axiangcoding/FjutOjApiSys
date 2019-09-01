@@ -2,18 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fjut.oj.mapper.CeInfoMapper">
 
-    <select id="queryAllCeInfo" resultType="com.fjut.oj.pojo.CeInfo">
+    <select id="queryAllCeInfo" resultType="com.fjut.oj.pojo.CeInfoPO">
         SELECT *
         FROM ceinfo
     </select>
 
-    <select id="queryCeInfo" resultType="com.fjut.oj.pojo.CeInfo">
+    <select id="queryCeInfo" resultType="com.fjut.oj.pojo.CeInfoPO">
         SELECT *
         FROM ceinfo
         WHERE rid = #{rid}
     </select>
 
-    <insert id="insertCeInfo" parameterType="com.fjut.oj.pojo.CeInfo">
+    <insert id="insertCeInfo" parameterType="com.fjut.oj.pojo.CeInfoPO">
         INSERT INTO ceinfo
         VALUES(
           #{ce.rid},

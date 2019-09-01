@@ -1,17 +1,13 @@
 package com.fjut.oj.controller;
 
-import com.fjut.oj.pojo.User;
+import com.fjut.oj.pojo.JsonInfoVO;
+import com.fjut.oj.pojo.UserPO;
 import com.fjut.oj.service.AllUserRankService;
 import com.fjut.oj.service.UserService;
-import com.fjut.oj.util.JsonInfo;
-import com.fjut.oj.util.JsonMsg;
-import net.sf.json.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -37,10 +33,10 @@ public class UserRankController {
      * @return
      */
     @GetMapping("/GUserRank")
-    public JsonInfo getAllUsersRank(@RequestParam("pagenum") String pageNumStr,
-                                    @RequestParam(value = "order", required = false) String order,
-                                    @RequestParam(value = "desc", required = false) String desc) {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO getAllUsersRank(@RequestParam("pagenum") String pageNumStr,
+                                      @RequestParam(value = "order", required = false) String order,
+                                      @RequestParam(value = "desc", required = false) String desc) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         if (null == order) {
             order = "acnum";
         }
@@ -48,26 +44,26 @@ public class UserRankController {
         Integer totalUser = userService.queryUserCount();
         Integer totalPageNum = totalUser % 50 == 0 ? totalUser / 50 : totalUser / 50 + 1;
         Integer start = (pageNum - 1) * 50;
-        List<User> list = allUserRankService.allUsersRank(order, desc, start);
-        jsonInfo.setSuccess();
-        jsonInfo.addInfo(totalPageNum);
-        jsonInfo.addInfo(list);
-        return jsonInfo;
+        List<UserPO> list = allUserRankService.allUsersRank(order, desc, start);
+        JsonInfoVO.setSuccess();
+        JsonInfoVO.addInfo(totalPageNum);
+        JsonInfoVO.addInfo(list);
+        return JsonInfoVO;
     }
 
     @RequestMapping("/GUserRankByName")
-    public JsonInfo getUsersRankByName(@RequestParam("pagenum") String pageNumStr,
+    public JsonInfoVO getUsersRankByName(@RequestParam("pagenum") String pageNumStr,
                                        @RequestParam("username") String username) {
-        JsonInfo jsonInfo = new JsonInfo();
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
         Integer pageNum = Integer.parseInt(pageNumStr);
         Integer totalUser = allUserRankService.queryUserCountByName(username);
         Integer totalPageNum = totalUser % 50 == 0 ? totalUser / 50 : totalUser / 50 + 1;
         Integer start = (pageNum - 1) * 50;
 
-        List<User> list = allUserRankService.queryUserByName(username, start);
-        jsonInfo.setSuccess();
-        jsonInfo.addInfo(totalPageNum);
-        jsonInfo.addInfo(list);
-        return jsonInfo;
+        List<UserPO> list = allUserRankService.queryUserByName(username, start);
+        JsonInfoVO.setSuccess();
+        JsonInfoVO.addInfo(totalPageNum);
+        JsonInfoVO.addInfo(list);
+        return JsonInfoVO;
     }
 }

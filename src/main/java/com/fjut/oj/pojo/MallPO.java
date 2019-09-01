@@ -3,15 +3,17 @@ package com.fjut.oj.pojo;
 import java.util.Date;
 
 /**
- * @Author: axiang [20190717]
+ * 商城
+ *
+ * @author axiang [20190717]
  */
-public class Mall {
+public class MallPO {
     private Integer id;
     private String title;
     private Integer acb;
     private Integer stock;
     private String des;
-    private boolean isHidden;
+    private Boolean isHidden;
     private String user;
     private Date time;
     private Integer buyLimit;
@@ -57,11 +59,11 @@ public class Mall {
         this.des = des;
     }
 
-    public boolean isHidden() {
+    public Boolean getIsHidden() {
         return isHidden;
     }
 
-    public void setHidden(boolean hidden) {
+    public void setIsHidden(Boolean hidden) {
         isHidden = hidden;
     }
 
@@ -95,5 +97,21 @@ public class Mall {
 
     public void setBuyVerifyLimit(Integer buyVerifyLimit) {
         this.buyVerifyLimit = buyVerifyLimit;
+    }
+
+    @Override
+    public String toString() {
+        return "MallPO{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", acb=" + acb +
+                ", stock=" + stock +
+                ", des='" + des + '\'' +
+                ", isHidden=" + isHidden +
+                ", user='" + user + '\'' +
+                ", time=" + time +
+                ", buyLimit=" + buyLimit +
+                ", buyVerifyLimit=" + buyVerifyLimit +
+                '}';
     }
 }

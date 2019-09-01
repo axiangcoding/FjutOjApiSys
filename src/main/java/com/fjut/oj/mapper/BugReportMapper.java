@@ -1,6 +1,6 @@
 package com.fjut.oj.mapper;
 
-import com.fjut.oj.pojo.TableBugReport;
+import com.fjut.oj.pojo.BugReportPO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,10 +12,10 @@ public interface BugReportMapper {
     /**
      * 插入一条bug报告记录
      *
-     * @param tableBugReport
+     * @param bugReportPO
      * @return
      */
-    Integer insertBugReport(@Param("tableBugReport") TableBugReport tableBugReport);
+    Integer insertBugReport(@Param("bugReportPO") BugReportPO bugReportPO);
 
     /**
      * FIXME: 条件还没添加上去
@@ -24,5 +24,5 @@ public interface BugReportMapper {
      * @param startIndex
      * @return
      */
-    List<TableBugReport> queryBugReportByCondition(@Param("startIndex") Integer startIndex);
+    List<BugReportPO> queryBugReportByCondition(@Param("startIndex") Integer startIndex);
 }

@@ -23,12 +23,6 @@ public class ProblemServiceImpl implements ProblemService {
     @Autowired
     private ProblemMapper problemMapper;
 
-    @Override
-    public List<Problem> queryAllProblems() {
-        List<Problem> list = problemMapper.queryAllProblems();
-        return list;
-    }
-
 
     @Override
     public Integer insertProblem(Problem problem) {

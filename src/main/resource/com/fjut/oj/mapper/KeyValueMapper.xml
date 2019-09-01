@@ -6,11 +6,11 @@
         VALUES(#{tableKeyValue.key}, #{tableKeyValue.value})
     </insert>
 
-    <select id="queryAllKeyValues" resultType="com.fjut.oj.pojo.TableKeyValue">
+    <select id="queryAllKeyValues" resultType="com.fjut.oj.pojo.KeyValuePO">
         SELECT * FROM t_kv
     </select>
 
-    <select id="queryValueByKey" resultType="com.fjut.oj.pojo.TableKeyValue">
+    <select id="queryValueByKey" resultType="com.fjut.oj.pojo.KeyValuePO">
         SELECT * FROM t_kv
         WHERE `key`=#{key}
     </select>

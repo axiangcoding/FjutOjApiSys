@@ -13,17 +13,17 @@
         )
         VALUES
         (
-        #{tableBugReport.username},
-        #{tableBugReport.title},
-        #{tableBugReport.type},
-        #{tableBugReport.text},
-        #{tableBugReport.time},
-        #{tableBugReport.isFixed}
+        #{bugReportPO.username},
+        #{bugReportPO.title},
+        #{bugReportPO.type},
+        #{bugReportPO.text},
+        #{bugReportPO.time},
+        #{bugReportPO.isFixed}
         );
 
     </insert>
 
-    <select id="queryBugReportByCondition" resultType="com.fjut.oj.pojo.TableBugReport">
+    <select id="queryBugReportByCondition" resultType="com.fjut.oj.pojo.BugReportPO">
         SELECT * FROM t_bug_report
         LIMIT #{startIndex}, 20
     </select>

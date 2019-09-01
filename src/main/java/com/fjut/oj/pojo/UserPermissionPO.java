@@ -4,7 +4,7 @@ package com.fjut.oj.pojo;
 /**
  * @author
  */
-public class UserPer {
+public class UserPermissionPO {
 
     private String username;
     private Integer perid;
@@ -23,5 +23,13 @@ public class UserPer {
 
     public void setPerid(Integer perid) {
         this.perid = perid;
+    }
+
+    @Override
+    public String toString() {
+        return "UserPermissionPO{" +
+                "username='" + username + '\'' +
+                ", perid=" + perid +
+                '}';
     }
 }

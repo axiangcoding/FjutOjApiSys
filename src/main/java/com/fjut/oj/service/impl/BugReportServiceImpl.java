@@ -1,7 +1,7 @@
 package com.fjut.oj.service.impl;
 
 import com.fjut.oj.mapper.BugReportMapper;
-import com.fjut.oj.pojo.TableBugReport;
+import com.fjut.oj.pojo.BugReportPO;
 import com.fjut.oj.service.BugReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,12 +17,12 @@ public class BugReportServiceImpl implements BugReportService {
     BugReportMapper bugReportMapper;
 
     @Override
-    public Integer insertBugReport(TableBugReport tableBugReport) {
-        return bugReportMapper.insertBugReport(tableBugReport);
+    public Integer insertBugReport(BugReportPO bugReportPO) {
+        return bugReportMapper.insertBugReport(bugReportPO);
     }
 
     @Override
-    public List<TableBugReport> queryBugReportByCondition(Integer startIndex) {
+    public List<BugReportPO> queryBugReportByCondition(Integer startIndex) {
         return queryBugReportByCondition(startIndex);
     }
 }

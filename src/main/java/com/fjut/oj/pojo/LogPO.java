@@ -3,16 +3,14 @@ package com.fjut.oj.pojo;
 import java.util.Date;
 
 /**
- * @author cjt
+ * @author axiang [20190901]
  */
-public class Log {
+public class LogPO {
     private Integer id;
-
     private Date time;
-
     private String ipAddress;
-
     private String text;
+
 
     public Integer getId() {
         return id;
@@ -44,5 +42,15 @@ public class Log {
 
     public void setText(String text) {
         this.text = text == null ? null : text.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "LogPO{" +
+                "id=" + id +
+                ", time=" + time +
+                ", ipAddress='" + ipAddress + '\'' +
+                ", text='" + text + '\'' +
+                '}';
     }
 }

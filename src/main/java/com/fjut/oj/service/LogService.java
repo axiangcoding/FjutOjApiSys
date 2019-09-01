@@ -1,6 +1,6 @@
 package com.fjut.oj.service;
 
-import com.fjut.oj.pojo.Log;
+import com.fjut.oj.pojo.LogPO;
 
 import java.util.Date;
 import java.util.List;
@@ -15,7 +15,7 @@ public interface LogService {
      * @param log
      * @return
      */
-    Integer insertLog(Log log);
+    Integer insertLog(LogPO log);
 
     /**
      * 根据时间段查询日志
@@ -25,6 +25,6 @@ public interface LogService {
      * @param startIndex
      * @return
      */
-    List<Log> queryLogsByTime(Date DateStart, Date DateEnd, int startIndex);
+    List<LogPO> queryLogsByTime(Date DateStart, Date DateEnd, int startIndex);
 
 }

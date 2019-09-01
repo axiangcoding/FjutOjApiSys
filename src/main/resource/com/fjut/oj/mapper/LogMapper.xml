@@ -17,7 +17,7 @@
 		)
     </insert>
 
-    <select id="queryLogsByTime" resultType="com.fjut.oj.pojo.Log">
+    <select id="queryLogsByTime" resultType="com.fjut.oj.pojo.LogPO">
 	SELECT 	id, time, text, ipAddress
 		FROM t_log
 		WHERE time BETWEEN #{timeStart} AND #{timeEnd}

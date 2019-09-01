@@ -1,7 +1,7 @@
 package com.fjut.oj.service;
 
-import com.fjut.oj.pojo.TableUserAuth;
-import com.fjut.oj.pojo.User;
+import com.fjut.oj.pojo.UserAuthPO;
+import com.fjut.oj.pojo.UserPO;
 
 import java.util.List;
 
@@ -23,9 +23,9 @@ public interface UserService {
      * @param userAuth
      * @return
      */
-    boolean insertUser(User user, TableUserAuth userAuth);
+    boolean insertUser(UserPO user, UserAuthPO userAuth);
 
-    int updateUserByUsername(User user);             // 通过用户名更新用户
+    int updateUserByUsername(UserPO user);             // 通过用户名更新用户
 
     /**
      * 通过用户名查找用户
@@ -33,7 +33,7 @@ public interface UserService {
      * @param username
      * @return
      */
-    User getUserByUsername(String username);
+    UserPO getUserByUsername(String username);
 
     Integer getUserByUsernameAndPassword(String username, String password); // 用户名密码是否匹配
 
@@ -45,9 +45,9 @@ public interface UserService {
 
     List<Integer> queryNotPutTagProblemsByUsername(String username); // 查询用户未贴标签的题目
 
-    List<User> queryRichTop10();                  // 获取用户 ACB 排行榜前10
+    List<UserPO> queryRichTop10();                  // 获取用户 ACB 排行榜前10
 
-    List<User> queryAcNumTop10();                 // 获取用户 AC 题目数量前10
+    List<UserPO> queryAcNumTop10();                 // 获取用户 AC 题目数量前10
 
     /**
      * 获取用户权限

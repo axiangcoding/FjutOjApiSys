@@ -1,6 +1,6 @@
 package com.fjut.oj.service;
 
-import com.fjut.oj.pojo.User;
+import com.fjut.oj.pojo.UserPO;
 
 import java.util.List;
 
@@ -13,11 +13,11 @@ public interface AllTopTenService {
      *
      * @return
      */
-    List<User> getRatingTop();
+    List<UserPO> getRatingTop();
 
-    List<User> getAcbTOP();
+    List<UserPO> getAcbTOP();
 
-    List<User> getAcTOP();
+    List<UserPO> getAcTOP();
 
-    List<User> getActiveTop();
+    List<UserPO> getActiveTop();
 }

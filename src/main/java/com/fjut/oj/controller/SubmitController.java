@@ -4,11 +4,10 @@ import com.fjut.oj.interceptor.CheckUserIsLogin;
 import com.fjut.oj.interceptor.CheckUserPrivate;
 import com.fjut.oj.judge.util.Vjudge.Submitter;
 import com.fjut.oj.judge.util.Vjudge.SubmitterImp;
-import com.fjut.oj.localjudge.LocalJudgeHttp;
+import com.fjut.oj.localjudge.LocalJudgeHttpClient;
 import com.fjut.oj.pojo.*;
 import com.fjut.oj.pojo.enums.Result;
 import com.fjut.oj.service.*;
-import com.fjut.oj.util.JsonInfo;
 import com.fjut.oj.util.ResultString;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -24,7 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * TODO: 把 JsonMsg 替换为 JsonInfo
+ * TODO: 把 JsonMsg 替换为 JsonInfoVO
  *
  * @author cjt
  */
@@ -56,7 +55,7 @@ public class SubmitController {
     private ChallengeService challengeService;
 
     @Autowired
-    private LocalJudgeHttp localJudgeHttp;
+    private LocalJudgeHttpClient localJudgeHttp;
 
     /** 线程池 */
     @Autowired
@@ -66,20 +65,20 @@ public class SubmitController {
 
     @PostMapping("/submitProblem")
     @CheckUserIsLogin
-    public JsonInfo submitProblem(HttpServletRequest req) {
+    public JsonInfoVO submitProblem(HttpServletRequest req) {
         String strpid = req.getParameter("pid");
         if (strpid == null || strpid == "") {
-            return new JsonInfo("FAIL", "pid未传入");
+            return new JsonInfoVO("FAIL", "pid未传入");
         }
 
         String user = req.getParameter("username");
         if (user == null || user == "") {
-            return new JsonInfo("FAIL", "user未传入");
+            return new JsonInfoVO("FAIL", "user未传入");
         }
 
         String code = req.getParameter("code");
         if (code == null || code == "") {
-            return new JsonInfo("FAIL", "code未传入");
+            return new JsonInfoVO("FAIL", "code未传入");
         }
 
         Integer pid = Integer.parseInt(strpid);
@@ -88,7 +87,7 @@ public class SubmitController {
         if (cid != -1) {
             Contest contest = contestService.queryContestByCid(cid);
             if (contest == null) {
-                return new JsonInfo("FAIL", "没有查找到该比赛");
+                return new JsonInfoVO("FAIL", "没有查找到该比赛");
             }
             Date endTime = contest.getEndTime();
 
@@ -97,7 +96,7 @@ public class SubmitController {
             String dateString = formatter.format(currentTime);
 
             if (endTime.compareTo(currentTime) < 0) {
-                return new JsonInfo("FAIL", "比赛已经结束，提交失败");
+                return new JsonInfoVO("FAIL", "比赛已经结束，提交失败");
             }
 
             Integer userNum = contestService.getContestUser(cid, user);
@@ -128,7 +127,7 @@ public class SubmitController {
             problemService.updateProblemtotalSubmitUser(pid);
 
         }
-        return new JsonInfo("SUCCESS", "");
+        return new JsonInfoVO("SUCCESS", "");
     }
 
 
@@ -139,14 +138,14 @@ public class SubmitController {
      */
     @CheckUserPrivate
     @PostMapping("/submitProblemToLocal")
-    public JsonInfo submitProblemToLocalJudge(@RequestParam("pid") String pidStr,
-                                              @RequestParam("timeLimit") String timeLimitStr,
-                                              @RequestParam("memoryLimit") String MemoryLimitStr,
-                                              @RequestParam("code") String code,
-                                              @RequestParam("language") String language,
-                                              @RequestParam("username") String username,
-                                              @RequestParam(value = "cid", required = false) String cidStr) throws InterruptedException {
-        JsonInfo jsonInfo = new JsonInfo();
+    public JsonInfoVO submitProblemToLocalJudge(@RequestParam("pid") String pidStr,
+                                                @RequestParam("timeLimit") String timeLimitStr,
+                                                @RequestParam("memoryLimit") String MemoryLimitStr,
+                                                @RequestParam("code") String code,
+                                                @RequestParam("language") String language,
+                                                @RequestParam("username") String username,
+                                                @RequestParam(value = "cid", required = false) String cidStr) throws InterruptedException {
+        JsonInfoVO jsonInfoVO = new JsonInfoVO();
         Integer cid = -1;
         if (null != cidStr && !"".equals(cidStr)) {
             cid = Integer.parseInt(cidStr);
@@ -156,13 +155,13 @@ public class SubmitController {
         if (cid != -1) {
             Contest contest = contestService.queryContestByCid(cid);
             if (contest == null) {
-                return new JsonInfo("FAIL", "没有查找到该比赛");
+                return new JsonInfoVO("FAIL", "没有查找到该比赛");
             }
             Date endTime = contest.getEndTime();
             Date currentTime = new Date();
             String dateString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(currentTime);
             if (endTime.compareTo(currentTime) < 0) {
-                return new JsonInfo("FAIL", "比赛已经结束，提交失败");
+                return new JsonInfoVO("FAIL", "比赛已经结束，提交失败");
             }
             Integer userNum = contestService.getContestUser(cid, username);
             if (userNum == 0) {
@@ -183,16 +182,16 @@ public class SubmitController {
         Integer timeLimit = Integer.parseInt(timeLimitStr);
         Integer MemoryLimit = Integer.parseInt(MemoryLimitStr);
 
-        LocalJudgeSubmitInfo localJudgeSubmitInfo = new LocalJudgeSubmitInfo();
-        localJudgeSubmitInfo.setType(type);
-        localJudgeSubmitInfo.setPid(pid);
-        localJudgeSubmitInfo.setRid(rid);
-        localJudgeSubmitInfo.setMemorylimit(MemoryLimit);
-        localJudgeSubmitInfo.setTimelimit(timeLimit);
-        localJudgeSubmitInfo.setCode(code);
+        LocalJudgeSubmitInfoPO localJudgeSubmitInfoBO = new LocalJudgeSubmitInfoPO();
+        localJudgeSubmitInfoBO.setType(type);
+        localJudgeSubmitInfoBO.setPid(pid);
+        localJudgeSubmitInfoBO.setRid(rid);
+        localJudgeSubmitInfoBO.setMemoryLimit(MemoryLimit);
+        localJudgeSubmitInfoBO.setTimeLimit(timeLimit);
+        localJudgeSubmitInfoBO.setCode(code);
         // 目前本地评测机只支持三种语言 JAVA Python2 C/C++
-        localJudgeSubmitInfo.setLanguageId(("JAVA").equalsIgnoreCase(language) ? 2 : ("Python").equalsIgnoreCase(language) ? 3 : 1);
-        String submitJsonStr = localJudgeHttp.submitToLocalJudge(localJudgeSubmitInfo);
+        localJudgeSubmitInfoBO.setLanguageId(("JAVA").equalsIgnoreCase(language) ? 2 : ("Python").equalsIgnoreCase(language) ? 3 : 1);
+        String submitJsonStr = localJudgeHttp.submitToLocalJudge(localJudgeSubmitInfoBO);
         JSONObject jsonObject = JSONObject.fromObject(submitJsonStr);
 
         Status beforeStatus = new Status();
@@ -222,9 +221,9 @@ public class SubmitController {
                 // 该用户没有交过这道题目
                 problemService.updateProblemtotalSubmitUser(pid);
             }
-            jsonInfo.setSuccess("代码提交成功！");
+            jsonInfoVO.setSuccess("代码提交成功！");
         } else {
-            return new JsonInfo("FAIL", "评测机访问失败！");
+            return new JsonInfoVO("FAIL", "评测机访问失败！");
         }
 
         final Integer finalRid = beforeStatus.getId();
@@ -242,7 +241,7 @@ public class SubmitController {
                 }
             }
         });
-        return jsonInfo;
+        return jsonInfoVO;
     }
 
     @Transactional(rollbackFor = RuntimeException.class)
@@ -274,7 +273,7 @@ public class SubmitController {
                     statusService.updateStatusAfterJudge(status);
                 } else if ("CE".equals(judgingStatu)) {
                     // 插入数据库内容，并设置 ceinfo 为 resultJsonObj.getString("info")
-                    CeInfo ceinfo = new CeInfo();
+                    CeInfoPO ceinfo = new CeInfoPO();
                     ceinfo.setRid(status.getId());
                     ceinfo.setInfo(resultJsonObj.getString("info"));
                     ceinfoService.insertCeinfo(ceinfo);
@@ -324,7 +323,7 @@ public class SubmitController {
     }
 
     private String handleLocalJudgeReturns(JSONArray retJsonArr, Status status) {
-        CeInfo ceinfo = new CeInfo();
+        CeInfoPO ceinfo = new CeInfoPO();
         String ans;
         String ceStr = "";
         String resStatu = "";

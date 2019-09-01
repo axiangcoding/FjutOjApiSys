@@ -1,19 +1,19 @@
 package com.fjut.oj.service;
 
-import com.fjut.oj.pojo.TableClockIn;
+import com.fjut.oj.pojo.ClockInPO;
 
 import java.util.Date;
 import java.util.List;
 
 
 public interface ClockInService {
-    List<TableClockIn> queryAllClockInByDate(Date time);
+    List<ClockInPO> queryAllClockInByDate(Date time);
 
-    List<TableClockIn> queryAllClockIn();
+    List<ClockInPO> queryAllClockIn();
 
-    List<TableClockIn> queryAllClockInByUsername(String username, Integer pageNum);
+    List<ClockInPO> queryAllClockInByUsername(String username, Integer pageNum);
 
-    List<TableClockIn> queryClockInByUsernameAndDate(String username, Date date);
+    List<ClockInPO> queryClockInByUsernameAndDate(String username, Date date);
 
-    boolean insertClockIn(TableClockIn clockin);
+    boolean insertClockIn(ClockInPO clockin);
 }

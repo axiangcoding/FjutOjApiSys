@@ -8,7 +8,7 @@
 
     </insert>
 
-    <select id="queryAllChallengeBlocks" resultType="com.fjut.oj.pojo.ChallengeBlockForUser">
+    <select id="queryAllChallengeBlocks" resultType="com.fjut.oj.pojo.ChallengeBlockBO">
         SELECT
             cb.id AS id,
             cb.name AS name,
@@ -45,7 +45,7 @@
     </select>
 
 
-    <select id="queryAllChallengeConditions" resultType="com.fjut.oj.pojo.t_challenge_condition">
+    <select id="queryAllChallengeConditions" resultType="com.fjut.oj.pojo.ChallengeConditionPO">
         SELECT * FROM t_challenge_condition ORDER BY belongblockId
 
     </select>
@@ -60,7 +60,7 @@
     </select>
 
 
-    <select id="queryChallengeBlocksScoredByUsername" resultType="com.fjut.oj.pojo.ChallengeBlockForUser">
+    <select id="queryChallengeBlocksScoredByUsername" resultType="com.fjut.oj.pojo.ChallengeBlockBO">
         SELECT id, SUM(score) getScore FROM
             t_challenge_problem WHERE tpid IN
             (SELECT pid FROM t_usersolve WHERE username = #{username} AND status = 1)
@@ -72,7 +72,7 @@
         WHERE c.belongBlockId = #{blockId} AND b.id = c.par
     </select>
 
-    <select id="queryChallengeBlockByBlockId" resultType="com.fjut.oj.pojo.ChallengeBlock">
+    <select id="queryChallengeBlockByBlockId" resultType="com.fjut.oj.pojo.ChallengeBlockPO">
         SELECT * FROM t_challenge_block
             WHERE id = #{blockId}
     </select>

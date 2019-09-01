@@ -1,6 +1,6 @@
 package com.fjut.oj.mapper;
 
-import com.fjut.oj.pojo.User;
+import com.fjut.oj.pojo.UserPO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public interface AllUsersRankMapper {
      * @param start
      * @return
      */
-    List<User> queryAllUsersRank(@Param("order") String order, @Param("desc") String desc, @Param("start") Integer start);
+    List<UserPO> queryAllUsersRank(@Param("order") String order, @Param("desc") String desc, @Param("start") Integer start);
 
     /**
      * 查询名字相似用户
@@ -27,7 +27,7 @@ public interface AllUsersRankMapper {
      * @param start
      * @return
      */
-    List<User> queryUserByName(@Param("username") String username, @Param("start") Integer start);
+    List<UserPO> queryUserByName(@Param("username") String username, @Param("start") Integer start);
 
     /**
      * 查询名字相似用户的数量

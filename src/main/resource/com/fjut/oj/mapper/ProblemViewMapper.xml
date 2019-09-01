@@ -13,7 +13,7 @@
         t_problemview
         values(
         #{problemView.pid},
-        #{problemView.timelimit},
+        #{problemView.timeLimit},
         #{problemView.Menorylimit},
         #{problemView.int64},
         #{problemView.spj},

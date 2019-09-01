@@ -2,15 +2,16 @@ package com.fjut.oj.pojo;
 
 import java.util.Date;
 
-// acb 变化表
-public class t_acborder {
-
+/**
+ * @author axiang [2019/8/7]
+ */
+public class AcbBorderPO {
     private Integer id;
-    private String  username;
+    private String username;
     private Integer acbchange;
     private Integer reason;
-    private String  mark;
-    private Date    time;
+    private String mark;
+    private Date time;
 
     public Integer getId() {
         return id;
@@ -58,5 +59,17 @@ public class t_acborder {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    @Override
+    public String toString() {
+        return "AcbBorderPO{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", acbchange=" + acbchange +
+                ", reason=" + reason +
+                ", mark='" + mark + '\'' +
+                ", time=" + time +
+                '}';
     }
 }

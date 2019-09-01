@@ -1,7 +1,7 @@
 package com.fjut.oj.service.impl;
 
 import com.fjut.oj.mapper.UserPermissionMapper;
-import com.fjut.oj.pojo.UserPer;
+import com.fjut.oj.pojo.UserPermissionPO;
 import com.fjut.oj.service.UserPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class UserPermissionServiceImpl implements UserPermissionService {
     private UserPermissionMapper permissionMapper;
 
     @Override
-    public List<UserPer> queryUserPermission(String username) {
+    public List<UserPermissionPO> queryUserPermission(String username) {
         return permissionMapper.queryUserPermission(username);
     }
 

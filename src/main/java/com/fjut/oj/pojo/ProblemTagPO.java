@@ -1,7 +1,10 @@
 package com.fjut.oj.pojo;
 
-// 题目标签表
-public class t_problem_tag {
+/**
+ * 题目标签表
+ * @author cjt
+  */
+public class ProblemTagPO {
 
     private Integer id;
     private String  name;
@@ -38,5 +41,15 @@ public class t_problem_tag {
 
     public void setPriority(Double priority) {
         this.priority = priority;
+    }
+
+    @Override
+    public String toString() {
+        return "ProblemTagPO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", ttype=" + ttype +
+                ", priority=" + priority +
+                '}';
     }
 }

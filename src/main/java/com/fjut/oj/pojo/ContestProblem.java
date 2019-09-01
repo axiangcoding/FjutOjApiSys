@@ -1,6 +1,9 @@
 package com.fjut.oj.pojo;
 
-// 比赛题目表
+
+/**
+ * 比赛题目表
+ */
 public class ContestProblem {
 
     private Integer cid;
