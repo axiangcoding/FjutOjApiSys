@@ -15,9 +15,21 @@ public interface AllTopTenService {
      */
     List<UserPO> getRatingTop();
 
+    /**
+     * 获得ACB榜前十
+     * @return
+     */
     List<UserPO> getAcbTOP();
 
+    /**
+     * 获得AC榜前十
+     * @return
+     */
     List<UserPO> getAcTOP();
 
+    /**
+     * 获得活跃榜前十
+     * @return
+     */
     List<UserPO> getActiveTop();
 }

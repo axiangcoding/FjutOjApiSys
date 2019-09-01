@@ -3,11 +3,10 @@
 <mapper namespace="com.fjut.oj.mapper.TeamMemberInfoMapper">
 
     <select id="queryAllTeamMemberInfo" resultType="com.fjut.oj.pojo.TeamMemberInfo">
-        select *
-        from t_team_member_info
-        ORDER BY time
-        DESC
-        limit #{start}, 50
+        SELECT *
+        FROM t_team_member_info
+        ORDER BY time DESC
+        LIMIT #{start}, 50
     </select>
 
     <select id="queryAllCountTeamMemberInfo" resultType="java.lang.Integer">

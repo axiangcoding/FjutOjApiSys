@@ -61,7 +61,7 @@ public class SubmitController {
     @Autowired
     private ThreadPoolTaskExecutor executor;
 
-    Submitter sm = new SubmitterImp();
+    private Submitter sm = new SubmitterImp();
 
     @PostMapping("/submitProblem")
     @CheckUserIsLogin
@@ -322,7 +322,8 @@ public class SubmitController {
 
     }
 
-    private String handleLocalJudgeReturns(JSONArray retJsonArr, Status status) {
+    @Transactional(rollbackFor = RuntimeException.class)
+    public String handleLocalJudgeReturns(JSONArray retJsonArr, Status status) {
         CeInfoPO ceinfo = new CeInfoPO();
         String ans;
         String ceStr = "";

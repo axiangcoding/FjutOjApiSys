@@ -16,6 +16,6 @@ public class CodeViewServiceImpl implements CodeViewService {
     @Override
     public boolean queryCanUserViewCodeByPid(String username, Integer pid) {
         Integer ans = codeViewMapper.queryCanUserViewCodeByPid(username, pid);
-        return (0 == ans) ? false : true;
+        return 0 != ans;
     }
 }

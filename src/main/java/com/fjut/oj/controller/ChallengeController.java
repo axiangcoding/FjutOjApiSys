@@ -152,7 +152,7 @@ public class ChallengeController {
         if (null == username) {
             throw new NotOwnerException();
         }
-        // FIXME: 已有数据库表保存解题状态，这里是多余了，虽然功能正常，但是是冗余，必须修改！！！
+        // FIXME: 已有数据库表保存解题状态，这里是多余了，虽然功能正常，但是是冗余，需要修改！！！
         if (0 < count) {
             List<Status> statuses = challengeService.queryAllBlockSolvedProblemByUsername(username);
             Map<Integer, Integer> statusMap = new TreeMap<>();

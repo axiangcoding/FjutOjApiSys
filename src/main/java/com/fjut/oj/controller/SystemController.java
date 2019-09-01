@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @author axiang [2019/8/29]
+ * @author axiang [20190829]
  */
 @Controller
 @CrossOrigin

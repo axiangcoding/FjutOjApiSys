@@ -193,6 +193,9 @@ public class ResultString {
     }
 
     public static String contestLevelToStr(Integer num) {
+        if(null == num) {
+            return "";
+        }
         if (num == 0) {
             return "ACM省赛";
         }

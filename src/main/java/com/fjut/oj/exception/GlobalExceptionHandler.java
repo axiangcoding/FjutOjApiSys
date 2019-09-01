@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
@@ -80,16 +79,16 @@ public class GlobalExceptionHandler {
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public JsonInfoVO handleException(Exception e, HttpServletResponse response) {
+    public JsonInfoVO handleException(Exception e) {
         String msg;
         LOGGER.error("服务运行异常", e);
         if (e instanceof NullPointerException) {
-            msg = "空指针错误！";
+            msg = "服务器内部错误！";
             addExceptionToDatabase(e);
         } else if (e instanceof NumberFormatException) {
-            msg = "数字解析错误！";
+            msg = "服务器内部错误！";
         } else if (e instanceof SQLException) {
-            msg = "SQL语句错误！";
+            msg = "服务器内部错误！";
         } else if (e instanceof MissingServletRequestParameterException) {
             msg = "请求参数不完整！";
         } else if (e instanceof RedisConnectionFailureException) {
