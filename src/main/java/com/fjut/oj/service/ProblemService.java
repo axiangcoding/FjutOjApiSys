@@ -12,8 +12,22 @@ import java.util.List;
  * @author cjt
  */
 public interface ProblemService {
+    /**
+     * 插入题目
+     *
+     * @param problem
+     * @return
+     */
+    Integer insertProblem(Problem problem);
 
-    Integer insertProblem(Problem problem); // 插入题目
+    /**
+     * 设置题目类型 ptype = 0 为本地， ptype = 1为第三方
+     *
+     * @param pIds
+     * @param type
+     * @return
+     */
+    Integer updateSomeProblemType(ArrayList<Integer> pIds, Integer type);
 
     List<Problem> queryProblemsByPage(Integer startIndex);   // 一页一页的查询题目信息
 
@@ -23,10 +37,21 @@ public interface ProblemService {
 
     /**
      * 查询某个标题题目的相似题目数量
+     *
      * @param title
      * @return
      */
     Integer queryProblemsNumByTitle(String title); // 查询某一题目的题的数量
+
+
+    /**
+     * 根据 tagId 查询 username 未做过的 随机三道有tagId的题目
+     *
+     * @param tagId
+     * @param username
+     * @return
+     */
+    List<Problem> queryProblemByTagId(Integer tagId, String username);
 
     Integer updateProblemtotalSubmit(Integer pid);
 
@@ -58,20 +83,12 @@ public interface ProblemService {
 
     /**
      * 设置题目类型 ptype = 0 为本地， ptype = 1为第三方
+     *
      * @param pid
      * @param type
      * @return
      */
     Integer updateProblemType(Integer pid, Integer type);
-
-    /**
-     * 设置题目类型 ptype = 0 为本地， ptype = 1为第三方
-     *
-     * @param pIds
-     * @param type
-     * @return
-     */
-    Integer updateSomeProblemType(ArrayList<Integer> pIds, Integer type);
 
 
     Integer setProblemVisiablePid(Integer pid);

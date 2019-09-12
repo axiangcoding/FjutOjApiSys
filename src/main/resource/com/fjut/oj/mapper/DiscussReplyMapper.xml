@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fjut.oj.mapper.DiscussReplyMapper">
+    <select id="queryDiscussReplyByDiscussId" resultType="com.fjut.oj.pojo.DiscussReplyPO">
+        SELECT * FROM t_discuss_reply
+        WHERE discuss_id = #{discussId}
+        LIMIT #{startIndex}, 10
+
+    </select>
+
+    <select id="queryLastReplyByDiscussId" resultType="com.fjut.oj.pojo.DiscussReplyPO">
+        SELECT * FROM t_discuss_reply
+        WHERE discuss_id = #{discussId}
+        ORDER BY time DESC
+        LIMIT 1;
+    </select>
+</mapper>

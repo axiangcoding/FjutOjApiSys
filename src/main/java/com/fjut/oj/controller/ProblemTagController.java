@@ -2,6 +2,8 @@ package com.fjut.oj.controller;
 
 import com.fjut.oj.pojo.JsonInfoVO;
 import com.fjut.oj.pojo.ProblemTagPO;
+import com.fjut.oj.pojo.ProblemTagRecordPO;
+import com.fjut.oj.service.ProblemTagRecordService;
 import com.fjut.oj.service.ProblemTagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,9 @@ public class ProblemTagController {
     @Autowired
     private ProblemTagService problemTagService;
 
+    @Autowired
+    private ProblemTagRecordService problemTagRecordService;
+
     @GetMapping("/getAllProblemTag")
     public JsonInfoVO queryAllProblemTag() {
         JsonInfoVO JsonInfoVO = new JsonInfoVO();
@@ -36,4 +41,15 @@ public class ProblemTagController {
         }
         return JsonInfoVO;
     }
+
+    @GetMapping("/getAllProblemTagRecord")
+    public JsonInfoVO queryAllProblemTagRecord()
+    {
+        JsonInfoVO jsonInfoVO = new JsonInfoVO();
+        List<ProblemTagRecordPO> problemTagRecords = problemTagRecordService.queryAllProblemTagRecord();
+
+        jsonInfoVO.addInfo(problemTagRecords);
+        return jsonInfoVO;
+    }
+
 }

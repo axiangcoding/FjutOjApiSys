@@ -52,6 +52,7 @@ public class PKU extends OTHOJ {
         languageList.add(new Pair<>(2,CodeLanguage.JAVA));
         languageList.add(new Pair<>(3,CodeLanguage.PASCAL));
     }
+    @Override
     public String getName(){
         return "POJ";
     }
@@ -78,6 +79,7 @@ public class PKU extends OTHOJ {
         }
         return "error";
     }
+    @Override
     public String getProblemURL(String pid){
         return url+"/problem?id="+pid;
     }
@@ -112,6 +114,7 @@ public class PKU extends OTHOJ {
         }
         return ph;
     }
+    @Override
     public String getTitle(String pid){
         Element e=null;
         Document d = null;
@@ -124,6 +127,7 @@ public class PKU extends OTHOJ {
         }
         return GET_TITLE_ERROR;
     }
+    @Override
     public String submit(VjSubmitter s){
         MyClient hc=new MyClient();
         List<NameValuePair> formparams = new ArrayList<NameValuePair>();
@@ -156,6 +160,7 @@ public class PKU extends OTHOJ {
         Document d = hc.get(url+"/showcompileinfo?solution_id="+s.getOjsrid());
         return d.select("pre").html();
     }
+    @Override
     public RES getResult(VjSubmitter s){
         Element e;
         Document d = null;

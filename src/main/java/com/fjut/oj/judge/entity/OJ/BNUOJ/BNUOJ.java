@@ -167,6 +167,7 @@ public class BNUOJ extends OTHOJ {
         return p;
     }
 
+    @Override
     public String submit(VjSubmitter s) {
         String ret = Login(s);
         if (ret.equals("error")) return "error";
@@ -181,6 +182,7 @@ public class BNUOJ extends OTHOJ {
         return "success";
     }
 
+    @Override
     public RES getResult(VjSubmitter s) {
         RES r = new RES();
         JSONObject jo = JSONObject.fromObject(MyClient.getMyClient().get(URL + "/v3/ajax/status_data.php?sEcho=27&iDisplayLength=1&bSearchable_0=true&iDisplayStart=0&sSearch_0=" + s.getUsername()).select("body").html());

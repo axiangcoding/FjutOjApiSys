@@ -6,7 +6,7 @@
         SELECT * FROM t_problem_tag ORDER BY id
     </select>
 
-    <select id="problemTagRecord" resultType="com.fjut.oj.pojo.t_problem_tag_record">
+    <select id="problemTagRecord" resultType="com.fjut.oj.pojo.ProblemTagRecordPO">
         SELECT *
         FROM t_problem_tag_record
         WHERE pid=#{pid}
@@ -15,20 +15,20 @@
         </if>
     </select>
 
-    <select id="problemTagRecordLimitNum" resultType="com.fjut.oj.pojo.t_problem_tag_record">
+    <select id="problemTagRecordLimitNum" resultType="com.fjut.oj.pojo.ProblemTagRecordPO">
         SELECT *
         FROM t_problem_tag_record
         WHERE pid=#{pid}
         ORDER by rating desc,username  limit #{from},#{num}
     </select>
 
-    <insert id="addTag" parameterType="com.fjut.oj.pojo.t_problem_tag_record">
+    <insert id="addTag" parameterType="com.fjut.oj.pojo.ProblemTagRecordPO">
         REPLACE INTO
         t_problem_tag_record
         VALUES(#{pid},#{username},#{tagid},#{rating})
     </insert>
 
-    <delete id="delTag" parameterType="com.fjut.oj.pojo.t_problem_tag_record">
+    <delete id="delTag" parameterType="com.fjut.oj.pojo.ProblemTagRecordPO">
         DELETE FROM t_problem_tag_record
          WHERE pid=#{pid} AND username=#{username} AND tagid=#{tagid}
     </delete>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fjut.oj.mapper.ProblemTagRecordMapper">
+    <select id="queryAllProblemTagRecord" resultType="com.fjut.oj.pojo.ProblemTagRecordPO">
+        SELECT * FROM t_problem_tag_record;
+
+    </select>
+
+    <select id="queryProblemTagRecordByTagId" resultType="com.fjut.oj.pojo.ProblemTagRecordPO">
+        SELECT DISTINCT pid
+        FROM t_problem_tag_record
+        WHERE tagid = #{tagId}
+        AND pid NOT IN (SELECT pid FROM t_usersolve WHERE username=#{username})
+    </select>
+</mapper>

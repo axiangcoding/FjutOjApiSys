@@ -60,7 +60,7 @@ public class RedisTokenManager implements TokenManager {
         String username = model.getUsername();
         String token = model.getToken();
         String auth = username + "_" + token;
-        String encryptAuth = DESUtils.encrypt(auth, key);
+        String encryptAuth = DESUtils.encode(key, auth);
         return encryptAuth;
 
     }
@@ -71,7 +71,7 @@ public class RedisTokenManager implements TokenManager {
             return null;
         }
         // 对加密后的auth进行解密
-        String authentication = DESUtils.decrypt(encryptAuth, key);
+        String authentication = DESUtils.decode(key, encryptAuth);
         if (null == authentication || 0 == authentication.length()) {
             return null;
         }

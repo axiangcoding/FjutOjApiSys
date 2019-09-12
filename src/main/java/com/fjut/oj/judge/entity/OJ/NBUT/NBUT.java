@@ -50,6 +50,7 @@ public class NBUT extends OTHOJ {
         languageList.add(new Pair<>(2,CodeLanguage.GPP));
     }
 
+    @Override
     public String getName(){
         return "NBUT";
     }
@@ -76,6 +77,7 @@ public class NBUT extends OTHOJ {
         return "error";
     }
 
+    @Override
     public String getProblemURL(String pid){
         return url+"/Problem/view.xhtml?id="+pid;
     }
@@ -107,6 +109,7 @@ public class NBUT extends OTHOJ {
         return ph;
     }
 
+    @Override
     public String getTitle(String pid){
         Document d = MyClient.getMyClient().get(url + "/Problem/view.xhtml?id=" + pid);
         if(d==null) return GET_TITLE_ERROR;
@@ -122,6 +125,7 @@ public class NBUT extends OTHOJ {
         return s.substring(z+21,z+21+32);
     }
 
+    @Override
     public String submit(VjSubmitter s){
         List<NameValuePair> formparams = new ArrayList<NameValuePair>();
         formparams.add(new BasicNameValuePair("username",s.getUsername()));
@@ -154,6 +158,7 @@ public class NBUT extends OTHOJ {
             return d.select("#prob-info-ul pre").html();
         }
     }
+    @Override
     public RES getResult(VjSubmitter s){
         Element e;
         Document d = null;

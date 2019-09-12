@@ -249,6 +249,9 @@ public class ResultString {
     }
 
     public static String awardLevelToStr(Integer num) {
+        if(num == null) {
+            return "无";
+        }
         if (num == -1) {
             return "顽强拼搏奖";
         }

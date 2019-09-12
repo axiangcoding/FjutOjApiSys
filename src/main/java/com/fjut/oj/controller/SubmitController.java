@@ -85,11 +85,11 @@ public class SubmitController {
         Integer cid = Integer.parseInt(req.getParameter("cid") == null ? "-1" : req.getParameter("cid"));
 
         if (cid != -1) {
-            Contest contest = contestService.queryContestByCid(cid);
-            if (contest == null) {
+            ContestPO contestPO = contestService.queryContestByCid(cid);
+            if (contestPO == null) {
                 return new JsonInfoVO("FAIL", "没有查找到该比赛");
             }
-            Date endTime = contest.getEndTime();
+            Date endTime = contestPO.getEndTime();
 
             Date currentTime = new Date();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -153,11 +153,11 @@ public class SubmitController {
         System.out.println("cidStr: "+cidStr);
         System.out.println("cid: "+cid);
         if (cid != -1) {
-            Contest contest = contestService.queryContestByCid(cid);
-            if (contest == null) {
+            ContestPO contestPO = contestService.queryContestByCid(cid);
+            if (contestPO == null) {
                 return new JsonInfoVO("FAIL", "没有查找到该比赛");
             }
-            Date endTime = contest.getEndTime();
+            Date endTime = contestPO.getEndTime();
             Date currentTime = new Date();
             String dateString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(currentTime);
             if (endTime.compareTo(currentTime) < 0) {

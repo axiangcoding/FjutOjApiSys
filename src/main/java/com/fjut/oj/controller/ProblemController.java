@@ -4,6 +4,7 @@ import com.fjut.oj.pojo.JsonInfoVO;
 import com.fjut.oj.pojo.Problem;
 import com.fjut.oj.pojo.Problems1;
 import com.fjut.oj.pojo.ViewUserSolve;
+import com.fjut.oj.service.ProblemDifficultService;
 import com.fjut.oj.service.ProblemService;
 import com.fjut.oj.service.StatusService;
 import com.fjut.oj.util.JsonMsg;
@@ -31,6 +32,9 @@ public class ProblemController {
 
     @Autowired
     private ProblemService problemService;
+
+    @Autowired
+    private ProblemDifficultService problemDifficultService;
 
     @Autowired
     private StatusService statusService;
@@ -61,6 +65,7 @@ public class ProblemController {
         Integer startIndex = (pageNum - 1) * 50;
         List<Problem> problems = problemService.queryProblemsByConditions(startIndex, tagId, title);
         Integer problemCount = problemService.queryProblemCountByCondition(tagId, title);
+
         JsonInfoVO.addInfo(problems);
         JsonInfoVO.addInfo(problemCount);
         return JsonInfoVO;
@@ -84,6 +89,16 @@ public class ProblemController {
         solves = statusService.queryUserSolveProblemByUsername(username);
         JsonInfoVO.addInfo(solves);
         return JsonInfoVO;
+    }
+
+    @GetMapping("/getRecommendProblems")
+    public JsonInfoVO getRecommendProblems(@RequestParam("username") String username) {
+        JsonInfoVO jsonInfoVO = new JsonInfoVO();
+        // FIXME: 暂时设置为1
+        Integer tagId = 1;
+        List<Problem> problems = problemService.queryProblemByTagId(tagId, username);
+        jsonInfoVO.addInfo(problems);
+        return jsonInfoVO;
     }
 
 
@@ -120,7 +135,7 @@ public class ProblemController {
      */
     @GetMapping("/getProblemByTitle")
     public JsonInfoVO queryProblemByTitle(@RequestParam("title") String title,
-                                        @RequestParam("pagenum") String pageNumStr) {
+                                          @RequestParam("pagenum") String pageNumStr) {
         JsonInfoVO JsonInfoVO = new JsonInfoVO();
         Integer pageNum = Integer.parseInt(pageNumStr == null ? "0" : pageNumStr);
         Integer totalPageNum, totalProblem;

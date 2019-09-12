@@ -3,7 +3,7 @@ package com.fjut.oj.mapper;
 import com.fjut.oj.pojo.ProblemTagPO;
 import com.fjut.oj.pojo.UserTag1;
 import com.fjut.oj.pojo.UserTag2;
-import com.fjut.oj.pojo.t_problem_tag_record;
+import com.fjut.oj.pojo.ProblemTagRecordPO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -20,9 +20,9 @@ public interface ProblemTagMapper {
      */
     List<ProblemTagPO> queryAllProblemTag();
 
-    List<t_problem_tag_record> problemTagRecord(@Param("pid") Integer pid, @Param("username") String username);
+    List<ProblemTagRecordPO> problemTagRecord(@Param("pid") Integer pid, @Param("username") String username);
 
-    List<t_problem_tag_record> problemTagRecordLimitNum(@Param("pid") Integer pid, @Param("from") Integer from, @Param("num") Integer num);
+    List<ProblemTagRecordPO> problemTagRecordLimitNum(@Param("pid") Integer pid, @Param("from") Integer from, @Param("num") Integer num);
 
     int addTag(@Param("pid") Integer pid, @Param("username") String username, @Param("tagid") Integer tagid, @Param("rating") Integer rating);
 

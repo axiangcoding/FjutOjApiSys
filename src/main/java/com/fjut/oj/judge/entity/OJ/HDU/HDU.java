@@ -86,6 +86,7 @@ public class HDU extends OTHOJ {
         return URL+statusURL+"?"+statusFormUser+"="+user;
     }
 
+    @Override
     public String getName(){
         return "HDU";
     }
@@ -100,6 +101,7 @@ public class HDU extends OTHOJ {
         return languageList;
     }
 
+    @Override
     public String getProblemURL(String pid){ return URL+problemURL+"?pid="+pid; }
     private Result getResultMap(String v){
         return resultMap.get(v);
@@ -115,6 +117,7 @@ public class HDU extends OTHOJ {
         }
         return "error";
     }
+    @Override
     public String getTitle(String pid){
         Document doc;
         try {
@@ -125,6 +128,8 @@ public class HDU extends OTHOJ {
             return GET_TITLE_ERROR;
         }
     }
+
+    @Override
     public problemHTML getProblemHTML(String pid){
         Document doc;
         problemHTML p=new problemHTML();
@@ -160,6 +165,7 @@ public class HDU extends OTHOJ {
         return p;
     }
 
+    @Override
     public String submit(VjSubmitter s){
         String ret=Login(s);
         if(ret.equals("error")) return "error";
@@ -171,6 +177,7 @@ public class HDU extends OTHOJ {
         return "success";
     }
 
+    @Override
     public RES getResult(VjSubmitter s) {
         Element e;
         Document d = null;

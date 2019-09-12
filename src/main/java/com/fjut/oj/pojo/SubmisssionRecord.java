@@ -154,7 +154,7 @@ public class SubmisssionRecord {
 //        TimeUsed=time;
 //        MemoryUsed=Memory;
 ////        if(cid!=-1){
-////            Contest c= ContestMain.getContest(cid);
+////            ContestPO c= ContestMain.getContest(cid);
 ////            c.getRank()._add(Main.status.getStatu(rid),c);//通知更新排行榜
 ////        }
 //    }

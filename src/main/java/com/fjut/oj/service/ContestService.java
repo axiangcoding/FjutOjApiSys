@@ -11,10 +11,11 @@ public interface ContestService {
 
     /**
      * 新建一个比赛
-     * @param contest
+     *
+     * @param contestPO
      * @return
      */
-    Integer insertContest(Contest contest);
+    Integer insertContest(ContestPO contestPO);
 
     /**
      * 插入一个比赛的题目
@@ -23,7 +24,24 @@ public interface ContestService {
      * @param pidStr
      * @return
      */
-    Integer insertContestProblem(Integer cid, String pidStr);
+    Integer insertAllContestProblem(Integer cid, String pidStr);
+
+    /**
+     * 根据cid删除比赛下所有题目
+     *
+     * @param cid
+     * @return
+     */
+    Integer deleteAllContestProblemByCid(Integer cid);
+
+    /**
+     * 根据 cid 更新比赛信息
+     *
+     * @param contestPO
+     * @return
+     */
+    Integer updateContestByCid(ContestPO contestPO);
+
 
     /**
      * 根据条件获取比赛列表，一次20条
@@ -32,7 +50,7 @@ public interface ContestService {
      * @param kind
      * @return
      */
-    List<Contest> queryContestByCondition(Integer startIndex, Integer kind);
+    List<ContestPO> queryContestByCondition(Integer startIndex, Integer kind);
 
     /**
      * 根据条件获取比赛列表数量
@@ -48,10 +66,13 @@ public interface ContestService {
      * @param cid
      * @return
      */
-    Contest queryContestByCid(Integer cid);
+    ContestPO queryContestByCid(Integer cid);
+
+    Boolean queryContestIsExist(Integer cid);
 
     /**
      * 根据多重条件查询比赛的提交记录，一次30条
+     *
      * @param startIndex
      * @param cid
      * @param nick
@@ -82,7 +103,7 @@ public interface ContestService {
      * @param cid
      * @return
      */
-    List<ContestProblemInfo> queryContestProblem(Integer cid);
+    List<ContestProblemInfoBO> queryContestProblem(Integer cid);
 
     List<Status> getContestStatus(Integer cid, Integer pagenum);
 
@@ -93,9 +114,7 @@ public interface ContestService {
     Integer getContestUser(Integer cid, String username);
 
 
-
     Integer getMaxContestId();
-
 
 
     Integer insertContestuser(Contestuser contestuser);

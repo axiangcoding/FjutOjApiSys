@@ -1,10 +1,8 @@
 package com.fjut.oj.service.impl;
 
 import com.fjut.oj.mapper.ProblemMapper;
-import com.fjut.oj.pojo.Problem;
-import com.fjut.oj.pojo.Problems1;
-import com.fjut.oj.pojo.ProblemSample;
-import com.fjut.oj.pojo.t_problemview;
+import com.fjut.oj.mapper.ProblemTagRecordMapper;
+import com.fjut.oj.pojo.*;
 import com.fjut.oj.service.ProblemService;
 import com.fjut.oj.util.ProblemHTML;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,8 @@ public class ProblemServiceImpl implements ProblemService {
     @Autowired
     private ProblemMapper problemMapper;
 
+    @Autowired
+    private ProblemTagRecordMapper problemTagRecordMapper;
 
     @Override
     public Integer insertProblem(Problem problem) {
@@ -72,6 +72,28 @@ public class ProblemServiceImpl implements ProblemService {
     @Override
     public Integer queryProblemsNumByTitle(String title) {
         return problemMapper.queryProblemsNumByTitle(title);
+    }
+
+
+    @Override
+    public List<Problem> queryProblemByTagId(Integer tagId, String username) {
+        // 拿到该标签对应的题目
+        List<ProblemTagRecordPO> tagProblems = problemTagRecordMapper.queryProblemTagRecordByTagId(tagId, username);
+        // 转换为 problem 类
+        List<Problem> problems = new ArrayList<>();
+        int rand1, rand2, rand3;
+        int size = tagProblems.size();
+        // FIXME: 随机选取三个题目作为推荐，这里以后需要引入算法
+        rand1 = (int)(Math.random()*size);
+        rand2 = (int)(Math.random()*size);
+        rand3 = (int)(Math.random()*size);
+        for (int i = 0; i < tagProblems.size(); i++) {
+            if (i == rand1 || i == rand2 || i == rand3) {
+              Problem problem =  problemMapper.queryProblemById(tagProblems.get(i).getPid());
+              problems.add(problem);
+            }
+        }
+        return problems;
     }
 
     @Override

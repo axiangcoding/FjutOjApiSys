@@ -6,7 +6,7 @@ package com.fjut.oj.pojo;
  * @author cjt
   */
 
-public class t_problem_tag_record {
+public class ProblemTagRecordPO {
 
     private Integer pid;
     private String  username;
@@ -43,5 +43,15 @@ public class t_problem_tag_record {
 
     public void setRating(Integer rating) {
         this.rating = rating;
+    }
+
+    @Override
+    public String toString() {
+        return "ProblemTagRecordPO{" +
+                "pid=" + pid +
+                ", username='" + username + '\'' +
+                ", tagid=" + tagid +
+                ", rating=" + rating +
+                '}';
     }
 }

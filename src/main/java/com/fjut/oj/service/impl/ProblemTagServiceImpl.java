@@ -25,14 +25,14 @@ public class ProblemTagServiceImpl implements ProblemTagService {
     }
 
     @Override
-    public List<t_problem_tag_record> problemTagRecord(Integer pid, String username) {
-        List<t_problem_tag_record> list = problemTagMapper.problemTagRecord(pid, username);
+    public List<ProblemTagRecordPO> problemTagRecord(Integer pid, String username) {
+        List<ProblemTagRecordPO> list = problemTagMapper.problemTagRecord(pid, username);
         return list;
     }
 
     @Override
-    public List<t_problem_tag_record> problemTagRecordLimitNum(Integer pid, Integer from, Integer num) {
-        List<t_problem_tag_record> list = problemTagMapper.problemTagRecordLimitNum(pid, from, num);
+    public List<ProblemTagRecordPO> problemTagRecordLimitNum(Integer pid, Integer from, Integer num) {
+        List<ProblemTagRecordPO> list = problemTagMapper.problemTagRecordLimitNum(pid, from, num);
         return list;
     }
 

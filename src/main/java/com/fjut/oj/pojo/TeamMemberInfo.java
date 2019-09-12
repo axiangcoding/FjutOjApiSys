@@ -6,7 +6,6 @@ package com.fjut.oj.pojo;
  * @author cjt
  */
 public class TeamMemberInfo {
-
     private Integer id;
     private String  time;
     private String  username1;
@@ -15,8 +14,8 @@ public class TeamMemberInfo {
     private String  name1;
     private String  name2;
     private String  name3;
-    private Integer contest_level;
-    private Integer awards_level;
+    private Integer contestLevel;
+    private Integer awardsLevel;
     private String  text;
 
     private String contestLevelStr;
@@ -86,20 +85,20 @@ public class TeamMemberInfo {
         this.name3 = name3;
     }
 
-    public Integer getContest_level() {
-        return contest_level;
+    public Integer getContestLevel() {
+        return contestLevel;
     }
 
-    public void setContest_level(Integer contest_level) {
-        this.contest_level = contest_level;
+    public void setContestLevel(Integer contestLevel) {
+        this.contestLevel = contestLevel;
     }
 
-    public Integer getAwards_level() {
-        return awards_level;
+    public Integer getAwardsLevel() {
+        return awardsLevel;
     }
 
-    public void setAwards_level(Integer awards_level) {
-        this.awards_level = awards_level;
+    public void setAwardsLevel(Integer awardsLevel) {
+        this.awardsLevel = awardsLevel;
     }
 
     public String getText() {

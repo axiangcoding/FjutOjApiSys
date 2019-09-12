@@ -1,7 +1,7 @@
 package com.fjut.oj.pojo;
 
 /**
- * 挑战模式模块BO类，集成了用户的模块信息
+ * 挑战模式模块业务pojo类，集成了用户的模块信息
  *
  * @author axiang [20190625]
  */
@@ -58,7 +58,7 @@ public class ChallengeBlockBO {
         this.notScore = notScore;
     }
 
-    public boolean isLocked() {
+    public boolean getLocked() {
         return isLocked;
     }
 
@@ -74,11 +74,11 @@ public class ChallengeBlockBO {
         this.text = text;
     }
 
-    public boolean isHide() {
+    public Boolean isHide() {
         return isHide;
     }
 
-    public void setHide(boolean hide) {
+    public void setHide(Boolean hide) {
         isHide = hide;
     }
 

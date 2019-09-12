@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fjut.oj.mapper.DiscussMapper">
+
+    <select id="queryDiscussByConditions" resultType="com.fjut.oj.pojo.DiscussPO">
+        SELECT * FROM t_discuss LIMIT #{startIndex}, 30
+    </select>
+
+<!--    <select id="queryDiscussViewByConditions" resultType="com.fjut.oj.pojo.DiscussBO">-->
+<!--        SELECT d.id, d.title, d.time, d.author, d.priority, dr.time, dr.author-->
+<!--	    FROM t_discuss d-->
+<!--        LEFT JOIN-->
+<!--        (SELECT tdr.discuss_id, tdr.time, tdr.author-->
+<!--            FROM t_discuss_reply tdr-->
+<!--            GROUP BY tdr.discuss_id-->
+<!--            ORDER BY time DESC ) dr ON d.id = dr.discuss_id ORDER BY id DESC-->
+<!--    </select>-->
+</mapper>

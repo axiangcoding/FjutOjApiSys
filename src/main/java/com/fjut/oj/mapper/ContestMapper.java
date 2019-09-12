@@ -12,10 +12,18 @@ public interface ContestMapper {
     /**
      * 新建一个比赛
      *
-     * @param contest
+     * @param contestPO
      * @return
      */
-    Integer insertContest(@Param("contest") Contest contest);
+    Integer insertContest(@Param("contestPO") ContestPO contestPO);
+
+    /**
+     * 根据 cid 更新比赛信息
+     *
+     * @param contestPO
+     * @return
+     */
+    Integer updateContestByCid(@Param("contestPO") ContestPO contestPO);
 
     /**
      * 根据条件一次性查询20条比赛列表
@@ -24,7 +32,7 @@ public interface ContestMapper {
      * @param kind
      * @return
      */
-    List<Contest> queryContestByCondition(@Param("startIndex") Integer startIndex, @Param("kind") Integer kind);
+    List<ContestPO> queryContestByCondition(@Param("startIndex") Integer startIndex, @Param("kind") Integer kind);
 
     /**
      * 根据条件查询比赛的数量
@@ -70,7 +78,7 @@ public interface ContestMapper {
      * @param cid
      * @return
      */
-    Contest queryContestByCid(@Param("cid") Integer cid);
+    ContestPO queryContestByCid(@Param("cid") Integer cid);
 
     List<Contestuser> getContestUsers(@Param("cid") int cid, @Param("pagenum") int pagenum);
 
@@ -82,7 +90,7 @@ public interface ContestMapper {
      * @param cid
      * @return
      */
-    List<ContestProblemInfo> queryContestProblem(@Param("cid") int cid);
+    List<ContestProblemInfoBO> queryContestProblem(@Param("cid") int cid);
 
     List<Status> getContestStatus(@Param("cid") int cid, @Param("pagenum") int pagenum);
 

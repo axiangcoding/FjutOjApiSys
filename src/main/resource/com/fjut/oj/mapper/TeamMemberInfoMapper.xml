@@ -23,7 +23,7 @@
 
     <insert id="insertTeamMemberInfo" parameterType="com.fjut.oj.pojo.TeamMemberInfo">
         insert into
-        t_team_member_info(time,username1,username2,username3,name1,name2,name3,contest_level,awards_level,text)
+        t_team_member_info(time,username1,username2,username3,name1,name2,name3,contestLevel,awardsLevel,text)
         values(
           #{teamMemberInfo.time},
           #{teamMemberInfo.username1},
@@ -32,8 +32,8 @@
           #{teamMemberInfo.name1},
           #{teamMemberInfo.name2},
           #{teamMemberInfo.name3},
-          #{teamMemberInfo.contest_level},
-          #{teamMemberInfo.awards_level},
+          #{teamMemberInfo.contestLevel},
+          #{teamMemberInfo.awardsLevel},
           #{teamMemberInfo.text}
         )
     </insert>
@@ -49,8 +49,8 @@
           #{teamMemberInfo.name1},
           #{teamMemberInfo.name2},
           #{teamMemberInfo.name3},
-          #{teamMemberInfo.contest_level},
-          #{teamMemberInfo.awards_level},
+          #{teamMemberInfo.contestLevel},
+          #{teamMemberInfo.awardsLevel},
           #{teamMemberInfo.text}
           )
     </update>

@@ -2,7 +2,11 @@ package com.fjut.oj.pojo;
 
 import java.util.Date;
 
-public class Contest {
+/**
+ * 比赛类
+ * @author cjt
+ */
+public class ContestPO {
     private Integer id;
     private String name;
     private Date beginTime;
@@ -173,5 +177,30 @@ public class Contest {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "ContestPO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", beginTime=" + beginTime +
+                ", endTime=" + endTime +
+                ", rankType=" + rankType +
+                ", ctype=" + ctype +
+                ", password='" + password + '\'' +
+                ", registerstarttime=" + registerstarttime +
+                ", registerendtime=" + registerendtime +
+                ", info='" + info + '\'' +
+                ", computerating=" + computerating +
+                ", createuser='" + createuser + '\'' +
+                ", kind=" + kind +
+                ", problemCanPutTag=" + problemCanPutTag +
+                ", statusReadOut=" + statusReadOut +
+                ", registerShowComplete=" + registerShowComplete +
+                ", isHideOthersStatus=" + isHideOthersStatus +
+                ", isHideOthersStatusInfo=" + isHideOthersStatusInfo +
+                ", status=" + status +
+                '}';
     }
 }

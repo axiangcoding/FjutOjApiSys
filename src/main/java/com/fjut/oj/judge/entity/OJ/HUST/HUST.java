@@ -51,6 +51,7 @@ public class HUST extends OTHOJ {
         languageList.add(new Pair<>(2,CodeLanguage.PASCAL));
         languageList.add(new Pair<>(3,CodeLanguage.JAVA));
     }
+    @Override
     public String getName(){
         return "FJUTOJ";
     }
@@ -77,6 +78,7 @@ public class HUST extends OTHOJ {
         }
         return "error";
     }
+    @Override
     public String getProblemURL(String pid){
         return url+"/problem.php?id="+pid;
     }
@@ -117,6 +119,7 @@ public class HUST extends OTHOJ {
         }
         return ph;
     }
+    @Override
     public String getTitle(String pid){
         Element e=null;
         Document d = null;
@@ -137,6 +140,7 @@ public class HUST extends OTHOJ {
 //        System.out.println("password"+s.getPassword());
         hc.Post(url+"/login.php", formparams);
     }
+    @Override
     public String submit(VjSubmitter s){
         MyClient hc=new MyClient();
         login(hc,s);
@@ -162,6 +166,7 @@ public class HUST extends OTHOJ {
         Document d = hc.get(url+"/ceinfo.php?sid="+s.getOjsrid());
         return d.select("#errtxt").html();
     }
+    @Override
     public RES getResult(VjSubmitter s){
         Element e;
         Document d = null;

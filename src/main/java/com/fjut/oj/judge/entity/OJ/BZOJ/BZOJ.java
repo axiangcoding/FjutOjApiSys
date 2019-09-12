@@ -83,6 +83,7 @@ public class BZOJ extends OTHOJ{
         return d.select("title").text();
     }
 
+    @Override
     public String submit(VjSubmitter s) {
         MyClient client = s.client;
         if(client == null) return "error";

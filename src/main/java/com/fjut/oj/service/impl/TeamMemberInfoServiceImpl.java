@@ -19,8 +19,8 @@ public class TeamMemberInfoServiceImpl implements TeamMemberInfoService {
     public List<TeamMemberInfo> queryAllTeamMemberInfo(Integer start){
         List<TeamMemberInfo> list = teamMemberInfoMapper.queryAllTeamMemberInfo(start);
         for (TeamMemberInfo t : list){
-            t.setContestLevelStr(ResultString.contestLevelToStr(t.getContest_level()));
-            t.setAwardsLevelStr(ResultString.awardLevelToStr(t.getAwards_level()));
+            t.setContestLevelStr(ResultString.contestLevelToStr(t.getContestLevel()));
+            t.setAwardsLevelStr(ResultString.awardLevelToStr(t.getAwardsLevel()));
         }
         return list;
     }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -51,8 +50,8 @@ public class ContestAwardController {
         teamMemberInfo.setName1(name1);
         teamMemberInfo.setName2(name2);
         teamMemberInfo.setName3(name3);
-        teamMemberInfo.setContest_level(contestLevel);
-        teamMemberInfo.setAwards_level(awardsLevel);
+        teamMemberInfo.setContestLevel(contestLevel);
+        teamMemberInfo.setAwardsLevel(awardsLevel);
         teamMemberInfo.setText(text);
 
         Integer num = teamMemberInfoService.insertTeamMemberInfo(teamMemberInfo);
@@ -93,8 +92,8 @@ public class ContestAwardController {
         t.setName1(name1 == null ? t.getName1() : name1);
         t.setName2(name2 == null ? t.getName2() : name2);
         t.setName3(name3 == null ? t.getName3() : name3);
-        t.setContest_level(contestLevel == null ? t.getContest_level() : contestLevel);
-        t.setAwards_level(awardsLevel == null ? t.getAwards_level() : awardsLevel);
+        t.setContestLevel(contestLevel == null ? t.getContestLevel() : contestLevel);
+        t.setAwardsLevel(awardsLevel == null ? t.getAwardsLevel() : awardsLevel);
         t.setText(text == null ? t.getText() : text);
         Integer num = teamMemberInfoService.replaceTeamMemberInfo(t);
         if (num == 0){

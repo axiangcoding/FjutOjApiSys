@@ -82,6 +82,7 @@ public class ZOJ extends OTHOJ{
         return d.select("center").get(0).text();
     }
 
+    @Override
     public String submit(VjSubmitter s) {
         MyClient client = s.client;
         if(client == null) return "error";

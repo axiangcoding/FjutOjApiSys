@@ -3,8 +3,9 @@ package com.fjut.oj.pojo;
 
 /**
  * 比赛题目表
+ * @author axiang
  */
-public class ContestProblem {
+public class ContestProblemPO {
 
     private Integer cid;
     private Integer pid;

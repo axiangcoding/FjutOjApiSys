@@ -38,8 +38,8 @@ public class ContestController {
                                     @RequestParam("beginTime") String beginTimeStr,
                                     @RequestParam("endTime") String endTimeStr,
                                     @RequestParam("ctype") String cTypeStr,
-                                    @RequestParam("registerBeginTime") String registerBeginTimeStr,
-                                    @RequestParam("registerEndTime") String registerEndTimeStr,
+                                    @RequestParam(value = "registerBeginTime", required = false) String registerBeginTimeStr,
+                                    @RequestParam(value = "registerEndTime", required = false) String registerEndTimeStr,
                                     @RequestParam("info") String info,
                                     @RequestParam("kind") String kindStr,
                                     @RequestParam("pidList") String pidList) {
@@ -47,44 +47,130 @@ public class ContestController {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date beginTime;
         Date endTime;
-        Date registerBeginTime;
-        Date registerEndTime;
+        Date registerBeginTime = new Date();
+        Date registerEndTime = new Date();
         Integer cType;
         Integer kind;
         try {
             beginTime = simpleDateFormat.parse(beginTimeStr);
             endTime = simpleDateFormat.parse(endTimeStr);
-            registerBeginTime = simpleDateFormat.parse(registerBeginTimeStr);
-            registerEndTime = simpleDateFormat.parse(registerEndTimeStr);
+            if (registerBeginTimeStr != null && registerEndTimeStr != null) {
+                registerBeginTime = simpleDateFormat.parse(registerBeginTimeStr);
+                registerEndTime = simpleDateFormat.parse(registerEndTimeStr);
+            }
             cType = Integer.parseInt(cTypeStr);
             kind = Integer.parseInt(kindStr);
         } catch (Exception e) {
             return new JsonInfoVO("ERROR", "参数错误");
         }
-        Contest contest = new Contest();
-        contest.setName(contestTitle);
-        contest.setBeginTime(beginTime);
-        contest.setEndTime(endTime);
+        ContestPO contestPO = new ContestPO();
+        contestPO.setName(contestTitle);
+        contestPO.setBeginTime(beginTime);
+        contestPO.setEndTime(endTime);
         // FIXME: 暂时未用上，设置为0
-        contest.setRankType(0);
-        contest.setCtype(cType);
+        contestPO.setRankType(0);
+        contestPO.setCtype(cType);
         // 密码非空
-        contest.setPassword("");
-        contest.setRegisterstarttime(registerBeginTime);
-        contest.setRegisterendtime(registerEndTime);
-        contest.setInfo(info);
-        contest.setKind(kind);
-        contest.setCreateuser(username);
-        Integer ans = contestService.insertContest(contest);
+        contestPO.setPassword("");
+
+        contestPO.setRegisterstarttime(registerBeginTime);
+        contestPO.setRegisterendtime(registerEndTime);
+        contestPO.setInfo(info);
+        contestPO.setKind(kind);
+        contestPO.setCreateuser(username);
+        Integer ans = contestService.insertContest(contestPO);
         if (0 == ans) {
             return new JsonInfoVO("ERROR", "比赛添加失败");
         }
-        Integer ansCount = contestService.insertContestProblem(contest.getId(), pidList);
+        Integer ansCount = contestService.insertAllContestProblem(contestPO.getId(), pidList);
         if (0 < ansCount) {
             jsonInfoVO.setSuccess("比赛添加成功！请到比赛页面查看！");
         }
         return jsonInfoVO;
     }
+
+    /**
+     * TODO：修改比赛信息的逻辑还没做好
+     * @param cidStr
+     * @param username
+     * @param contestTitle
+     * @param beginTimeStr
+     * @param endTimeStr
+     * @param cTypeStr
+     * @param registerBeginTimeStr
+     * @param registerEndTimeStr
+     * @param info
+     * @param kindStr
+     * @param pidList
+     * @return
+     */
+    @CheckUserIsAdmin
+    @Transactional(rollbackFor = RuntimeException.class)
+    @RequestMapping("/updateContest")
+    public JsonInfoVO updateContest(@RequestParam("cid") String cidStr,
+                                    @RequestParam("username") String username,
+                                    @RequestParam("name") String contestTitle,
+                                    @RequestParam("beginTime") String beginTimeStr,
+                                    @RequestParam("endTime") String endTimeStr,
+                                    @RequestParam("ctype") String cTypeStr,
+                                    @RequestParam(value = "registerBeginTime", required = false) String registerBeginTimeStr,
+                                    @RequestParam(value = "registerEndTime", required = false) String registerEndTimeStr,
+                                    @RequestParam("info") String info,
+                                    @RequestParam("kind") String kindStr,
+                                    @RequestParam("pidList") String pidList) {
+        JsonInfoVO jsonInfoVO = new JsonInfoVO();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date beginTime;
+        Date endTime;
+        Date registerBeginTime = new Date();
+        Date registerEndTime = new Date();
+        Integer cid;
+        Integer cType;
+        Integer kind;
+        try {
+            cid = Integer.parseInt(cidStr);
+            // 查找比赛是否存在，如果不存在则直接返回
+            if (!contestService.queryContestIsExist(cid)) {
+                return new JsonInfoVO("ERROR", "没有找到该比赛");
+            }
+            beginTime = simpleDateFormat.parse(beginTimeStr);
+            endTime = simpleDateFormat.parse(endTimeStr);
+            if (registerBeginTimeStr != null && registerEndTimeStr != null) {
+                registerBeginTime = simpleDateFormat.parse(registerBeginTimeStr);
+                registerEndTime = simpleDateFormat.parse(registerEndTimeStr);
+            }
+            cType = Integer.parseInt(cTypeStr);
+            kind = Integer.parseInt(kindStr);
+        } catch (Exception e) {
+            return new JsonInfoVO("ERROR", "参数错误");
+        }
+        ContestPO contestPO = new ContestPO();
+        contestPO.setId(cid);
+        contestPO.setName(contestTitle);
+        contestPO.setBeginTime(beginTime);
+        contestPO.setEndTime(endTime);
+        // FIXME: 暂时未用上，设置为0
+        contestPO.setRankType(0);
+        contestPO.setCtype(cType);
+        // 密码非空
+        contestPO.setPassword("");
+        contestPO.setRegisterstarttime(registerBeginTime);
+        contestPO.setRegisterendtime(registerEndTime);
+        contestPO.setInfo(info);
+        contestPO.setKind(kind);
+        contestPO.setCreateuser(username);
+        // TODO: 更新比赛信息
+        int ans =  contestService.updateContestByCid(contestPO);
+        if (0 == ans) {
+            return new JsonInfoVO("ERROR", "比赛更新失败");
+        }
+        // TODO: 更新题目列表
+        int ansDel = contestService.deleteAllContestProblemByCid(cid);
+        int ansAdd = contestService.insertAllContestProblem(contestPO.getId(), pidList);
+        jsonInfoVO.setSuccess("比赛更新成功！");
+        return jsonInfoVO;
+    }
+
 
     /**
      * TODO: 还有筛选条件未用上
@@ -101,7 +187,7 @@ public class ContestController {
         Integer pageNum = Integer.parseInt(pageNumStr);
         Integer startIndex = (pageNum - 1) * 20;
         Integer kind = Integer.parseInt(kindStr);
-        List<Contest> list = contestService.queryContestByCondition(startIndex, kind);
+        List<ContestPO> list = contestService.queryContestByCondition(startIndex, kind);
         Integer contestNum = contestService.queryContestCountByCondition(kind);
         if (list == null) {
             jsonInfoVO.setFail("没有比赛信息！");
@@ -153,13 +239,21 @@ public class ContestController {
     public JsonInfoVO getContestByCid(@RequestParam("cid") String cidStr) {
         JsonInfoVO jsonInfoVO = new JsonInfoVO();
         Integer cid = Integer.parseInt(cidStr);
-        Contest contest = contestService.queryContestByCid(cid);
-        if (null == contest) {
+        ContestPO contestPO = contestService.queryContestByCid(cid);
+        if (null == contestPO) {
             jsonInfoVO.setFail("找不到比赛！");
             return jsonInfoVO;
         }
-        jsonInfoVO.setSuccess();
-        jsonInfoVO.addInfo(contest);
+
+        List<ContestProblemInfoBO> contestProblemInfoBOS = contestService.queryContestProblem(cid);
+        StringBuffer pidStr = new StringBuffer();
+        for (ContestProblemInfoBO contestProblemInfoBO : contestProblemInfoBOS) {
+            pidStr.append(contestProblemInfoBO.getTpid());
+            pidStr.append(" ");
+        }
+        jsonInfoVO.setSuccess("找到比赛！");
+        jsonInfoVO.addInfo(contestPO);
+        jsonInfoVO.addInfo(pidStr);
         return jsonInfoVO;
     }
 
@@ -167,11 +261,11 @@ public class ContestController {
     public JsonInfoVO getContestProblem(@RequestParam("cid") String cidStr) {
         JsonInfoVO jsonInfoVO = new JsonInfoVO();
         Integer cid = Integer.parseInt(cidStr);
-        List<ContestProblemInfo> contestProblemInfos = contestService.queryContestProblem(cid);
-        if (contestProblemInfos == null) {
+        List<ContestProblemInfoBO> contestProblemInfoBOS = contestService.queryContestProblem(cid);
+        if (contestProblemInfoBOS == null) {
             return new JsonInfoVO("FAIL", "该比赛内没有题目！");
         }
-        jsonInfoVO.addInfo(contestProblemInfos);
+        jsonInfoVO.addInfo(contestProblemInfoBOS);
         jsonInfoVO.setSuccess();
         return jsonInfoVO;
     }
