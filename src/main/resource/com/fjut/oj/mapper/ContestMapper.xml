@@ -73,7 +73,7 @@
     </select>
 
     <select id="queryContestCountByCondition" resultType="java.lang.Integer">
-        SELECT count(*)
+        SELECT COUNT(*)
         FROM contest
         WHERE kind = #{kind}
     </select>
@@ -125,7 +125,7 @@
     </select>
 
     <select id="getContestUsersNum" resultType="java.lang.Integer">
-        SELECT count(users.username)
+        SELECT COUNT(users.username)
         FROM users
         LEFT JOIN contestuser ON(users.username=contestuser.username)
         WHERE cid=#{cid}
@@ -163,7 +163,7 @@
     </select>
 
     <select id="getContestUser" resultType="java.lang.Integer">
-        select count(*)
+        select COUNT(*)
         from contestuser
         where cid = #{cid} and username = #{username}
     </select>

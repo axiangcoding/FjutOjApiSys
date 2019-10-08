@@ -2,6 +2,7 @@ package com.fjut.oj.service.impl;
 
 import com.fjut.oj.mapper.StatusMapper;
 import com.fjut.oj.pojo.Status;
+import com.fjut.oj.pojo.StatusCountBO;
 import com.fjut.oj.pojo.ViewUserSolve;
 import com.fjut.oj.pojo.ViewUserStatus;
 import com.fjut.oj.service.StatusService;
@@ -23,6 +24,11 @@ public class StatusServiceImpl implements StatusService {
     @Override
     public List<Status> getAllStatusByUsername(String username) {
         return statusMapper.getAllStatusByUsername(username);
+    }
+
+    @Override
+    public List<StatusCountBO> queryStatusCountOrderByDate(int days) {
+        return statusMapper.queryStatusCountOrderByDate(days);
     }
 
     @Override

@@ -10,7 +10,7 @@
     </select>
 
     <select id="queryAllCountTeamMemberInfo" resultType="java.lang.Integer">
-        select count(*)
+        select COUNT(*)
         from t_team_member_info
     </select>
 

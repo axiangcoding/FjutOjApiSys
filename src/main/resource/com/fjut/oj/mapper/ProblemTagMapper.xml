@@ -45,7 +45,7 @@
     </update>
 
     <select id="queryUserTag1" resultType="com.fjut.oj.pojo.UserTag1">
-        (select username,ttype,count(*) as num
+        (select username,ttype,COUNT(*) as num
         from (SELECT username,pid
         FROM t_usersolve where username=#{username} and status=1)
         a join (SELECT pid,(SELECT ttype FROM t_problem_tag WHERE id=tagid) as ttype,sum(rating-500) as ss
@@ -53,7 +53,7 @@
     </select>
 
     <select id="queryUserTag2" resultType="com.fjut.oj.pojo.UserTag2">
-       (select ttype,count(*) as num from
+       (select ttype, COUNT(*) as num from
        (SELECT username,pid FROM t_usersolve where  status=1)
        a join (SELECT pid,(SELECT ttype FROM t_problem_tag WHERE id=tagid) as ttype,sum(rating-500)
        as ss  FROM t_problem_tag_record group by ttype,pid) b on a.pid=b.pid where b.ss>0 group by ttype)

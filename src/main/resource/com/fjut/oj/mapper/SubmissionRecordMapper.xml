@@ -5,12 +5,12 @@
         select *
         FROM statu
         <where>
-             submitTime &gt;= #{from} and submitTime &lt; #{to} AND result=1
+             submitDay &gt;= #{from} and submitDay &lt; #{to} AND result=1
         </where>
     </select>
 
     <select id="getFailAreaSubmissionRecord" resultType="com.fjut.oj.pojo.SubmisssionRecord">
         select * from statu
-        where submitTime &gt;= #{from} and submitTime &lt; #{to} and result in (2,3,4,5,6,7,8)
+        where submitDay &gt;= #{from} and submitDay &lt; #{to} and result in (2,3,4,5,6,7,8)
     </select>
 </mapper>

@@ -27,7 +27,7 @@
     </insert>
 
     <select id="queryMaxCountDiscussId" resultType="java.lang.Integer">
-        select count(*)
+        select COUNT(*)
         from newdiscuss
     </select>
 

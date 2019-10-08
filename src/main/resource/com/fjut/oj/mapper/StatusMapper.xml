@@ -163,4 +163,13 @@
             GROUP BY ruser,pid
     </select>
 
+
+    <select id="queryStatusCountOrderByDate" resultType="com.fjut.oj.pojo.StatusCountBO">
+        SELECT COUNT(id) totalCount, SUM(result=1) acCount, DATE(submitTime) submitDay
+            FROM statu
+	        WHERE  submitTime >= DATE_SUB(NOW(), INTERVAL #{days} DAY)
+            GROUP BY DATE(submitTime)
+
+    </select>
+
 </mapper>

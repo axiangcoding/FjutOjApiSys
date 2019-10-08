@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * @author axiang
@@ -137,7 +135,7 @@ public class StatusController {
     @CheckUserPrivate
     @GetMapping("/getStatusById")
     public JsonInfoVO getStatusById(@RequestParam("id") String idStr,
-                                  @RequestParam(value = "username", required = false) String username) {
+                                    @RequestParam(value = "username", required = false) String username) {
         JsonInfoVO JsonInfoVO = new JsonInfoVO();
         if ("".equals(username) || null == username) {
             throw new NotOwnerException();
@@ -158,6 +156,52 @@ public class StatusController {
             JsonInfoVO.addInfo(viewUserStatus);
         }
         return JsonInfoVO;
+    }
+
+    @GetMapping("/getStatusCount")
+    public JsonInfoVO getStatusCount(
+            @RequestParam(value = "days", required = false) String daysStr) {
+        int days;
+        days = daysStr == null ? 30 : Integer.parseInt(daysStr);
+        JsonInfoVO jsonInfoVO = new JsonInfoVO();
+        HashMap<Date, StatusCountBO> hashMap = new HashMap<>(105);
+        for (int i = 0; i < days; i++) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, -days + 1 + i);
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            StatusCountBO statusCountBO = new StatusCountBO();
+            statusCountBO.setTotalCount(0);
+            statusCountBO.setAcCount(0);
+            statusCountBO.setSubmitDay(calendar.getTime());
+            hashMap.put(calendar.getTime(), statusCountBO);
+        }
+        List<StatusCountBO> statusCountBOS = statusService.queryStatusCountOrderByDate(days);
+        for (StatusCountBO statusCountBO : statusCountBOS) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(statusCountBO.getSubmitDay());
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            hashMap.put(calendar.getTime(), statusCountBO);
+        }
+        List<StatusCountBO> ans = new ArrayList<>();
+        for (Date date : hashMap.keySet()) {
+            StatusCountBO statusCountBO = hashMap.get(date);
+            ans.add(statusCountBO);
+        }
+        Collections.sort(ans, new Comparator<StatusCountBO>() {
+            @Override
+            public int compare(StatusCountBO sc1, StatusCountBO sc2) {
+                return sc1.getSubmitDay().compareTo(sc2.getSubmitDay()); //按时间升序
+            }
+        });
+        jsonInfoVO.addInfo(ans);
+        jsonInfoVO.setSuccess();
+        return jsonInfoVO;
     }
 
 }

@@ -1,9 +1,9 @@
 package com.fjut.oj.service;
 
 import com.fjut.oj.pojo.Status;
+import com.fjut.oj.pojo.StatusCountBO;
 import com.fjut.oj.pojo.ViewUserSolve;
 import com.fjut.oj.pojo.ViewUserStatus;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,6 +12,13 @@ public interface StatusService {
 
 
     List<Status> getAllStatusByUsername(String username);
+
+    /**
+     * 查询最近 days 天的提交统计
+     *
+     * @return
+     */
+    List<StatusCountBO> queryStatusCountOrderByDate(int days);
 
     Integer allStatusNum();
 

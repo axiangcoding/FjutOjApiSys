@@ -2,7 +2,8 @@
 SQLyog Enterprise Trial - MySQL GUI v7.11 
 MySQL - 8.0.15 : Database - ojtest
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -142,7 +143,7 @@ CREATE TABLE `statu` (
   `pid` int(11) NOT NULL,
   `cid` int(11) NOT NULL,
   `lang` int(11) NOT NULL,
-  `submitTime` datetime NOT NULL,
+  `submitDay` datetime NOT NULL,
   `result` int(11) NOT NULL,
   `score` int(11) NOT NULL DEFAULT '-1',
   `timeUsed` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -788,7 +789,7 @@ DROP TABLE IF EXISTS `v_user_status`;
   `pid` int(11) NOT NULL,
   `cid` int(11) NOT NULL,
   `lang` int(11) NOT NULL,
-  `submitTime` datetime NOT NULL,
+  `submitDay` datetime NOT NULL,
   `result` int(11) NOT NULL,
   `score` int(11) NOT NULL DEFAULT '0',
   `timeUsed` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -802,7 +803,7 @@ DROP TABLE IF EXISTS `v_user_status`;
 /*!50001 DROP TABLE IF EXISTS `v_user_status` */;
 /*!50001 DROP VIEW IF EXISTS `v_user_status` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_user_status` AS select `statu`.`id` AS `id`,`users`.`nick` AS `nick`,`statu`.`ruser` AS `ruser`,`statu`.`pid` AS `pid`,`statu`.`cid` AS `cid`,`statu`.`lang` AS `lang`,`statu`.`submitTime` AS `submitTime`,`statu`.`result` AS `result`,`statu`.`score` AS `score`,`statu`.`timeUsed` AS `timeUsed`,`statu`.`memoryUsed` AS `memoryUsed`,`statu`.`codelen` AS `codelen`,`statu`.`code` AS `code` from (`statu` join `users`) where (`statu`.`ruser` = `users`.`username`) order by `statu`.`id` desc */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_user_status` AS select `statu`.`id` AS `id`,`users`.`nick` AS `nick`,`statu`.`ruser` AS `ruser`,`statu`.`pid` AS `pid`,`statu`.`cid` AS `cid`,`statu`.`lang` AS `lang`,`statu`.`submitDay` AS `submitDay`,`statu`.`result` AS `result`,`statu`.`score` AS `score`,`statu`.`timeUsed` AS `timeUsed`,`statu`.`memoryUsed` AS `memoryUsed`,`statu`.`codelen` AS `codelen`,`statu`.`code` AS `code` from (`statu` join `users`) where (`statu`.`ruser` = `users`.`username`) order by `statu`.`id` desc */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

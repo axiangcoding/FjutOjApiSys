@@ -1,6 +1,7 @@
 package com.fjut.oj.mapper;
 
 import com.fjut.oj.pojo.Status;
+import com.fjut.oj.pojo.StatusCountBO;
 import com.fjut.oj.pojo.ViewUserSolve;
 import com.fjut.oj.pojo.ViewUserStatus;
 import org.apache.ibatis.annotations.Param;
@@ -18,6 +19,13 @@ public interface StatusMapper {
      * @return
      */
     List<Status> queryAllStatus();
+
+    /**
+     * 查询最近 days 天的提交统计
+     *
+     * @return
+     */
+    List<StatusCountBO> queryStatusCountOrderByDate(int days);
 
     List<Status> getAllStatusByUsername(@Param("username") String username);
 

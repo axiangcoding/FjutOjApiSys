@@ -96,7 +96,7 @@
 
 
     <select id="queryProblemsNumByTitle" resultType="java.lang.Integer">
-        select count(*)
+        select COUNT(*)
         from problem
         <where>
             title like '%${title}%'
@@ -165,8 +165,8 @@
 
     <select id="getCidProblems2" resultType="com.fjut.oj.pojo.CidProblems2">
         SELECT tpid,(select title from problem where problem.pid=tpid) as title,1,
-        (select count(distinct ruser) from statu where statu.cid=? and statu.pid=tpid and result=1)as acnum,
-        (select count(*) from statu where statu.cid=? and statu.pid=tpid)as submitnum
+        (select COUNT(distinct ruser) from statu where statu.cid=? and statu.pid=tpid and result=1)as acnum,
+        (select COUNT(*) from statu where statu.cid=? and statu.pid=tpid)as submitnum
         FROM `contestproblems` WHERE cid = #{cid}
     </select>
 

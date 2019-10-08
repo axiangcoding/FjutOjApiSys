@@ -216,7 +216,7 @@ public class UserServiceImpl implements UserService {
 //            timeList.add(dateFormat.format(start.getTime()));
 //            numList.add(num);
 //            while (start.before(end)) {
-//                while (i<=list_1.size()-1&&list_1.get(i).getSubmitTime().substring(0,10).equals(dateFormat.format(start.getTime()))){
+//                while (i<=list_1.size()-1&&list_1.get(i).getSubmitDay().substring(0,10).equals(dateFormat.format(start.getTime()))){
 //                    num +=1;
 //                    timeList.add(dateFormat.format(start.getTime()));
 //                    numList.add(num);
