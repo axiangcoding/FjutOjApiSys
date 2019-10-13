@@ -13,7 +13,6 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,10 +26,9 @@ import java.util.Date;
  *
  * @author cjt
  */
+@RestController
 @RequestMapping("/submit")
-@Controller
 @CrossOrigin
-@ResponseBody
 public class SubmitController {
 
     @Autowired
@@ -60,6 +58,7 @@ public class SubmitController {
     /** 线程池 */
     @Autowired
     private ThreadPoolTaskExecutor executor;
+
 
     private Submitter sm = new SubmitterImp();
 

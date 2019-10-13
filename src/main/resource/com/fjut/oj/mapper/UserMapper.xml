@@ -32,7 +32,7 @@
     </insert>
 
     <select id="queryUserCount" resultType="java.lang.Integer">
-        SELECT COUNT(*)
+        SELECT count(*)
         FROM users
     </select>
 
@@ -44,7 +44,7 @@
 
     <select id="queryByUsernameAndPassword" resultType="com.fjut.oj.pojo.UserPO">
         SELECT *
-        FROM users
+        FROM Users
         <where>
             <if test="username != null and username != ''">
                 AND
@@ -112,24 +112,23 @@
 
     <select id="queryUserRadar1" resultType="com.fjut.oj.pojo.UserRadar1">
         SELECT username,ttype,COUNT(*) AS num
-            FROM (SELECT username,pid FROM t_usersolve WHERE username = #{user} AND status=1) a
-            JOIN (SELECT pid,(SELECT ttype FROM t_problem_tag WHERE id=tagid) as ttype,sum(rating-500) as ss FROM t_problem_tag_record group by ttype,pid) b
-            on a.pid=b.pid
-            where b.ss>0
-            group by ttype
+        FROM (SELECT username,pid FROM t_usersolve WHERE username = #{user} AND status=1)
+        a JOIN (SELECT pid,(SELECT ttype FROM t_problem_tag WHERE id=tagid)
+        as ttype,sum(rating-500)
+        as ss  FROM t_problem_tag_record group by ttype,pid) b on a.pid=b.pid where b.ss>0 group by ttype
     </select>
 
 
     <select id="queryUserRadar2" resultType="com.fjut.oj.pojo.UserRadar2">
-        select ttype,COUNT(*) as num
-            from (SELECT username,pid FROM t_usersolve where  status=1) a
-            join (SELECT pid, (SELECT ttype FROM t_problem_tag WHERE id=tagid) as ttype,sum(rating-500) as ss  FROM t_problem_tag_record group by ttype,pid) b
-            on a.pid=b.pid where b.ss>0 group by ttype
+        select ttype,count(*)
+        as num from (SELECT username,pid FROM t_usersolve where  status=1) a join
+        (SELECT pid,(SELECT ttype FROM t_problem_tag WHERE id=tagid) as ttype,sum(rating-500)
+        as ss  FROM t_problem_tag_record group by ttype,pid) b on a.pid=b.pid where b.ss>0 group by ttype
     </select>
 
     <select id="queryPutTagNumByUsername" resultType="java.lang.Integer">
         SELECT COUNT(pid)
-        FROM (SELECT username,pid FROM t_problem_tag_record GROUP BY username,pid) t
+        FROM (SELECT username,pid FROM t_problem_tag_record GROUP BY username,pid)t
         WHERE username=#{username} GROUP BY username
     </select>
 
@@ -187,5 +186,9 @@
 
     <select id="queryAcbNumber" resultType="java.lang.Integer">
         SELECT acb FROM users WHERE username = #{username}
+    </select>
+
+    <select id="getUserAvatar" resultType="java.lang.String">
+        SELECT avatar FROM t_users_avatar WHERE username = #{username}
     </select>
 </mapper>

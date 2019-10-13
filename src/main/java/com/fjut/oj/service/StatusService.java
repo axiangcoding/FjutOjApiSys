@@ -49,7 +49,13 @@ public interface StatusService {
       */
     List<ViewUserStatus> queryAllStatusByConditions(String ruser, Integer pid, Integer result, Integer language, Integer start);
 
-    Integer querySubmitCountByUsername(String name);    // 获取一个用户所有提交题目的次数
+    /**
+     * 获取一个用户所有提交题目的次数
+     *
+     * @param name
+     * @return
+     */
+    Integer querySubmitCountByUsername(String name);
 
     Integer queryMaxStatusId();  // 获取最大的评测表的 id
 

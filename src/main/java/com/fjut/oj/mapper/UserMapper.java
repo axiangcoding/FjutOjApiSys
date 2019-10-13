@@ -100,5 +100,6 @@ public interface UserMapper {
 
     Integer queryAcbNumber(@Param("username") String username);
 
+    String getUserAvatar(@Param("username") String username);
 
 }

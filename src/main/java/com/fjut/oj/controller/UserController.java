@@ -204,10 +204,12 @@ public class UserController {
     public JsonInfoVO queryUserInfoByUsername(@RequestParam("username") String username) {
         JsonInfoVO JsonInfoVO = new JsonInfoVO();
         UserPO user = userService.getUserByUsername(username);
-
+        user.setPassword("");
+        Integer submitCount = statusService.querySubmitCountByUsername(username);
         if (null != user) {
             JsonInfoVO.setSuccess();
             JsonInfoVO.addInfo(user);
+            JsonInfoVO.addInfo(submitCount);
         } else {
             JsonInfoVO.setFail("未查询到该用户的信息！");
         }
@@ -299,4 +301,23 @@ public class UserController {
         }
         return JsonInfoVO;
     }
+
+    /**
+     * 获取一个用户的头像
+     */
+    @CheckUserIsLogin
+    @RequestMapping("/getUserAvatar")
+    public JsonInfoVO getUserAvatar(@RequestParam("username") String username) {
+        JsonInfoVO JsonInfoVO = new JsonInfoVO();
+        String userAvatar = userService.getUserAvatar(username);
+
+        if (null != userAvatar) {
+            JsonInfoVO.setSuccess();
+            JsonInfoVO.addInfo(userAvatar);
+        } else {
+            JsonInfoVO.setFail("该用户未设置头像！");
+        }
+        return JsonInfoVO;
+    }
+
 }

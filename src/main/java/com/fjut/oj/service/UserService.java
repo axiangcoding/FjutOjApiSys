@@ -68,4 +68,6 @@ public interface UserService {
     Integer queryAcbNumber(String username);
 
     Integer updateAcbNumber(String username, Integer acbChange);
+
+    String getUserAvatar(String username);
 }

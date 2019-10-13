@@ -2,13 +2,18 @@ package com.fjut.oj.service;
 
 import com.fjut.oj.pojo.MessagePO;
 
-
 import java.util.List;
 
 /**
  * @author axiang [20190620]
  */
 public interface MessageService {
+    /**
+     * 插入一条消息
+     *
+     * @param message
+     * @return
+     */
     Integer insertMessage(MessagePO message);
 
     Integer deleteMessageByMid(int mid);
@@ -17,6 +22,13 @@ public interface MessageService {
 
     Integer updateMessageStatuByMid(int mid, int status);
 
+    /**
+     * FIXME: 疑似失效
+     * 设置全部消息已读
+     *
+     * @param username
+     * @return
+     */
     Integer updateAllMessageReadByUser(String username);
 
     Integer queryAllMessageCountByUser(String username);
