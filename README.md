@@ -1,8 +1,9 @@
 # OJ
+> 本项目已经暂停开发，所有功能均迁移到CodingFirstApiSys中
 
 #### 介绍
 FJUT 在线编程竞赛网站
-本项目已经暂停开发，所有功能均迁移到CodingFirstApiSys中
+
 
 #### 软件架构
 
